@@ -48,4 +48,11 @@ public class MainCategoryController {
         mainCategoryService.updateMainCategory(id, MainCategoryReqDto.from(mainCategoryReqVo));
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
     }
+
+    @Operation(summary = "메인 카테고리 삭제")
+    @DeleteMapping("/{id}")
+    public BaseResponseEntity<Void> deleteMainCategory(@PathVariable Integer id) {
+        mainCategoryService.deleteMainCategory(id);
+        return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
+    }
 }

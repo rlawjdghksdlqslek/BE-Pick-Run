@@ -41,4 +41,14 @@ public class MainCategoryServiceImpl implements MainCategoryService {
 
         mainCategory.updateName(dto.getMainCategoryName());
     }
+
+    @Transactional
+    @Override
+    public void deleteMainCategory(Integer mainCategoryId) {
+        MainCategory mainCategory = mainCategoryRepository.findById(mainCategoryId).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.CATEGORY_NOT_FOUND)
+        );
+
+        mainCategoryRepository.delete(mainCategory);
+    }
 }
