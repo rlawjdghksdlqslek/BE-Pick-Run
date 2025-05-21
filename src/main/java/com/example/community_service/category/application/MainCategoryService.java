@@ -8,7 +8,9 @@ import java.util.List;
 public interface MainCategoryService {
 
     void createMainCategory(MainCategoryReqDto mainCategoryReqDto);
+
     List<MainCategoryResDto> getAllMainCategory();
+
+    void updateMainCategory(Integer id, MainCategoryReqDto from);
 //    void deleteMainCategory(Long categoryId);
-//    void updateMainCategory(MainCategoryReqDto mainCategoryReqDto);
 }

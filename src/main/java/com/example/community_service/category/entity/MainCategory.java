@@ -26,4 +26,8 @@ public class MainCategory extends BaseEntity {
         this.id = id;
         this.name = name;
     }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
 }

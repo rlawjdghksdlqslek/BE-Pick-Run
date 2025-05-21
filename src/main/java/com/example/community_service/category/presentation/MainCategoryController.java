@@ -38,4 +38,14 @@ public class MainCategoryController {
                         .map(MainCategoryResDto::toVo)
                         .toList());
     }
+
+    @Operation(summary = "메인 카테고리 수정")
+    @PutMapping("/{id}")
+    public BaseResponseEntity<Void> updateMainCategory(
+            @PathVariable Integer id,
+            @RequestBody MainCategoryReqVo mainCategoryReqVo
+    ) {
+        mainCategoryService.updateMainCategory(id, MainCategoryReqDto.from(mainCategoryReqVo));
+        return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
+    }
 }
