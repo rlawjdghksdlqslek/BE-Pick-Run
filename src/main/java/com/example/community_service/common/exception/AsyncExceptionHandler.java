@@ -11,7 +11,7 @@ public class AsyncExceptionHandler implements AsyncUncaughtExceptionHandler {
     @Override
     public void handleUncaughtException(Throwable ex, Method method, Object... params) {
         if (ex instanceof BaseException baseException) {
-            log.error("BaseException: [{}] {}", baseException.getErrorCode(), baseException.getMessage());
+            log.error("BaseException: [{}] {}", baseException.getStatus(), baseException.getMessage());
         } else {
             log.error("Async method [{}] threw an exception", method.getName(), ex);
         }
