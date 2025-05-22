@@ -1,12 +1,19 @@
-package com.example.community_service.common.exception;
+package com.example.community_service.common.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+
 
 @Getter
 @AllArgsConstructor
-public enum ErrorCode {
+public enum BaseResponseStatus {
+
+    /**
+     * 200: 요청 성공
+     **/
+    SUCCESS(HttpStatus.OK, true, 200, "요청에 성공하였습니다."),
 
     // 888 : internal server error
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, false, 888, "서버에서 요청을 처리하지 못했습니다."),
@@ -43,7 +50,8 @@ public enum ErrorCode {
     FAILED_TO_UPDATE_CATEGORY(HttpStatus.INTERNAL_SERVER_ERROR, false, 1302, "카테고리 수정에 실패하였습니다."),
     FAILED_TO_DELETE_CATEGORY(HttpStatus.INTERNAL_SERVER_ERROR, false, 1303, "카테고리 삭제에 실패하였습니다."),
     CATEGORY_NAME_ALREADY_EXISTS(HttpStatus.CONFLICT, false, 1304, "이미 존재하는 카테고리 이름입니다."),
-    INVALID_CATEGORY_NAME(HttpStatus.BAD_REQUEST, false, 1305, "유효하지 않은 카테고리 이름입니다.");
+    INVALID_CATEGORY_NAME(HttpStatus.BAD_REQUEST, false, 1305, "유효하지 않은 카테고리 이름입니다."),
+    DUPLICATE_CATEGORY_LIST(HttpStatus.BAD_REQUEST, false, 1306, "중복된 카테고리 입니다.");
 
     /**
      * 3000 : order service error
@@ -57,8 +65,9 @@ public enum ErrorCode {
      * 5000 : notice service error
      */
 
-    private final HttpStatus httpStatus;
+    private final HttpStatusCode httpStatusCode;
     private final boolean isSuccess;
     private final int code;
     private final String message;
+
 }

@@ -1,17 +1,14 @@
 package com.example.community_service.common.exception;
 
-import lombok.Builder;
+import com.example.community_service.common.entity.BaseResponseStatus;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 public class BaseException extends RuntimeException {
 
-    private ErrorCode errorCode;
+    private final BaseResponseStatus status;
 
-    @Builder
-    public BaseException(ErrorCode errorCode) {
-        this.errorCode = errorCode;
+    public BaseException(BaseResponseStatus status) {
+        this.status = status;
     }
 }

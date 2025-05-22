@@ -1,8 +1,8 @@
-package com.example.community_service.common.response;
+package com.example.community_service.common.entity;
 
-import com.example.community_service.common.entity.BaseResponseStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+
 
 public record BaseResponseEntity<T>(HttpStatusCode httpStatus, Boolean isSuccess, String message, int code, T result) {
 
