@@ -50,7 +50,8 @@ public enum BaseResponseStatus {
     FAILED_TO_UPDATE_CATEGORY(HttpStatus.INTERNAL_SERVER_ERROR, false, 1302, "카테고리 수정에 실패하였습니다."),
     FAILED_TO_DELETE_CATEGORY(HttpStatus.INTERNAL_SERVER_ERROR, false, 1303, "카테고리 삭제에 실패하였습니다."),
     CATEGORY_NAME_ALREADY_EXISTS(HttpStatus.CONFLICT, false, 1304, "이미 존재하는 카테고리 이름입니다."),
-    INVALID_CATEGORY_NAME(HttpStatus.BAD_REQUEST, false, 1305, "유효하지 않은 카테고리 이름입니다.");
+    INVALID_CATEGORY_NAME(HttpStatus.BAD_REQUEST, false, 1305, "유효하지 않은 카테고리 이름입니다."),
+    DUPLICATE_CATEGORY_LIST(HttpStatus.BAD_REQUEST, false, 1306, "중복된 카테고리 입니다.");
 
     /**
      * 3000 : order service error
