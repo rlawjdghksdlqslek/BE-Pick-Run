@@ -10,16 +10,16 @@ import lombok.Getter;
 @Getter
 public class CategoryListReqDto {
 
-    private Integer mainCategoryId;
+    private Long mainCategoryId;
     private String mainCategoryName;
-    private Integer subCategoryId;
+    private Long subCategoryId;
     private String subCategoryName;
 
     @Builder
     public CategoryListReqDto(
-            Integer mainCategoryId,
+            Long mainCategoryId,
             String mainCategoryName,
-            Integer subCategoryId,
+            Long subCategoryId,
             String subCategoryName
     ) {
         this.mainCategoryId = mainCategoryId;

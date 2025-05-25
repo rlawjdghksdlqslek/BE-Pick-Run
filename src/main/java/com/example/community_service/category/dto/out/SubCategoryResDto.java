@@ -1,8 +1,6 @@
 package com.example.community_service.category.dto.out;
 
-import com.example.community_service.category.entity.MainCategory;
 import com.example.community_service.category.entity.SubCategory;
-import com.example.community_service.category.vo.out.MainCategoryResVo;
 import com.example.community_service.category.vo.out.SubCategoryResVo;
 import lombok.Builder;
 import lombok.Getter;

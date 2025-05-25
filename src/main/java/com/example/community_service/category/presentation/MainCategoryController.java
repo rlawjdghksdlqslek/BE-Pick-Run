@@ -42,7 +42,7 @@ public class MainCategoryController {
     @Operation(summary = "메인 카테고리 수정")
     @PutMapping("/main/{id}")
     public BaseResponseEntity<Void> updateMainCategory(
-            @PathVariable Integer id,
+            @PathVariable Long id,
             @RequestBody MainCategoryReqVo mainCategoryReqVo
     ) {
         mainCategoryService.updateMainCategory(id, MainCategoryReqDto.from(mainCategoryReqVo));
@@ -51,7 +51,7 @@ public class MainCategoryController {
 
     @Operation(summary = "메인 카테고리 삭제")
     @DeleteMapping("/main/{id}")
-    public BaseResponseEntity<Void> deleteMainCategory(@PathVariable Integer id) {
+    public BaseResponseEntity<Void> deleteMainCategory(@PathVariable Long id) {
         mainCategoryService.deleteMainCategory(id);
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
     }

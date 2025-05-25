@@ -45,7 +45,7 @@ public class CategoryListController {
 
     @Operation(summary = "카테고리 리스트 삭제")
     @DeleteMapping("/{id}")
-    public BaseResponseEntity<Void> deleteCategoryList(@PathVariable Integer id) {
+    public BaseResponseEntity<Void> deleteCategoryList(@PathVariable Long id) {
         categoryListService.deleteCategoryList(id);
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
     }

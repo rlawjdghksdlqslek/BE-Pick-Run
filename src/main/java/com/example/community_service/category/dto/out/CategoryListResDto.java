@@ -8,18 +8,18 @@ import lombok.Getter;
 @Getter
 public class CategoryListResDto {
 
-    private Integer id;
-    private Integer mainCategoryId;
+    private Long id;
+    private Long mainCategoryId;
     private String mainCategoryName;
-    private Integer subCategoryId;
+    private Long subCategoryId;
     private String subCategoryName;
 
     @Builder
     public CategoryListResDto(
-            Integer id,
-            Integer mainCategoryId,
+            Long id,
+            Long mainCategoryId,
             String mainCategoryName,
-            Integer subCategoryId,
+            Long subCategoryId,
             String subCategoryName
     ) {
         this.id = id;

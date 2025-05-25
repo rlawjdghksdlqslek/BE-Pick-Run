@@ -35,7 +35,7 @@ public class MainCategoryServiceImpl implements MainCategoryService {
 
     @Transactional
     @Override
-    public void updateMainCategory(Integer id, MainCategoryReqDto dto) {
+    public void updateMainCategory(Long id, MainCategoryReqDto dto) {
         MainCategory mainCategory = mainCategoryRepository.findById(id)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.CATEGORY_NOT_FOUND));
 
@@ -44,7 +44,7 @@ public class MainCategoryServiceImpl implements MainCategoryService {
 
     @Transactional
     @Override
-    public void deleteMainCategory(Integer mainCategoryId) {
+    public void deleteMainCategory(Long mainCategoryId) {
         MainCategory mainCategory = mainCategoryRepository.findById(mainCategoryId).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.CATEGORY_NOT_FOUND)
         );
