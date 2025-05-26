@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ import java.util.List;
 public class Post {
 
     @Id
-    private String Id;
+    private String id;
 
     private String postUuid;
     private String memberUuid;
@@ -59,5 +60,13 @@ public class Post {
         this.deletedAt = deletedAt;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public void update(String title, String contents, Long categoryListId, List<Image> images) {
+        this.title = title;
+        this.contents = contents;
+        this.categoryListId = categoryListId;
+        this.images = images;
+        this.updatedAt = LocalDateTime.now();
     }
 }
