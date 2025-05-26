@@ -27,7 +27,7 @@ public class PostController {
     @Operation(summary = "질문 등록")
     @PostMapping("/create")
     public BaseResponseEntity<Void> createPost(
-            @RequestHeader("MEMBER-UUID") String memberUuid,
+            @RequestHeader("X-Member-UUID") String memberUuid,
             @RequestBody PostCreateReqVo postCreateReqVo
     ) {
         postService.createPost(PostCreateReqDto.of(memberUuid, postCreateReqVo));
