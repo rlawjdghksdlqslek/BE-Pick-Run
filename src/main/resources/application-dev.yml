@@ -10,8 +10,11 @@ spring:
       idle-timeout: 300000
       max-lifetime: 900000
       connection-timeout: 10000
-
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/learn_run_community
 
 logging:
   level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG  # MongoTemplate 쿼리 로그 출력
     root: INFO
