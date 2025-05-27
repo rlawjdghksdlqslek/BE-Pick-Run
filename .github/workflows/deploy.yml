@@ -75,5 +75,5 @@ jobs:
             
             docker pull ${{ steps.login-ecr.outputs.registry }}/learn-run/discovery-service:latest
             docker-compose -f docker-compose-discovery.yml down
-            docker-compose -f docker-compose-discovery.yml up -d --remove-orphans
+            docker-compose -f docker-compose-discovery.yml up -d
             docker image prune -f
