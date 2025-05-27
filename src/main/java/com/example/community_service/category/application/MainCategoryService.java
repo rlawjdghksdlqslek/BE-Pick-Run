@@ -11,6 +11,6 @@ public interface MainCategoryService {
 
     List<MainCategoryResDto> getAllMainCategory();
 
-    void updateMainCategory(Long id, MainCategoryReqDto from);
+    void updateMainCategory(Long id, MainCategoryReqDto mainCategoryReqDto);
     void deleteMainCategory(Long mainCategoryId);
 }
