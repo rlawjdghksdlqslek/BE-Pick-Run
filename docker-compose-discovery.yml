@@ -8,3 +8,9 @@ services:
       - "8761:8761"
     env_file:
       - .env
+    networks:
+      - shared-net
+
+networks:
+  shared-net:
+    external: true
