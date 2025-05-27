@@ -16,13 +16,13 @@ public class SubCategory extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sub_category_id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "sub_category_name", nullable = false)
     private String name;
 
     @Builder
-    public SubCategory(Integer id, String name) {
+    public SubCategory(Long id, String name) {
         this.id = id;
         this.name = name;
     }

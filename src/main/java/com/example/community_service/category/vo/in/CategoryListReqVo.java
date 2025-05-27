@@ -6,13 +6,13 @@ import lombok.Getter;
 @Getter
 public class CategoryListReqVo {
 
-    private Integer mainCategoryId;
-    private Integer subCategoryId;
+    private Long mainCategoryId;
+    private Long subCategoryId;
 
     @Builder
     public CategoryListReqVo(
-            Integer mainCategoryId,
-            Integer subCategoryId
+            Long mainCategoryId,
+            Long subCategoryId
     ) {
         this.mainCategoryId = mainCategoryId;
         this.subCategoryId = subCategoryId;

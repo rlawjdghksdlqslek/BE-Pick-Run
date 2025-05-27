@@ -16,26 +16,26 @@ public class CategoryList extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_list_id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "main_category_id", nullable = false)
-    private Integer mainCategoryId;
+    private Long mainCategoryId;
 
     @Column(name = "main_category_name", nullable = false)
     private String mainCategoryName;
 
     @Column(name = "sub_category_id", nullable = false)
-    private Integer subCategoryId;
+    private Long subCategoryId;
 
     @Column(name = "sub_category_name", nullable = false)
     private String subCategoryName;
 
     @Builder
     public CategoryList(
-            Integer id,
-            Integer mainCategoryId,
+            Long id,
+            Long mainCategoryId,
             String mainCategoryName,
-            Integer subCategoryId,
+            Long subCategoryId,
             String subCategoryName
     ) {
         this.id = id;

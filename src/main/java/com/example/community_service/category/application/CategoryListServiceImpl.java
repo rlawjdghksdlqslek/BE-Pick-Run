@@ -60,7 +60,7 @@ public class CategoryListServiceImpl implements CategoryListService {
 
     @Transactional
     @Override
-    public void deleteCategoryList(Integer id) {
+    public void deleteCategoryList(Long id) {
         categoryListRepository.deleteById(id);
     }
 

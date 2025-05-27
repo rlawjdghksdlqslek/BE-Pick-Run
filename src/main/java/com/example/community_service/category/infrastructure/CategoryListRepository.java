@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CategoryListRepository extends JpaRepository<CategoryList, Integer> {
-    boolean existsByMainCategoryIdAndSubCategoryId(Integer mainCategoryId, Integer subCategoryId);
+public interface CategoryListRepository extends JpaRepository<CategoryList, Long> {
+    boolean existsByMainCategoryIdAndSubCategoryId(Long mainCategoryId, Long subCategoryId);
 
 }

@@ -16,13 +16,13 @@ public class MainCategory extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "main_category_id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "main_category_name", nullable = false)
     private String name;
 
     @Builder
-    public MainCategory(Integer id, String name) {
+    public MainCategory(Long id, String name) {
         this.id = id;
         this.name = name;
     }

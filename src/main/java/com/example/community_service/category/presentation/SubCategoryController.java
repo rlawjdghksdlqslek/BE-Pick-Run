@@ -42,7 +42,7 @@ public class SubCategoryController {
     @Operation(summary = "서브 카테고리 수정")
     @PutMapping("/sub/{id}")
     public BaseResponseEntity<Void> updateSubCategory(
-            @PathVariable Integer id,
+            @PathVariable Long id,
             @RequestBody SubCategoryReqVo subCategoryReqVo
     ) {
         subCategoryService.updateSubCategory(id, SubCategoryReqDto.from(subCategoryReqVo));
@@ -51,7 +51,7 @@ public class SubCategoryController {
 
     @Operation(summary = "서브 카테고리 삭제")
     @DeleteMapping("/sub/{id}")
-    public BaseResponseEntity<Void> deleteSubCategory(@PathVariable Integer id) {
+    public BaseResponseEntity<Void> deleteSubCategory(@PathVariable Long id) {
         subCategoryService.deleteSubCategory(id);
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
     }

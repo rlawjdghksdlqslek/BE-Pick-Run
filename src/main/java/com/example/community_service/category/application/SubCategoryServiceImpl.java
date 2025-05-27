@@ -38,7 +38,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 
     @Transactional
     @Override
-    public void updateSubCategory(Integer id, SubCategoryReqDto dto) {
+    public void updateSubCategory(Long id, SubCategoryReqDto dto) {
         SubCategory subCategory = subCategoryRepository.findById(id)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.CATEGORY_NOT_FOUND));
 
@@ -47,7 +47,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 
     @Transactional
     @Override
-    public void deleteSubCategory(Integer subCategoryId) {
+    public void deleteSubCategory(Long subCategoryId) {
         SubCategory subCategory = subCategoryRepository.findById(subCategoryId).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.CATEGORY_NOT_FOUND)
         );

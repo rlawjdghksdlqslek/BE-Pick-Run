@@ -1,53 +1,39 @@
 package com.example.community_service.post.entity;
 
+import com.example.community_service.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Entity
-@Table(name = "post")
+
+@Document(collection = "posts")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
-    private Long Id;
+    private String id;
 
-    @Column(name = "post_uuid", nullable = false)
     private String postUuid;
-
-    @Column(name = "member_uuid", nullable = false)
     private String memberUuid;
-
-    @Column(name = "category_list_id", nullable = false)
     private Long categoryListId;
-
-    @Column(name = "title", nullable = false)
     private String title;
-
-    @Column(name = "contents", nullable = false, columnDefinition = "TEXT")
     private String contents;
+    private List<Image> images;
 
-    @Column(name = "blind_status", nullable = false)
-    private Boolean blindStatus = false;
-
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
-
-    @Column(name = "deleted_at")
+    private boolean blindStatus;
+    private boolean deletedStatus;
     private LocalDateTime deletedAt;
 
-    @Column(name = "deleted_status", nullable = false)
-    private Boolean deletedStatus = false;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     @Builder
     public Post(
@@ -56,14 +42,31 @@ public class Post {
             Long categoryListId,
             String title,
             String contents,
-            Boolean blindStatus,
-            Boolean deletedStatus) {
+            List<Image> images,
+            boolean blindStatus,
+            boolean deletedStatus,
+            LocalDateTime deletedAt,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt
+    ) {
         this.postUuid = postUuid;
         this.memberUuid = memberUuid;
         this.categoryListId = categoryListId;
         this.title = title;
         this.contents = contents;
+        this.images = images;
         this.blindStatus = blindStatus;
         this.deletedStatus = deletedStatus;
+        this.deletedAt = deletedAt;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public void update(String title, String contents, Long categoryListId, List<Image> images) {
+        this.title = title;
+        this.contents = contents;
+        this.categoryListId = categoryListId;
+        this.images = images;
+        this.updatedAt = LocalDateTime.now();
     }
 }
