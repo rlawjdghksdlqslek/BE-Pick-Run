@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  app:
+  discovery-service:
     image: 009160040466.dkr.ecr.ap-northeast-2.amazonaws.com/learn-run/discovery-service:latest
     container_name: discovery-service
     ports:
