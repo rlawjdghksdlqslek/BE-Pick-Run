@@ -1,0 +1,4 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: https://${EUREKA_SERVER_IP}:8761/eureka/

@@ -1,1 +1,81 @@
-spring.application.name=gateway-service
+server:
+  port: 8000
+  forward-headers-strategy: framework
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  profiles:
+    active: prod
+  main:
+    web-application-type: reactive
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+      global-cors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:3000"
+            allow-credentials: true
+            allowedHeaders:
+              - x-requested-with
+              - Authorization
+              - content-type
+              - credential
+              - X-AUTH-TOKEN
+              - X-CSRF-TOKEN
+            allowedMethods:
+              - PUT
+              - GET
+              - POST
+              - PATCH
+              - DELETE
+              - OPTIONS
+      routes:
+        - id: member-service
+          uri: lb://MEMBER-SERVICE
+          predicates:
+            - Path=/member-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
+                  - /api/v1/auth/sign-up
+                  - /api/v1/auth/sign-in
+                  - /api/v1/auth/email/check-duplicate
+                  - /api/v1/email/send-code
+                  - /api/v1/email/verify-code
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /webjars/swagger-ui/index.html
+
+    urls:
+      - name: Member Service API
+        url: /member-service/v3/api-docs
+
+logging:
+  level:
+    root: INFO
+
+jwt:
+  secret-key: Bt#WZxNc@M1pQ9LvUYKA8oFrTcVJX!g7qFu32LxZ$NbPCy0w
