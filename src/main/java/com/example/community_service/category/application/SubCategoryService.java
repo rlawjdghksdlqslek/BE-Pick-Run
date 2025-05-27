@@ -10,6 +10,6 @@ public interface SubCategoryService {
     void createSubCategory(SubCategoryReqDto mainCategoryReqDto);
 
     List<SubCategoryResDto> getAllSubCategory();
-    void updateSubCategory(Long id, SubCategoryReqDto from);
+    void updateSubCategory(Long id, SubCategoryReqDto subCategoryReqDto);
     void deleteSubCategory(Long subCategoryId);
 }
