@@ -16,7 +16,7 @@ services:
       - shared-net
 
   redis:
-    image: redis:latest
+    image: redis:8.0
     container_name: redis
     ports:
       - "6379:6379"
@@ -25,6 +25,20 @@ services:
       - ./redis/conf/redis.conf:/user/local/conf/redis.conf
     command: redis-server /user/local/conf/redis.conf
     restart: always
+    networks:
+      - shared-net
+
+  mongodb:
+    image: mongo:8.0
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+    volumes:
+      - mongo_data:/data/db
     networks:
       - shared-net
 
