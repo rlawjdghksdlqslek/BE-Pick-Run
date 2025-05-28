@@ -72,6 +72,6 @@ jobs:
           script_stop: true
           script: |
             docker pull ${{ steps.login-ecr.outputs.registry }}/learn-run/community-service:latest
-            docker-compose down
-            docker-compose up -d
+            docker-compose -f docker-compose-community.yml down
+            docker-compose -f docker-compose-community.yml up -d
             docker image prune -f
