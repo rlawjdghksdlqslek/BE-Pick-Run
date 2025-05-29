@@ -61,6 +61,10 @@ spring:
                   - /api/v1/auth/nickname/check-duplicate
                   - /api/v1/email/send-code
                   - /api/v1/email/verify-code
+                  - /api/v1/email/send-password
+                  - /api/v1/oauth/sign-in
+                  - /api/v1/oauth/bind-account
+
         - id: community-service
           uri: lb://COMMUNITY-SERVICE
           predicates:
@@ -76,11 +80,6 @@ spring:
                   - /swagger-ui.html
                   - /webjars
                   - /error
-
-
-                  - /api/v1/email/send-password
-                  - /api/v1/oauth/sign-in
-                  - /api/v1/oauth/bind-account
 
 springdoc:
   api-docs:
