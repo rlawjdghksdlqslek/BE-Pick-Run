@@ -20,7 +20,7 @@ import java.util.List;
 @Tag(name = "CategoryList", description = "CategoryList 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/community-service/api/v1/category-list")
+@RequestMapping("/api/v1/category-list")
 @Slf4j
 public class CategoryListController {
 

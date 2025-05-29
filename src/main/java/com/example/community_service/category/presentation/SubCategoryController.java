@@ -17,7 +17,7 @@ import java.util.List;
 @Tag(name = "SubCategory", description = "SubCategory 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/community-service/api/v1/category")
+@RequestMapping("/api/v1/category")
 public class SubCategoryController {
 
     private final SubCategoryService subCategoryService;

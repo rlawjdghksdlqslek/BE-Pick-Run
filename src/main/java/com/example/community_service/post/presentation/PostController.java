@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/community-service/api/v1/post")
+@RequestMapping("/api/v1/post")
 @Tag(name = "auth")
 public class PostController {
 
