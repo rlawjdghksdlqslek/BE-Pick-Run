@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/learn_run_read
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-service:8761/eureka
