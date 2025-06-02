@@ -7,7 +7,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://discovery-service:8761/eureka
+      defaultZone: http://localhost:8761/eureka
 
 spring:
   main:
@@ -63,7 +63,9 @@ spring:
                   - /api/v1/email/verify-code
                   - /api/v1/email/send-password
                   - /api/v1/oauth/sign-in
-                  - /api/v1/oauth/bind-account
+                  - /api/v1/oauth/sign-up
+                  - /api/v1/agreement/**
+                  - /api/v1/member/agreement/**
 
         - id: community-service
           uri: lb://COMMUNITY-SERVICE
