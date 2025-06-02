@@ -8,21 +8,25 @@ import lombok.Getter;
 @Getter
 public class MainCategoryResDto {
 
+    private Long id;
     private String name;
 
     @Builder
-    public MainCategoryResDto(String name) {
+    public MainCategoryResDto(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
     public static MainCategoryResDto from(MainCategory category) {
         return MainCategoryResDto.builder()
+                .id(category.getId())
                 .name(category.getName())
                 .build();
     }
 
     public static MainCategoryResVo toVo(MainCategoryResDto dto) {
         return MainCategoryResVo.builder()
+                .id(dto.getId())
                 .name(dto.getName())
                 .build();
     }
