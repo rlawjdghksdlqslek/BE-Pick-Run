@@ -11,6 +11,7 @@ public class CategoryListResVo {
     private String mainCategoryName;
     private Long subCategoryId;
     private String subCategoryName;
+    private String subCategoryColor;
 
     @Builder
     public CategoryListResVo(
@@ -18,12 +19,14 @@ public class CategoryListResVo {
             Long mainCategoryId,
             String mainCategoryName,
             Long subCategoryId,
-            String subCategoryName
+            String subCategoryName,
+            String subCategoryColor
     ) {
         this.id = id;
         this.mainCategoryId = mainCategoryId;
         this.mainCategoryName = mainCategoryName;
         this.subCategoryId = subCategoryId;
         this.subCategoryName = subCategoryName;
+        this.subCategoryColor = subCategoryColor;
     }
 }

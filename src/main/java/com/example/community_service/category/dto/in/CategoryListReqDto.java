@@ -14,18 +14,21 @@ public class CategoryListReqDto {
     private String mainCategoryName;
     private Long subCategoryId;
     private String subCategoryName;
+    private String subCategoryColor;
 
     @Builder
     public CategoryListReqDto(
             Long mainCategoryId,
             String mainCategoryName,
             Long subCategoryId,
-            String subCategoryName
+            String subCategoryName,
+            String subCategoryColor
     ) {
         this.mainCategoryId = mainCategoryId;
         this.mainCategoryName = mainCategoryName;
         this.subCategoryId = subCategoryId;
         this.subCategoryName = subCategoryName;
+        this.subCategoryColor = subCategoryColor;
     }
 
     public static CategoryListReqDto from(CategoryListReqVo vo) {
@@ -41,6 +44,7 @@ public class CategoryListReqDto {
                 .mainCategoryName(mainCategory.getName())
                 .subCategoryId(subCategory.getId())
                 .subCategoryName(subCategory.getName())
+                .subCategoryColor(subCategory.getColor())
                 .build();
     }
 }

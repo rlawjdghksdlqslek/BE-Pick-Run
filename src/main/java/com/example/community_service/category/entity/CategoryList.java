@@ -30,18 +30,23 @@ public class CategoryList extends BaseEntity {
     @Column(name = "sub_category_name", nullable = false)
     private String subCategoryName;
 
+    @Column(name = "sub_category_color", nullable = false)
+    private String subCategoryColor;
+
     @Builder
     public CategoryList(
             Long id,
             Long mainCategoryId,
             String mainCategoryName,
             Long subCategoryId,
-            String subCategoryName
+            String subCategoryName,
+            String subCategoryColor
     ) {
         this.id = id;
         this.mainCategoryId = mainCategoryId;
         this.mainCategoryName = mainCategoryName;
         this.subCategoryId = subCategoryId;
         this.subCategoryName = subCategoryName;
+        this.subCategoryColor = subCategoryColor;
     }
 }
