@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -25,6 +26,7 @@ import java.util.List;
 public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAuthenticationFilter.Config> {
 
     private final JwtProvider jwtProvider;
+    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     public JwtAuthenticationFilter(JwtProvider jwtProvider) {
         super(Config.class);
@@ -44,13 +46,10 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
             String path = request.getURI().getPath();
             log.info("요청 경로: {}", path);
 
-            if (config.getSkipPaths() != null) {
-                for (String skipPath : config.getSkipPaths()) {
-                    log.debug("→ 비교 대상: {}", skipPath);
-                    if (path.startsWith(skipPath)) {
-                        log.info("인증 제외 경로 → 필터 통과: {}", path);
-                        return chain.filter(exchange);
-                    }
+            for (String skipPath : config.getSkipPaths()) {
+                if (antPathMatcher.match(skipPath, path)) {
+                    log.info("인증 제외 경로 → 필터 통과: {}", path);
+                    return chain.filter(exchange);
                 }
             }
 
