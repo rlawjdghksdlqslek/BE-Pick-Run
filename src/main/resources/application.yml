@@ -16,7 +16,7 @@ spring:
   application:
     name: community-service
   profiles:
-    active: dev
+    active: prod
 
   jpa:
     hibernate:
