@@ -21,10 +21,14 @@ public class SubCategory extends BaseEntity {
     @Column(name = "sub_category_name", nullable = false)
     private String name;
 
+    @Column(name = "color", nullable = false)
+    private String color;
+
     @Builder
-    public SubCategory(Long id, String name) {
+    public SubCategory(Long id, String name, String color) {
         this.id = id;
         this.name = name;
+        this.color = color;
     }
 
     public void updateName(String name) {

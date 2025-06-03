@@ -13,6 +13,7 @@ public class CategoryListResDto {
     private String mainCategoryName;
     private Long subCategoryId;
     private String subCategoryName;
+    private String subCategoryColor;
 
     @Builder
     public CategoryListResDto(
@@ -20,13 +21,15 @@ public class CategoryListResDto {
             Long mainCategoryId,
             String mainCategoryName,
             Long subCategoryId,
-            String subCategoryName
+            String subCategoryName,
+            String subCategoryColor
     ) {
         this.id = id;
         this.mainCategoryId = mainCategoryId;
         this.mainCategoryName = mainCategoryName;
         this.subCategoryId = subCategoryId;
         this.subCategoryName = subCategoryName;
+        this.subCategoryColor = subCategoryColor;
     }
 
     public static CategoryListResDto from(CategoryList categoryList) {
@@ -36,6 +39,7 @@ public class CategoryListResDto {
                 .mainCategoryName(categoryList.getMainCategoryName())
                 .subCategoryId(categoryList.getSubCategoryId())
                 .subCategoryName(categoryList.getSubCategoryName())
+                .subCategoryColor(categoryList.getSubCategoryColor())
                 .build();
     }
 
@@ -46,6 +50,7 @@ public class CategoryListResDto {
                 .mainCategoryName(dto.getMainCategoryName())
                 .subCategoryId(dto.getSubCategoryId())
                 .subCategoryName(dto.getSubCategoryName())
+                .subCategoryColor(dto.getSubCategoryColor())
                 .build();
     }
 }

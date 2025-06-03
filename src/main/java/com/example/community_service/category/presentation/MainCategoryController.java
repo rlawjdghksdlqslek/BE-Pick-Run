@@ -3,6 +3,7 @@ package com.example.community_service.category.presentation;
 import com.example.community_service.category.application.MainCategoryService;
 import com.example.community_service.category.dto.in.MainCategoryReqDto;
 import com.example.community_service.category.dto.out.MainCategoryResDto;
+import com.example.community_service.category.dto.out.SimpleSubCategoryResDto;
 import com.example.community_service.category.vo.in.MainCategoryReqVo;
 import com.example.community_service.category.vo.out.MainCategoryResVo;
 import com.example.community_service.common.entity.BaseResponseStatus;
@@ -54,5 +55,11 @@ public class MainCategoryController {
     public BaseResponseEntity<Void> deleteMainCategory(@PathVariable Long id) {
         mainCategoryService.deleteMainCategory(id);
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
+    }
+
+    @Operation(summary = "메인 카테고리에 속한 서브 카테고리 전체 조회")
+    @GetMapping("/main/{id}")
+    public BaseResponseEntity<List<SimpleSubCategoryResDto>> getMainCategory(@PathVariable Long id) {
+        return new BaseResponseEntity<>(mainCategoryService.getSubCategoriesByMainCategoryId(id));
     }
 }
