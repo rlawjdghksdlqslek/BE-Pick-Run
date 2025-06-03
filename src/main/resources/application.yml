@@ -76,6 +76,7 @@ spring:
             - name: JwtAuthenticationFilter
               args:
                 skipPaths:
+                  - /api/v1/community-service/**
                   - /api/v1/category/**
                   - /v3/api-docs
                   - /v3/api-docs/swagger-config
