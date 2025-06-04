@@ -28,9 +28,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          source: |
-            docker-compose-infra.yml
-            docker-compose-kafka.yml
+          source: "docker-compose-infra.yml docker-compose-kafka.yml"
           target: "~/"
 
       - name: Deploy on EC2 via SSH
