@@ -63,6 +63,6 @@ jobs:
             echo "EC2_HOST=${{ secrets.EC2_HOST }}" >> .env
             
             
-            docker-compose -f docker-compose-infra.yml -f docker-compose-kafka down
-            docker-compose -f docker-compose-infra.yml -f docker-compose-kafka  up -d
+            docker-compose -f docker-compose-infra.yml -f docker-compose-kafka.yml down
+            docker-compose -f docker-compose-infra.yml -f docker-compose-kafka.yml  up -d
             docker image prune -f
