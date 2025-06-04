@@ -51,8 +51,9 @@ jobs:
             echo "MONGO_INITDB_ROOT_USERNAME=${{ secrets.MONGO_INITDB_ROOT_USERNAME }}" >> .env
             echo "MONGO_INITDB_ROOT_PASSWORD=${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}" >> .env
             echo "MONGODB_URI_COMMUNITY=${{ secrets.MONGODB_URI_COMMUNITY }}" >> .env
+            echo "EC2_HOST=${{ secrets.EC2_HOST }}" >> .env
             
             
-            docker-compose -f docker-compose-infra.yml down
-            docker-compose -f docker-compose-infra.yml up -d
+            docker-compose -f docker-compose-infra.yml -f docker-compose-kafka down
+            docker-compose -f docker-compose-infra.yml -f docker-compose-kafka  up -d
             docker image prune -f
