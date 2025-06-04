@@ -61,6 +61,7 @@ jobs:
             echo "MONGO_INITDB_ROOT_PASSWORD=${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}" >> .env
             echo "MONGODB_URI_COMMUNITY=${{ secrets.MONGODB_URI_COMMUNITY }}" >> .env
             echo "EC2_HOST=${{ secrets.EC2_HOST }}" >> .env
+            echo "MONGODB_URI_PROFILE=${{ secrets.MONGO_URI_PROFILE }}" >> .env
             
             
             docker-compose -f docker-compose-infra.yml -f docker-compose-kafka.yml down
