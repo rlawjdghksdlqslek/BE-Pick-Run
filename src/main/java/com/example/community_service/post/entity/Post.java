@@ -1,19 +1,17 @@
 package com.example.community_service.post.entity;
 
-import com.example.community_service.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 
-@Document(collection = "posts")
+@Document(collection = "post")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post {
