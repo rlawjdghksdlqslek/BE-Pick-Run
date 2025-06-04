@@ -12,6 +12,8 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
     networks:
       - shared-net
 
@@ -46,5 +48,6 @@ volumes:
   mongo_data:
 
 networks:
+  mysql_data:
   shared-net:
     external: true
