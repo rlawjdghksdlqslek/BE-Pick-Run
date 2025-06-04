@@ -2,18 +2,13 @@ server:
   port: 8000
   forward-headers-strategy: framework
 
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-
 spring:
   main:
     web-application-type: reactive
   application:
     name: gateway-service
+  profiles:
+    active: prod
   cloud:
     gateway:
       default-filters:
