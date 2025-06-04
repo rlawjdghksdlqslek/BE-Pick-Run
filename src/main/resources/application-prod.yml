@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/learn_run_read
+      uri: ${MONGODB_URI_READ}
 
 eureka:
   client:
