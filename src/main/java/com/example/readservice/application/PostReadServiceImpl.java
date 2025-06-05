@@ -20,6 +20,7 @@ public class PostReadServiceImpl implements PostReadService {
     private final PostReadRepository postReadRepository;
 
     @Transactional
+    @Override
     public void createPostRead(PostCreatedEvent postCreatedEvent) {
         postReadRepository.save(PostReadModelReqDto.from(postCreatedEvent));
     }
