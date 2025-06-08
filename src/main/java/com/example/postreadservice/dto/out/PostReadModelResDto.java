@@ -12,6 +12,7 @@ import java.util.List;
 public class PostReadModelResDto {
 
     private String postUuid;
+    private String memberUuid;
     private Long categoryListId;
     private String title;
     private String contents;
@@ -29,6 +30,7 @@ public class PostReadModelResDto {
     @Builder
     public PostReadModelResDto(
             String postUuid,
+            String memberUuid,
             Long categoryListId,
             String title,
             String contents,
@@ -41,6 +43,7 @@ public class PostReadModelResDto {
             LocalDateTime updatedAt
     ) {
         this.postUuid = postUuid;
+        this.memberUuid = memberUuid;
         this.categoryListId = categoryListId;
         this.title = title;
         this.contents = contents;
@@ -56,6 +59,7 @@ public class PostReadModelResDto {
     public static PostReadModelResDto from(PostReadModel postReadModel) {
         return PostReadModelResDto.builder()
                 .postUuid(postReadModel.getPostUuid())
+                .memberUuid(postReadModel.getMemberUuid())
                 .categoryListId(postReadModel.getCategoryListId())
                 .title(postReadModel.getTitle())
                 .contents(postReadModel.getContents())
