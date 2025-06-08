@@ -78,6 +78,7 @@ spring:
                   - /swagger-ui.html
                   - /webjars
                   - /error
+                  - /api/v1/category-list
 
         - id: profile-service
           uri: lb://PROFILE-SERVICE
