@@ -7,7 +7,7 @@ import com.example.community_service.category.entity.CategoryList;
 import com.example.community_service.category.entity.MainCategory;
 import com.example.community_service.category.infrastructure.CategoryListRepository;
 import com.example.community_service.category.infrastructure.MainCategoryRepository;
-import com.example.community_service.common.entity.BaseResponseStatus;
+import com.example.community_service.common.response.BaseResponseStatus;
 import com.example.community_service.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

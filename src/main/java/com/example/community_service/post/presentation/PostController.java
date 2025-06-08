@@ -1,7 +1,7 @@
 package com.example.community_service.post.presentation;
 
-import com.example.community_service.common.entity.BaseResponseStatus;
-import com.example.community_service.common.response.BaseResponseEntity;
+import com.example.community_service.common.response.BaseResponseStatus;
+import com.example.community_service.common.entity.BaseResponseEntity;
 import com.example.community_service.post.application.PostService;
 import com.example.community_service.post.dto.in.PostCreateReqDto;
 import com.example.community_service.post.dto.in.PostUpdateReqDto;
