@@ -1,13 +1,10 @@
 package com.example.community_service.category.application;
 
 import com.example.community_service.category.dto.in.SubCategoryReqDto;
-import com.example.community_service.category.dto.in.SubCategoryReqDto;
 import com.example.community_service.category.dto.out.SubCategoryResDto;
-import com.example.community_service.category.dto.out.SubCategoryResDto;
-import com.example.community_service.category.entity.SubCategory;
 import com.example.community_service.category.entity.SubCategory;
 import com.example.community_service.category.infrastructure.SubCategoryRepository;
-import com.example.community_service.common.entity.BaseResponseStatus;
+import com.example.community_service.common.response.BaseResponseStatus;
 import com.example.community_service.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

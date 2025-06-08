@@ -1,4 +1,4 @@
-package com.example.community_service.common.entity;
+package com.example.community_service.common.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

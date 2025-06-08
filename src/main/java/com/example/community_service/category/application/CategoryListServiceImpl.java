@@ -2,14 +2,13 @@ package com.example.community_service.category.application;
 
 import com.example.community_service.category.dto.in.CategoryListReqDto;
 import com.example.community_service.category.dto.out.CategoryListResDto;
-import com.example.community_service.category.dto.out.MainCategoryResDto;
 import com.example.community_service.category.entity.CategoryList;
 import com.example.community_service.category.entity.MainCategory;
 import com.example.community_service.category.entity.SubCategory;
 import com.example.community_service.category.infrastructure.CategoryListRepository;
 import com.example.community_service.category.infrastructure.MainCategoryRepository;
 import com.example.community_service.category.infrastructure.SubCategoryRepository;
-import com.example.community_service.common.entity.BaseResponseStatus;
+import com.example.community_service.common.response.BaseResponseStatus;
 import com.example.community_service.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.example.community_service.common.entity.BaseResponseStatus.CATEGORY_NOT_FOUND;
+import static com.example.community_service.common.response.BaseResponseStatus.CATEGORY_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor

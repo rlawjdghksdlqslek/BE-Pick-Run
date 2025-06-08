@@ -1,6 +1,6 @@
 package com.example.community_service.common.exception;
 
-import com.example.community_service.common.entity.BaseResponseStatus;
+import com.example.community_service.common.response.BaseResponseStatus;
 import lombok.Getter;
 
 @Getter

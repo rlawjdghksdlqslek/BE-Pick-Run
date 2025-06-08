@@ -1,7 +1,7 @@
 package com.example.community_service.common.exception;
 
-import com.example.community_service.common.entity.BaseResponseStatus;
-import com.example.community_service.common.response.BaseResponseEntity;
+import com.example.community_service.common.response.BaseResponseStatus;
+import com.example.community_service.common.entity.BaseResponseEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

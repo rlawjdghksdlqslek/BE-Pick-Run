@@ -1,6 +1,6 @@
-package com.example.community_service.common.response;
+package com.example.community_service.common.entity;
 
-import com.example.community_service.common.entity.BaseResponseStatus;
+import com.example.community_service.common.response.BaseResponseStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
