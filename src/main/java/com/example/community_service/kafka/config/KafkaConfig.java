@@ -1,6 +1,6 @@
 package com.example.community_service.kafka.config;
 
-import com.example.community_service.kafka.event.PostEvent;
+import com.example.community_service.kafka.event.PostCreatedEvent;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,12 +32,12 @@ public class KafkaConfig {
     }
 
     @Bean
-    public ProducerFactory<String, PostEvent> createPostNotification() {
+    public ProducerFactory<String, PostCreatedEvent> createPostNotification() {
         return new DefaultKafkaProducerFactory<>(postProducerConfigs());
     }
 
     @Bean
-    public KafkaTemplate<String, PostEvent> kafkaTemplate() {
+    public KafkaTemplate<String, PostCreatedEvent> kafkaTemplate() {
         return new KafkaTemplate<>(createPostNotification());
     }
 
