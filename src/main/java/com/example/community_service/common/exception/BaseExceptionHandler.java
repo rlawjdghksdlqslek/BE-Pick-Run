@@ -2,13 +2,11 @@ package com.example.community_service.common.exception;
 
 import com.example.community_service.common.entity.BaseResponseStatus;
 import com.example.community_service.common.response.BaseResponseEntity;
-import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@Hidden
 @RestControllerAdvice
 @Slf4j
 public class BaseExceptionHandler {
