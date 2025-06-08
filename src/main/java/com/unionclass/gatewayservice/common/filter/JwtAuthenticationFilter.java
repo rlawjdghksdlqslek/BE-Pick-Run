@@ -2,7 +2,7 @@ package com.unionclass.gatewayservice.common.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.unionclass.gatewayservice.common.exception.BaseErrorResponse;
+import com.unionclass.gatewayservice.common.exception.BaseExceptionEntity;
 import com.unionclass.gatewayservice.common.exception.ErrorCode;
 import com.unionclass.gatewayservice.common.security.JwtProvider;
 import lombok.Getter;
@@ -72,7 +72,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
         response.setStatusCode(errorCode.getHttpStatus());
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 
-        BaseErrorResponse errorResponse = BaseErrorResponse.of(
+        BaseExceptionEntity errorResponse = BaseExceptionEntity.of(
                 errorCode.getHttpStatus(),
                 errorCode.isSuccess(),
                 errorCode.getCode(),
