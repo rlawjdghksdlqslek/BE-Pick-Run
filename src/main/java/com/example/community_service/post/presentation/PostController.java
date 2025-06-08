@@ -1,7 +1,7 @@
 package com.example.community_service.post.presentation;
 
-import com.example.community_service.common.entity.BaseResponseEntity;
 import com.example.community_service.common.entity.BaseResponseStatus;
+import com.example.community_service.common.response.BaseResponseEntity;
 import com.example.community_service.post.application.PostService;
 import com.example.community_service.post.dto.in.PostCreateReqDto;
 import com.example.community_service.post.dto.in.PostUpdateReqDto;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/post")
-@Tag(name = "auth")
+@Tag(name = "post")
 public class PostController {
 
     private final PostService postService;
