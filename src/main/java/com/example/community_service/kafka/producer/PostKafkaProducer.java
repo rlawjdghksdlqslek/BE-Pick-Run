@@ -1,6 +1,6 @@
 package com.example.community_service.kafka.producer;
 
-import com.example.community_service.kafka.event.PostEvent;
+import com.example.community_service.kafka.event.PostCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -14,11 +14,11 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class PostKafkaProducer {
 
-    private final KafkaTemplate<String, PostEvent> postKafkaTemplate;
+    private final KafkaTemplate<String, PostCreatedEvent> postKafkaTemplate;
 
-    public void sendPostEvent(PostEvent postEvent) {
-        log.info("Sending PostEvent: {}", postEvent);
-        CompletableFuture<SendResult<String, PostEvent>> future = postKafkaTemplate.send("create-post-send-read", postEvent);
+    public void sendPostEvent(PostCreatedEvent postCreatedEvent) {
+        log.info("Sending PostEvent: {}", postCreatedEvent);
+        CompletableFuture<SendResult<String, PostCreatedEvent>> future = postKafkaTemplate.send("post-create-send-read", postCreatedEvent);
     }
 
 }
