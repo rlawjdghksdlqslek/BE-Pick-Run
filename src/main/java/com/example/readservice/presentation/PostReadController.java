@@ -1,6 +1,7 @@
 package com.example.readservice.presentation;
 
 import com.example.readservice.application.PostReadService;
+import com.example.readservice.common.response.BaseResponseEntity;
 import com.example.readservice.dto.out.PostReadModelResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +17,8 @@ public class PostReadController {
     private final PostReadService postReadService;
 
     @GetMapping("/{postUuid}")
-    public PostReadModelResDto getPostRead(@PathVariable String postUuid) {
-        return postReadService.getPostRead(postUuid);
+    public BaseResponseEntity<PostReadModelResDto> getPostRead(@PathVariable String postUuid) {
+        return new BaseResponseEntity<>(postReadService.getPostRead(postUuid));
     }
 
 

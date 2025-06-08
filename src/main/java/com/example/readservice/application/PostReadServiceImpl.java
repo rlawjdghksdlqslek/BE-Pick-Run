@@ -1,5 +1,7 @@
 package com.example.readservice.application;
 
+import com.example.readservice.common.entity.BaseResponseStatus;
+import com.example.readservice.common.exception.BaseException;
 import com.example.readservice.dto.in.PostReadModelReqDto;
 import com.example.readservice.dto.out.PostReadModelResDto;
 import com.example.readservice.entity.PostReadModel;
@@ -27,7 +29,8 @@ public class PostReadServiceImpl implements PostReadService {
 
     @Override
     public PostReadModelResDto getPostRead(String postUuid) {
-        PostReadModel postReadModel = postReadRepository.findByPostUuid(postUuid);
+        PostReadModel postReadModel = postReadRepository.findByPostUuid(postUuid)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.POST_NOT_FOUND));
         return PostReadModelResDto.from(postReadModel);
     }
 

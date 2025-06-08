@@ -1,5 +1,6 @@
 package com.example.readservice.entity;
 
+import com.example.readservice.common.entity.BaseDocument;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.List;
 @Document(collection = "post_read")
 @Getter
 @NoArgsConstructor
-public class PostReadModel {
+public class PostReadModel extends BaseDocument {
 
     @Id
     private String postUuid;
@@ -28,9 +29,6 @@ public class PostReadModel {
     private long viewCount;
     private long likeCount;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
     @Builder
     public PostReadModel(
             String postUuid,
@@ -42,9 +40,7 @@ public class PostReadModel {
             boolean blindStatus,
             boolean deletedStatus,
             long viewCount,
-            long likeCount,
-            LocalDateTime createdAt,
-            LocalDateTime updatedAt
+            long likeCount
     ) {
         this.postUuid = postUuid;
         this.memberUuid = memberUuid;
@@ -56,7 +52,5 @@ public class PostReadModel {
         this.deletedStatus = deletedStatus;
         this.viewCount = viewCount;
         this.likeCount = likeCount;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 }
