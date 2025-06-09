@@ -8,7 +8,7 @@ spring:
   application:
     name: gateway-service
   profiles:
-    active: dev
+    active: prod
   cloud:
     gateway:
       default-filters:
@@ -97,6 +97,8 @@ spring:
                   - /error
                   - /api/v1/profile/nickname/check-duplicate
                   - /api/v1/grade/**
+
+
         - id: post-read-service
           uri: lb://POST-READ-SERVICE
           predicates:
