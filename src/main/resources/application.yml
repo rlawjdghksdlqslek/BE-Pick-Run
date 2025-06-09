@@ -14,7 +14,7 @@ springdoc:
 
 spring:
   application:
-    name: community-service
+    name: post-service
   profiles:
     active: prod
 
