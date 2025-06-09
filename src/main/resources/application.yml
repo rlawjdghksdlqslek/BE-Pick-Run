@@ -125,7 +125,7 @@ springdoc:
       - name: Profile Service API
         url: /profile-service/v3/api-docs
       - name: Post Read Service API
-      - url: /post-read-service/v3/api-docs
+        url: /post-read-service/v3/api-docs
 logging:
   level:
     root: INFO
