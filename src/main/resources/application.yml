@@ -98,6 +98,18 @@ spring:
                   - /api/v1/profile/nickname/check-duplicate
                   - /api/v1/grade/**
 
+
+        - id: post-read-service
+          uri: lb://POST-READ-SERVICE
+          predicates:
+            - Path=/post-read-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /**
+
         - id: review-service
           uri: lb://REVIEW-SERVICE
           predicates:
@@ -128,6 +140,8 @@ springdoc:
         url: /community-service/v3/api-docs
       - name: Profile Service API
         url: /profile-service/v3/api-docs
+      - name: Post Read Service API
+        url: /post-read-service/v3/api-docs
       - name: Review Service API
         url: /review-service/v3/api-docs
 
