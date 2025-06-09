@@ -47,4 +47,9 @@ public class CategoryListController {
         categoryListService.deleteCategoryList(id);
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
     }
+
+    @GetMapping("/main/{id}")
+    public BaseResponseEntity<List<CategoryListResDto>> getCategoryListByMainCategory(@PathVariable Long id) {
+        return new BaseResponseEntity<>(categoryListService.getAllCategoryListByMainCategory(id));
+    }
 }
