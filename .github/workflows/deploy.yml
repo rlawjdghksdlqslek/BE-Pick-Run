@@ -52,7 +52,6 @@ jobs:
             echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
             echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
             echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
-            echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
             echo "MAIL_APP_PASSWORD=${{ secrets.MAIL_APP_PASSWORD }}" >> .env
             echo "MAIL_SENDER_ADDRESS=${{ secrets.MAIL_SENDER_ADDRESS }}" >> .env
             echo "MAIL_SENDER_NAME=${{ secrets.MAIL_SENDER_NAME }}" >> .env
@@ -61,8 +60,8 @@ jobs:
             echo "MONGO_INITDB_ROOT_PASSWORD=${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}" >> .env
             echo "MONGODB_URI_COMMUNITY=${{ secrets.MONGODB_URI_COMMUNITY }}" >> .env
             echo "EC2_HOST=${{ secrets.EC2_HOST }}" >> .env
-            echo "MONGODB_URI_PROFILE=${{ secrets.MONGO_URI_PROFILE }}" >> .env
-            
+            echo "MONGODB_URI_PROFILE=${{ secrets.MONGODB_URI_PROFILE }}" >> .env
+            echo "MONGODB_URI_REVIEW=${{ secrets.MONGODB_URI_REVIEW }}" >> .env
             
             docker-compose -f docker-compose-infra.yml -f docker-compose-kafka.yml down
             docker-compose -f docker-compose-infra.yml -f docker-compose-kafka.yml  up -d
