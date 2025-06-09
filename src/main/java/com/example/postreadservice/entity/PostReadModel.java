@@ -1,18 +1,18 @@
 package com.example.postreadservice.entity;
 
-import com.example.postreadservice.common.entity.BaseDocument;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Document(collection = "post_read")
 @Getter
 @NoArgsConstructor
-public class PostReadModel extends BaseDocument {
+public class PostReadModel {
 
     @Id
     private String postUuid;
@@ -28,6 +28,9 @@ public class PostReadModel extends BaseDocument {
     private long viewCount;
     private long likeCount;
 
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
     @Builder
     public PostReadModel(
             String postUuid,
@@ -39,7 +42,9 @@ public class PostReadModel extends BaseDocument {
             boolean blindStatus,
             boolean deletedStatus,
             long viewCount,
-            long likeCount
+            long likeCount,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt
     ) {
         this.postUuid = postUuid;
         this.memberUuid = memberUuid;
@@ -51,5 +56,7 @@ public class PostReadModel extends BaseDocument {
         this.deletedStatus = deletedStatus;
         this.viewCount = viewCount;
         this.likeCount = likeCount;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 }

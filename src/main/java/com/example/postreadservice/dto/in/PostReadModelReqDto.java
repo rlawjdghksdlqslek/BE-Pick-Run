@@ -68,6 +68,8 @@ public class PostReadModelReqDto {
                 .deletedStatus(postCreatedEvent.isDeletedStatus())
                 .viewCount(0L)
                 .likeCount(0L)
+                .createdAt(postCreatedEvent.getCreatedAt())
+                .updatedAt(postCreatedEvent.getUpdatedAt())
                 .build();
     }
 }
