@@ -48,6 +48,7 @@ public class CategoryListController {
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
     }
 
+    @Operation(summary = "메인 카테고리 ID에 해당하는 하위 categoryList 조회")
     @GetMapping("/main/{id}")
     public BaseResponseEntity<List<CategoryListResDto>> getCategoryListByMainCategory(@PathVariable Long id) {
         return new BaseResponseEntity<>(categoryListService.getAllCategoryListByMainCategory(id));
