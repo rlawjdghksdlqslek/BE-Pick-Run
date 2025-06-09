@@ -9,20 +9,26 @@ import java.util.List;
 public class PostListPageResponseDto {
 
     private List<PostSummaryResDto> posts;
-    private int page;
-    private int size;
+    private long page;
+    private long size;
     private boolean hasNext;
+    private long totalPage;
+    private long totalElements;
 
     @Builder
     public PostListPageResponseDto(
             List<PostSummaryResDto> posts,
-            int page,
-            int size,
-            boolean hasNext
+            long page,
+            long size,
+            boolean hasNext,
+            long totalElements,
+            long totalPage
     ) {
         this.posts = posts;
         this.page = page;
         this.size = size;
         this.hasNext = hasNext;
+        this.totalElements = totalElements;
+        this.totalPage = totalPage;
     }
 }

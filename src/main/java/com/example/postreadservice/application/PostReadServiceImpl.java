@@ -7,6 +7,7 @@ import com.example.postreadservice.dto.out.PostListPageResponseDto;
 import com.example.postreadservice.dto.out.PostReadModelResDto;
 import com.example.postreadservice.dto.out.PostSummaryResDto;
 import com.example.postreadservice.entity.PostReadModel;
+import com.example.postreadservice.entity.PostSortType;
 import com.example.postreadservice.infrastructure.PostReadRepository;
 import com.example.postreadservice.kafka.event.PostCreatedEvent;
 import lombok.RequiredArgsConstructor;
@@ -43,8 +44,13 @@ public class PostReadServiceImpl implements PostReadService {
     }
 
     @Override
-    public PostListPageResponseDto getPopularPosts(Long categoryListId, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "viewCount"));
+    public PostListPageResponseDto getPostBySort(
+            Long categoryListId,
+            int page,
+            int size,
+            PostSortType postSortType
+    ) {
+        Pageable pageable = PageRequest.of(page, size, postSortType.getSort());
         Page<PostReadModel> resultPage;
 
         if (categoryListId == null) {
@@ -61,7 +67,9 @@ public class PostReadServiceImpl implements PostReadService {
                 posts,
                 resultPage.getNumber(),
                 resultPage.getSize(),
-                resultPage.hasNext()
+                resultPage.hasNext(),
+                resultPage.getTotalElements(),
+                resultPage.getTotalPages()
         );
     }
 
