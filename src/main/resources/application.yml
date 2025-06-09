@@ -6,7 +6,7 @@ spring:
   application:
     name: post-read-service
   profiles:
-    active: dev
+    active: prod
 
   jpa:
     hibernate:
