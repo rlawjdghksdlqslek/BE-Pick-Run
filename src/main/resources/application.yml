@@ -98,12 +98,28 @@ spring:
                   - /api/v1/profile/nickname/check-duplicate
                   - /api/v1/grade/**
 
+        - id: review-service
+          uri: lb://REVIEW-SERVICE
+          predicates:
+            - Path=/review-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
+
 springdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
     enabled: true
-    path: /webjars/swagger-ui/index.html
+    path: /
 
     urls:
       - name: Member Service API
@@ -112,6 +128,8 @@ springdoc:
         url: /community-service/v3/api-docs
       - name: Profile Service API
         url: /profile-service/v3/api-docs
+      - name: Review Service API
+        url: /review-service/v3/api-docs
 
 logging:
   level:
