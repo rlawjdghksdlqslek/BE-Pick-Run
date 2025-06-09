@@ -61,16 +61,16 @@ spring:
                   - /api/v1/agreement/**
                   - /api/v1/member/agreement/**
 
-        - id: community-service
-          uri: lb://COMMUNITY-SERVICE
+        - id: post-service
+          uri: lb://POST-SERVICE
           predicates:
-            - Path=/community-service/**
+            - Path=/post-service/**
           filters:
             - StripPrefix=1
             - name: JwtAuthenticationFilter
               args:
                 skipPaths:
-                  - /api/v1/community-service/**
+                  - /api/v1/post-service/**
                   - /api/v1/category/**
                   - /v3/api-docs
                   - /v3/api-docs/swagger-config
@@ -78,7 +78,7 @@ spring:
                   - /swagger-ui.html
                   - /webjars
                   - /error
-                  - /api/v1/category-list
+                  - /api/v1/category-list/**
 
         - id: profile-service
           uri: lb://PROFILE-SERVICE
@@ -136,8 +136,8 @@ springdoc:
     urls:
       - name: Member Service API
         url: /member-service/v3/api-docs
-      - name: Community Service API
-        url: /community-service/v3/api-docs
+      - name: Post Service API
+        url: /post-service/v3/api-docs
       - name: Profile Service API
         url: /profile-service/v3/api-docs
       - name: Post Read Service API
