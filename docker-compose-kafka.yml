@@ -13,6 +13,8 @@ services:
     image: bitnami/kafka:3.7.0
     container_name: Kafka00Container
     restart: unless-stopped
+    env_file:
+      - .env
     ports:
       - '9092:9092'
       - '10000:10000'
@@ -41,6 +43,8 @@ services:
     image: bitnami/kafka:3.7.0
     container_name: Kafka01Container
     restart: unless-stopped
+    env_file:
+      - .env
     ports:
       - '9093:9092'
       - '10001:10000'
@@ -69,6 +73,8 @@ services:
     image: bitnami/kafka:3.7.0
     container_name: Kafka02Container
     restart: unless-stopped
+    env_file:
+      - .env
     ports:
       - '9094:9092'
       - '10002:10000'
