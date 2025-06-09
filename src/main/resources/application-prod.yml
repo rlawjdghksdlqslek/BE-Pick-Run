@@ -4,7 +4,7 @@ spring:
       uri: ${MONGODB_URI_POST_READ}
 
   kafka:
-    bootstrap-servers: ${EC2_HOST}:10000,${EC2_HOST}:10001$,${EC2_HOST}:10002
+    bootstrap-servers: ${EC2_HOST}:10000,${EC2_HOST}:10001,${EC2_HOST}:10002
     consumer:
       group-id: post-read-group
       auto-offset-reset: earliest
