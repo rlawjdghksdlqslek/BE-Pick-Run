@@ -4,8 +4,6 @@ services:
   post-service:
     image: 009160040466.dkr.ecr.ap-northeast-2.amazonaws.com/learn-run/post-service:latest
     container_name: post-service
-    ports:
-      - "8081:8081"
     env_file:
       - .env
     networks:
