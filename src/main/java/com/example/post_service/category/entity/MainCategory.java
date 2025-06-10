@@ -21,10 +21,23 @@ public class MainCategory extends BaseEntity {
     @Column(name = "main_category_name", nullable = false)
     private String name;
 
+    @Column(name = "icon_Url", nullable = false)
+    private String iconUrl;
+
+    @Column(name = "alt", nullable = false)
+    private String alt;
+
     @Builder
-    public MainCategory(Long id, String name) {
+    public MainCategory(
+            Long id,
+            String name,
+            String iconUrl,
+            String alt
+    ) {
         this.id = id;
         this.name = name;
+        this.iconUrl = iconUrl;
+        this.alt = alt;
     }
 
     public void updateName(String name) {
