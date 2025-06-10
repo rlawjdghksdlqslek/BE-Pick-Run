@@ -46,4 +46,8 @@ public class Comment extends BaseDocument {
         this.deleted_status = deleted_status;
         this.deleted_at = deleted_at;
     }
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }

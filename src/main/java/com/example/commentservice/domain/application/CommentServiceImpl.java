@@ -6,6 +6,8 @@ import com.example.commentservice.common.entity.BaseResponseEntity;
 import com.example.commentservice.common.exception.BaseException;
 import com.example.commentservice.common.response.BaseResponseStatus;
 import com.example.commentservice.domain.dto.in.CommentCreateReqDto;
+import com.example.commentservice.domain.dto.in.CommentUpdateReqDto;
+import com.example.commentservice.domain.entity.Comment;
 import com.example.commentservice.domain.infrastructure.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,26 @@ public class CommentServiceImpl implements CommentService {
     public void createComment(CommentCreateReqDto commentCreateReqDto) {
         validatePostExists(commentCreateReqDto);
         commentRepository.save(commentCreateReqDto.toEntity());
+    }
+
+    @Transactional
+    @Override
+    public void updateComment(CommentUpdateReqDto commentUpdateReqDto) {
+        Comment comment = commentRepository.findCommentByCommentUuid(commentUpdateReqDto.getCommentUuid());
+
+        validateCommentOwner(commentUpdateReqDto, comment);
+
+        comment.updateContent(commentUpdateReqDto.getContent());
+        commentRepository.save(comment);
+    }
+
+    private static void validateCommentOwner(CommentUpdateReqDto commentUpdateReqDto, Comment comment) {
+        if (comment == null) {
+            throw new BaseException(BaseResponseStatus.NOT_FOUND_COMMENT);
+        }
+        if (!comment.getMemberUuid().equals(commentUpdateReqDto.getMemberUuid())) {
+            throw new BaseException(BaseResponseStatus.INVALID_USER_ROLE);
+        }
     }
 
     private void validatePostExists(CommentCreateReqDto commentCreateReqDto) {

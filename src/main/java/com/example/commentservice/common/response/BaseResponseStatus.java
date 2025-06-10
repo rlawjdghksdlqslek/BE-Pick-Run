@@ -33,7 +33,7 @@ public enum BaseResponseStatus {
     INVALID_USER_ROLE(HttpStatus.BAD_REQUEST, false, 1102, "유효하지 않은 유저 권한입니다."),
 
     /**
-     * 2000 : post service error
+     * 2000 : post and comment service error
      */
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, false, 2000, "해당 게시글을 찾을 수 없습니다."),
     FAILED_TO_CREATE_POST(HttpStatus.INTERNAL_SERVER_ERROR, false, 2001, "게시글 작성에 실패하였습니다."),
@@ -50,8 +50,10 @@ public enum BaseResponseStatus {
     FAILED_TO_DELETE_CATEGORY(HttpStatus.INTERNAL_SERVER_ERROR, false, 2103, "카테고리 삭제에 실패하였습니다."),
     CATEGORY_NAME_ALREADY_EXISTS(HttpStatus.CONFLICT, false, 2104, "이미 존재하는 카테고리 이름입니다."),
     INVALID_CATEGORY_NAME(HttpStatus.BAD_REQUEST, false, 2105, "유효하지 않은 카테고리 이름입니다."),
-    DUPLICATE_CATEGORY_LIST(HttpStatus.BAD_REQUEST, false, 2106, "중복된 카테고리 입니다.");
+    DUPLICATE_CATEGORY_LIST(HttpStatus.BAD_REQUEST, false, 2106, "중복된 카테고리 입니다."),
 
+
+    NOT_FOUND_COMMENT(HttpStatus.NOT_FOUND, false, 2500, "해당 댓글을 찾을 수 없습니다.");
     /**
      * 3000 : order service error
      */
