@@ -7,6 +7,7 @@ import com.example.post_service.post.dto.in.PostCreateReqDto;
 import com.example.post_service.post.dto.in.PostUpdateReqDto;
 import com.example.post_service.post.vo.in.PostCreateReqVo;
 import com.example.post_service.post.vo.in.PostUpdateReqVo;
+import com.example.post_service.post.vo.out.GetPostInfoResVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
