@@ -2,9 +2,8 @@ package com.example.commentservice.common.entity;
 
 import com.example.commentservice.common.response.BaseResponseStatus;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 
-public record BaseResponseEntity<T>(HttpStatusCode httpStatus, Boolean isSuccess, String message, int code, T result) {
+public record BaseResponseEntity<T>(HttpStatus httpStatus, Boolean isSuccess, String message, int code, T result) {
 
     /**
      * 필요값 : Http상태코드, 성공여부, 메시지, 에러코드, 결과값
@@ -33,11 +32,11 @@ public record BaseResponseEntity<T>(HttpStatusCode httpStatus, Boolean isSuccess
      * @param status
      */
     public BaseResponseEntity(BaseResponseStatus status) {
-        this(status.getHttpStatusCode(), status.isSuccess(), status.getMessage(), status.getCode(), null);
+        this(status.getHttpStatus(), status.isSuccess(), status.getMessage(), status.getCode(), null);
     }
 
     public BaseResponseEntity(BaseResponseStatus status, String message) {
-        this(status.getHttpStatusCode(), status.isSuccess(), message, status.getCode(), null);
+        this(status.getHttpStatus(), status.isSuccess(), message, status.getCode(), null);
     }
 }
 

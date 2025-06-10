@@ -3,7 +3,6 @@ package com.example.commentservice.common.response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 
 
 @Getter
@@ -65,7 +64,7 @@ public enum BaseResponseStatus {
      * 5000 : notice service error
      */
 
-    private final HttpStatusCode httpStatusCode;
+    private final HttpStatus httpStatus;
     private final boolean isSuccess;
     private final int code;
     private final String message;
