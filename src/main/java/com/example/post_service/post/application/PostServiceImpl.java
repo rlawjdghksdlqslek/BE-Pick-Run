@@ -5,6 +5,7 @@ import com.example.post_service.kafka.producer.PostKafkaProducer;
 import com.example.post_service.post.dto.in.PostCreateReqDto;
 import com.example.post_service.post.dto.in.PostUpdateReqDto;
 import com.example.post_service.post.dto.out.GetPostInfoResDto;
+import com.example.post_service.post.dto.out.ExistsPostDto;
 import com.example.post_service.post.entity.Post;
 import com.example.post_service.post.infrastructure.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -66,6 +67,11 @@ public class PostServiceImpl implements PostService {
     public GetPostInfoResDto getPostInfo(String postUuid) {
         return GetPostInfoResDto.from(postRepository.findByPostUuid(postUuid)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다.")));
+    }
+
+    @Override
+    public ExistsPostDto existsPost(String postUuid) {
+        return ExistsPostDto.from(postRepository.existsByPostUuid(postUuid));
     }
 
     private void validatePostOwner(

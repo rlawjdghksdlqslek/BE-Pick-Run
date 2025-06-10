@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface PostRepository extends MongoRepository<Post, String> {
+    boolean existsByPostUuid(String postUuid);
 
     Optional<Post> findByPostUuid(String postUuid);
 }
