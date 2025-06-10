@@ -18,7 +18,8 @@ import java.util.UUID;
 public class Comment extends BaseDocument {
 
     @Id
-    private String commentUuid = UUID.randomUUID().toString();
+    private String id;
+    private String commentUuid;
     private String postUuid;
     private String memberUuid;
     private String content;

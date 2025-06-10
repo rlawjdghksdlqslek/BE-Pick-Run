@@ -57,4 +57,6 @@ public class CommentController {
         commentService.createComment(CommentCreateReqDto.of(postUuid,memberUuid, commentCreateReqVo));
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
     }
+
+//    @PutMapping("/{commentUuid")
 }

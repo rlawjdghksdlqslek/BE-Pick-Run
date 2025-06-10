@@ -5,9 +5,12 @@ import com.example.commentservice.domain.vo.in.CommentCreateReqVo;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.UUID;
+
 @Getter
 public class CommentCreateReqDto {
 
+    private String commentUuid;
     private String postUuid;
     private String memberUuid;
     private String content;
@@ -25,6 +28,7 @@ public class CommentCreateReqDto {
 
     public Comment toEntity() {
         return Comment.builder()
+                .commentUuid(UUID.randomUUID().toString())
                 .postUuid(this.postUuid)
                 .memberUuid(this.memberUuid)
                 .content(this.content)
