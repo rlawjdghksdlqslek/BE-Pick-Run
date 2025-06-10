@@ -12,12 +12,14 @@ import com.example.post_service.post.vo.out.GetPostInfoResVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/post")
 @Tag(name = "post")
+@Slf4j
 public class PostController {
 
     private final PostService postService;
@@ -85,14 +87,10 @@ public class PostController {
 
             [처리 로직]
             - UUID로 게시글을 조회하고 존재 여부만 반환
-            - 삭제 상태, 블라인드 상태 포함 여부는 도메인 로직에 따라 처리
-
-            [예외 상황]
-            - UUID 형식이 잘못된 경우 400 Bad Request
             """
     )
     @GetMapping("/exist/{postUuid}")
-    public BaseResponseEntity<ExistsPostDto> existPost(
+    public BaseResponseEntity<ExistsPostDto> existsPost(
             @PathVariable String postUuid
     ){
         return new BaseResponseEntity<>(postService.existsPost(postUuid));
