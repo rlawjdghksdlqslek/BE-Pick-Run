@@ -125,6 +125,7 @@ spring:
                   - /swagger-ui.html
                   - /webjars
                   - /error
+                  - /api/v1/review/info/**
 
 springdoc:
   api-docs:
