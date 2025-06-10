@@ -1,4 +1,4 @@
-package com.example.postreadservice.presentation;
+package com.example.postreadservice.kafka.consumer;
 
 import com.example.postreadservice.application.PostReadService;
 import com.example.postreadservice.kafka.event.PostCreatedEvent;
