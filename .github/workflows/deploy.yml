@@ -1,4 +1,4 @@
-name: Deploy community-service to ECR and EC2
+name: Deploy post-service to ECR and EC2
 
 on:
   push:
@@ -46,21 +46,21 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build Docker Image
-        run: docker build -t community-service:latest .
+        run: docker build -t post-service:latest .
 
       - name: Tag Docker Image
-        run: docker tag community-service:latest ${{ steps.login-ecr.outputs.registry }}/learn-run/community-service:latest
+        run: docker tag post-service:latest ${{ steps.login-ecr.outputs.registry }}/learn-run/post-service:latest
 
       - name: Push Docker Image to ECR
-        run: docker push ${{ steps.login-ecr.outputs.registry }}/learn-run/community-service:latest
+        run: docker push ${{ steps.login-ecr.outputs.registry }}/learn-run/post-service:latest
 
-      - name: Copy docker-compose-community.yml to EC2
+      - name: Copy docker-compose-post.yml to EC2
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          source: "docker-compose-community.yml"
+          source: "docker-compose-post.yml"
           target: "~/"
 
       - name: Deploy on EC2 via SSH
@@ -71,7 +71,7 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script_stop: true
           script: |
-            docker pull ${{ steps.login-ecr.outputs.registry }}/learn-run/community-service:latest
-            docker-compose -f docker-compose-community.yml down
-            docker-compose -f docker-compose-community.yml up -d
+            docker pull ${{ steps.login-ecr.outputs.registry }}/learn-run/post-service:latest
+            docker-compose -f docker-compose-post.yml down
+            docker-compose -f docker-compose-post.yml up -d
             docker image prune -f
