@@ -1,4 +1,4 @@
-package com.example.commentservice.domain.entity;
+package com.example.commentservice.domain.comment.entity;
 
 import com.example.commentservice.common.entity.BaseDocument;
 import lombok.AccessLevel;
@@ -9,7 +9,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 
 @Document("comment")

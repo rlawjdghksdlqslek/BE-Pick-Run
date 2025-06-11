@@ -1,6 +1,6 @@
-package com.example.commentservice.domain.dto.in;
+package com.example.commentservice.domain.comment.dto.in;
 
-import com.example.commentservice.domain.vo.in.CommentUpdateReqVo;
+import com.example.commentservice.domain.comment.vo.in.CommentUpdateReqVo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

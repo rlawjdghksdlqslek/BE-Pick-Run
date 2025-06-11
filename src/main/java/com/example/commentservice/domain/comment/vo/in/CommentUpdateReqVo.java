@@ -1,4 +1,4 @@
-package com.example.commentservice.domain.vo.in;
+package com.example.commentservice.domain.comment.vo.in;
 
 import lombok.Builder;
 import lombok.Getter;

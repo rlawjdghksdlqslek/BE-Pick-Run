@@ -1,13 +1,15 @@
-package com.example.commentservice.domain.presentation;
+package com.example.commentservice.domain.comment.presentation;
 
 import com.example.commentservice.common.entity.BaseResponseEntity;
 import com.example.commentservice.common.response.BaseResponseStatus;
-import com.example.commentservice.domain.application.CommentService;
-import com.example.commentservice.domain.dto.in.CommentCreateReqDto;
-import com.example.commentservice.domain.dto.in.CommentDeleteReqDto;
-import com.example.commentservice.domain.dto.in.CommentUpdateReqDto;
-import com.example.commentservice.domain.vo.in.CommentCreateReqVo;
-import com.example.commentservice.domain.vo.in.CommentUpdateReqVo;
+import com.example.commentservice.domain.comment.application.CommentService;
+import com.example.commentservice.domain.comment.dto.in.CommentCreateReqDto;
+import com.example.commentservice.domain.comment.dto.in.CommentDeleteReqDto;
+import com.example.commentservice.domain.comment.dto.in.CommentUpdateReqDto;
+import com.example.commentservice.domain.comment.dto.out.CommentListPageResDto;
+import com.example.commentservice.domain.comment.entity.CommentSortType;
+import com.example.commentservice.domain.comment.vo.in.CommentCreateReqVo;
+import com.example.commentservice.domain.comment.vo.in.CommentUpdateReqVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -79,4 +81,14 @@ public class CommentController {
         commentService.deleteComment(CommentDeleteReqDto.of(commentUuid, memberUuid));
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
     }
+
+    @GetMapping("/{postUuid}")
+    public BaseResponseEntity<CommentListPageResDto> getCommentsByPostUuid(
+            @PathVariable String postUuid,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "RECENT") CommentSortType commentSortType
+    ) {
+        return new BaseResponseEntity<>(commentService.getCommentsByPostUuid(postUuid, page, commentSortType));
+    }
+
 }

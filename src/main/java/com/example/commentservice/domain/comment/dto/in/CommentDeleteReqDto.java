@@ -1,4 +1,4 @@
-package com.example.commentservice.domain.dto.in;
+package com.example.commentservice.domain.comment.dto.in;
 
 import lombok.Builder;
 import lombok.Getter;

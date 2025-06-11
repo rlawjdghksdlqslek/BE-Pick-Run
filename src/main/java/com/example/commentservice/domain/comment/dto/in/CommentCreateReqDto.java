@@ -1,7 +1,7 @@
-package com.example.commentservice.domain.dto.in;
+package com.example.commentservice.domain.comment.dto.in;
 
-import com.example.commentservice.domain.entity.Comment;
-import com.example.commentservice.domain.vo.in.CommentCreateReqVo;
+import com.example.commentservice.domain.comment.entity.Comment;
+import com.example.commentservice.domain.comment.vo.in.CommentCreateReqVo;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -1,19 +1,27 @@
-package com.example.commentservice.domain.application;
+package com.example.commentservice.domain.comment.application;
 
 import com.example.commentservice.client.post.PostServiceClient;
 import com.example.commentservice.client.post.dto.out.ExistsPostResDto;
 import com.example.commentservice.common.entity.BaseResponseEntity;
 import com.example.commentservice.common.exception.BaseException;
 import com.example.commentservice.common.response.BaseResponseStatus;
-import com.example.commentservice.domain.dto.in.CommentCreateReqDto;
-import com.example.commentservice.domain.dto.in.CommentDeleteReqDto;
-import com.example.commentservice.domain.dto.in.CommentUpdateReqDto;
-import com.example.commentservice.domain.entity.Comment;
-import com.example.commentservice.domain.infrastructure.CommentRepository;
+import com.example.commentservice.domain.comment.dto.in.CommentCreateReqDto;
+import com.example.commentservice.domain.comment.dto.in.CommentDeleteReqDto;
+import com.example.commentservice.domain.comment.dto.in.CommentUpdateReqDto;
+import com.example.commentservice.domain.comment.dto.out.CommentListPageResDto;
+import com.example.commentservice.domain.comment.dto.out.CommentResDto;
+import com.example.commentservice.domain.comment.entity.Comment;
+import com.example.commentservice.domain.comment.entity.CommentSortType;
+import com.example.commentservice.domain.comment.infrastructure.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +31,8 @@ public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final PostServiceClient postServiceClient;
+
+    private static final int DEFAULT_PAGE_SIZE = 10;
 
     @Transactional
     @Override
@@ -48,6 +58,21 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentRepository.findCommentByCommentUuid(commentDeleteReqDto.getCommentUuid());
         validateCommentOwner(comment, commentDeleteReqDto.getMemberUuid());
         commentRepository.delete(comment);
+    }
+
+    @Override
+    public CommentListPageResDto getCommentsByPostUuid(String postUuid, int page, CommentSortType commentSortType) {
+        Pageable pageable = PageRequest.of(page, DEFAULT_PAGE_SIZE, commentSortType.getSort());
+        Page<Comment> resultPage = commentRepository.findCommentByPostUuid(postUuid, pageable);
+
+        List<CommentResDto> comments = resultPage.getContent().stream()
+                .map(CommentResDto::from)
+                .toList();
+
+        return new CommentListPageResDto(
+                comments, page, resultPage.getSize(), resultPage.hasNext(), resultPage.getTotalPages(),
+                resultPage.getTotalElements()
+        );
     }
 
     private static void validateCommentOwner(Comment comment, String memberUuid) {
