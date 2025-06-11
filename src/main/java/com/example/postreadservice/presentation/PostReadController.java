@@ -70,10 +70,10 @@ public class PostReadController {
     @GetMapping()
     public BaseResponseEntity<PostListPageResponseDto> getPostBySort(
             @RequestParam(required = false) Long categoryListId,
-            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "8") int size,
             @RequestParam(defaultValue = "RECENT") PostSortType postSortType
     ) {
-        return new BaseResponseEntity<>(postReadService.getPostBySort(categoryListId, page - 1, size, postSortType));
+        return new BaseResponseEntity<>(postReadService.getPostBySort(categoryListId, page, size, postSortType));
     }
 }
