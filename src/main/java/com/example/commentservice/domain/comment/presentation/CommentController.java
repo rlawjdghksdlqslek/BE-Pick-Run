@@ -7,6 +7,7 @@ import com.example.commentservice.domain.comment.dto.in.CommentCreateReqDto;
 import com.example.commentservice.domain.comment.dto.in.CommentDeleteReqDto;
 import com.example.commentservice.domain.comment.dto.in.CommentUpdateReqDto;
 import com.example.commentservice.domain.comment.dto.out.CommentListPageResDto;
+import com.example.commentservice.domain.comment.dto.out.CommentResDto;
 import com.example.commentservice.domain.comment.entity.CommentSortType;
 import com.example.commentservice.domain.comment.vo.in.CommentCreateReqVo;
 import com.example.commentservice.domain.comment.vo.in.CommentUpdateReqVo;
@@ -53,7 +54,7 @@ public class CommentController {
                     - NO_EXIST_POST: 게시글이 존재하지 않는 경우
                     """
     )
-    @PostMapping("/{postUuid}")
+    @PostMapping("/post/{postUuid}")
     public BaseResponseEntity<Void> createComment(
             @RequestHeader("X-Member-UUID") String memberUuid,
             @PathVariable String postUuid,
@@ -82,7 +83,7 @@ public class CommentController {
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
     }
 
-    @GetMapping("/{postUuid}")
+    @GetMapping("/post/{postUuid}/list")
     public BaseResponseEntity<CommentListPageResDto> getCommentsByPostUuid(
             @PathVariable String postUuid,
             @RequestParam(defaultValue = "0") int page,
@@ -91,4 +92,8 @@ public class CommentController {
         return new BaseResponseEntity<>(commentService.getCommentsByPostUuid(postUuid, page, commentSortType));
     }
 
+    @GetMapping("/{commentUuid}")
+    public BaseResponseEntity<CommentResDto> getCommentByCommentUuid(@PathVariable String commentUuid) {
+        return new BaseResponseEntity<>(commentService.getCommentByCommentUuid(commentUuid));
+    }
 }

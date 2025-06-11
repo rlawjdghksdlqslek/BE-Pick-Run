@@ -61,6 +61,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public CommentResDto getCommentByCommentUuid(String commentUuid) {
+        Comment comment = commentRepository.findCommentByCommentUuid(commentUuid);
+        return CommentResDto.from(comment);
+    }
+
+    @Override
     public CommentListPageResDto getCommentsByPostUuid(String postUuid, int page, CommentSortType commentSortType) {
         Pageable pageable = PageRequest.of(page, DEFAULT_PAGE_SIZE, commentSortType.getSort());
         Page<Comment> resultPage = commentRepository.findCommentByPostUuid(postUuid, pageable);
