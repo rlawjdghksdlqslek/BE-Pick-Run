@@ -6,6 +6,7 @@ import com.example.commentservice.common.entity.BaseResponseEntity;
 import com.example.commentservice.common.exception.BaseException;
 import com.example.commentservice.common.response.BaseResponseStatus;
 import com.example.commentservice.domain.dto.in.CommentCreateReqDto;
+import com.example.commentservice.domain.dto.in.CommentDeleteReqDto;
 import com.example.commentservice.domain.dto.in.CommentUpdateReqDto;
 import com.example.commentservice.domain.entity.Comment;
 import com.example.commentservice.domain.infrastructure.CommentRepository;
@@ -35,17 +36,25 @@ public class CommentServiceImpl implements CommentService {
     public void updateComment(CommentUpdateReqDto commentUpdateReqDto) {
         Comment comment = commentRepository.findCommentByCommentUuid(commentUpdateReqDto.getCommentUuid());
 
-        validateCommentOwner(commentUpdateReqDto, comment);
+        validateCommentOwner(comment, commentUpdateReqDto.getMemberUuid());
 
         comment.updateContent(commentUpdateReqDto.getContent());
         commentRepository.save(comment);
     }
 
-    private static void validateCommentOwner(CommentUpdateReqDto commentUpdateReqDto, Comment comment) {
+    @Transactional
+    @Override
+    public void deleteComment(CommentDeleteReqDto commentDeleteReqDto) {
+        Comment comment = commentRepository.findCommentByCommentUuid(commentDeleteReqDto.getCommentUuid());
+        validateCommentOwner(comment, commentDeleteReqDto.getMemberUuid());
+        commentRepository.delete(comment);
+    }
+
+    private static void validateCommentOwner(Comment comment, String memberUuid) {
         if (comment == null) {
             throw new BaseException(BaseResponseStatus.NOT_FOUND_COMMENT);
         }
-        if (!comment.getMemberUuid().equals(commentUpdateReqDto.getMemberUuid())) {
+        if (!comment.getMemberUuid().equals(memberUuid)) {
             throw new BaseException(BaseResponseStatus.INVALID_USER_ROLE);
         }
     }

@@ -4,6 +4,7 @@ import com.example.commentservice.common.entity.BaseResponseEntity;
 import com.example.commentservice.common.response.BaseResponseStatus;
 import com.example.commentservice.domain.application.CommentService;
 import com.example.commentservice.domain.dto.in.CommentCreateReqDto;
+import com.example.commentservice.domain.dto.in.CommentDeleteReqDto;
 import com.example.commentservice.domain.dto.in.CommentUpdateReqDto;
 import com.example.commentservice.domain.vo.in.CommentCreateReqVo;
 import com.example.commentservice.domain.vo.in.CommentUpdateReqVo;
@@ -67,6 +68,15 @@ public class CommentController {
             @RequestBody CommentUpdateReqVo commentUpdateReqVo
     ) {
         commentService.updateComment(CommentUpdateReqDto.of(commentUuid, memberUuid, commentUpdateReqVo));
+        return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
+    }
+
+    @DeleteMapping("/{commentUuid}")
+    public BaseResponseEntity<Void> deleteComment(
+            @PathVariable String commentUuid,
+            @RequestHeader("X-Member-UUID") String memberUuid
+    ) {
+        commentService.deleteComment(CommentDeleteReqDto.of(commentUuid, memberUuid));
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
     }
 }
