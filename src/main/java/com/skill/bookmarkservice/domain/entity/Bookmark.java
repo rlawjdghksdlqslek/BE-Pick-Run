@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(
         name = "bookmark", indexes = {
-        @Index(name = "idx_member_uuid", columnList = "memberUuid")}
+        @Index(name = "idx_member_post", columnList = "memberUuid, postUuid"),
+        @Index(name = "idx_member_bookmarked", columnList = "memberUuid, isBookmarked")
+}
 )
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
