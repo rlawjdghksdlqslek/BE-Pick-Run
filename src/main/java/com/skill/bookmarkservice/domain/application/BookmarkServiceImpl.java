@@ -1,8 +1,9 @@
 package com.skill.bookmarkservice.domain.application;
 
-import com.skill.bookmarkservice.common.exception.BaseErrorResponse;
+import com.skill.bookmarkservice.client.post.PostServiceClient;
+import com.skill.bookmarkservice.client.post.dto.out.ExistsPostResDto;
+import com.skill.bookmarkservice.common.entity.BaseResponseEntity;
 import com.skill.bookmarkservice.common.exception.BaseException;
-import com.skill.bookmarkservice.common.exception.BaseExceptionHandler;
 import com.skill.bookmarkservice.common.response.BaseResponseStatus;
 import com.skill.bookmarkservice.domain.dto.out.BookmarkListPageResDto;
 import com.skill.bookmarkservice.domain.entity.Bookmark;
@@ -26,12 +27,14 @@ import java.util.UUID;
 public class BookmarkServiceImpl implements BookmarkService {
 
     private final BookmarkRepository bookmarkRepository;
+    private final PostServiceClient postServiceClient;
 
     private static final int DEFAULT_PAGE_SIZE = 10;
 
     @Transactional
     @Override
     public void addBookmark(String memberUuid, String postUuid) {
+        validatePostExists(postUuid);
         if (bookmarkRepository.existsByMemberUuidAndPostUuid(memberUuid, postUuid)) {
             log.warn("북마크가 이미 존재합니다: memberUuid={}, postUuid={}", memberUuid, postUuid);
             throw new BaseException(BaseResponseStatus.ALREADY_EXISTS_BOOKMARK);
@@ -85,6 +88,13 @@ public class BookmarkServiceImpl implements BookmarkService {
                 postUuids, page, resultPage.getSize(), resultPage.hasNext(), resultPage.getTotalPages(),
                 resultPage.getTotalElements()
         );
+    }
+
+    private void validatePostExists(String postUuid) {
+        BaseResponseEntity<ExistsPostResDto> response = postServiceClient.existsPost(postUuid);
+        if (!response.result().isExistsPost()) {
+            throw new BaseException(BaseResponseStatus.POST_NOT_FOUND);
+        }
     }
 }
 
