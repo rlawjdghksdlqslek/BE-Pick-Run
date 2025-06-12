@@ -15,6 +15,6 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
     boolean existsByMemberUuidAndPostUuid(String memberUuid, String postUuid);
 
-    @Query("SELECT b.postUuid FROM Bookmark b WHERE b.memberUuid = :memberUuid AND b.isBookmarked = true")
+    @Query("SELECT b FROM Bookmark b WHERE b.memberUuid = :memberUuid AND b.isBookmarked = true")
     Page<Bookmark> findBookmarkedPosts(String memberUuid, Pageable pageable);
 }
