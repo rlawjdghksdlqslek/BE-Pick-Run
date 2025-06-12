@@ -1,17 +1,17 @@
 package com.skill.bookmarkservice.domain.entity;
 
 import com.skill.bookmarkservice.common.entity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "bookmark")
+@Table(
+        name = "bookmark", indexes = {
+        @Index(name = "idx_member_uuid", columnList = "memberUuid")}
+)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Bookmark extends BaseEntity {
