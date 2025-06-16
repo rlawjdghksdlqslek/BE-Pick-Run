@@ -9,4 +9,5 @@ public interface CategoryListService {
     void createCategoryList(CategoryListReqDto dto);
     List<CategoryListResDto> getAllMainCategory();
     void deleteCategoryList(Long id);
+    CategoryListResDto getCategoryList(Long id);
 }

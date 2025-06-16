@@ -41,6 +41,12 @@ public class CategoryListController {
                         .toList());
     }
 
+    @Operation(summary = "카테고리 리스트 단건 조회")
+    @GetMapping("/{id}")
+    public BaseResponseEntity<CategoryListResDto> getCategoryList(@PathVariable Long id) {
+        return new BaseResponseEntity<>(categoryListService.getCategoryList(id));
+    }
+
     @Operation(summary = "카테고리 리스트 삭제")
     @DeleteMapping("/{id}")
     public BaseResponseEntity<Void> deleteCategoryList(@PathVariable Long id) {

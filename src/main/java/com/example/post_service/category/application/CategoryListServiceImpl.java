@@ -63,6 +63,13 @@ public class CategoryListServiceImpl implements CategoryListService {
         categoryListRepository.deleteById(id);
     }
 
+    @Override
+    public CategoryListResDto getCategoryList(Long id) {
+        return categoryListRepository.findById(id)
+                .map(CategoryListResDto::from)
+                .orElseThrow(() -> new BaseException(CATEGORY_NOT_FOUND));
+    }
+
     public List<CategoryListResDto> getAllCategoryListByMainCategory(Long mainCategoryId) {
         return categoryListRepository.findAllByMainCategoryId(mainCategoryId)
                 .stream()
