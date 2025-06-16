@@ -96,6 +96,7 @@ spring:
                   - /webjars
                   - /error
                   - /api/v1/profile/author/**
+                  - /api/v1/profile/member/**
                   - /api/v1/profile/nickname/check-duplicate
                   - /api/v1/grade/**
 
