@@ -95,6 +95,7 @@ spring:
                   - /swagger-ui.html
                   - /webjars
                   - /error
+                  - /api/v1/profile/author/**
                   - /api/v1/profile/nickname/check-duplicate
                   - /api/v1/grade/**
 
@@ -109,6 +110,23 @@ spring:
               args:
                 skipPaths:
                   - /**
+
+        - id: active-history-service
+          uri: lb://ACTIVE-HISTORY-SERVICE
+          predicates:
+            - Path=/active-history-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
+                  - /api/v1/active-history/**
 
         - id: review-service
           uri: lb://REVIEW-SERVICE
@@ -126,6 +144,23 @@ spring:
                   - /webjars
                   - /error
                   - /api/v1/review/info/**
+
+        - id: payment-service
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/payment-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
+                  - /api/v1/payment/**
 
 springdoc:
   api-docs:
@@ -145,6 +180,10 @@ springdoc:
         url: /post-read-service/v3/api-docs
       - name: Review Service API
         url: /review-service/v3/api-docs
+      - name: Active History Service API
+        url: /active-history-service/v3/api-docs
+      - name: Payment Service API
+        url: /payment-service/v3/api-docs
 
 logging:
   level:
