@@ -64,6 +64,13 @@ jobs:
             echo "MONGODB_URI_REVIEW=${{ secrets.MONGODB_URI_REVIEW }}" >> .env
             echo "MONGODB_URI_POST_READ=${{ secrets.MONGODB_URI_POST_READ }}" >> .env
             echo "MONGODB_URI_COMMENT=${{ secrets.MONGODB_URI_COMMENT }}" >> .env
+            echo "TOSS_PAYMENT_CLIENT_KEY=${{ secrets.TOSS_PAYMENT_CLIENT_KEY }}" >> .env
+            echo "TOSS_PAYMENT_FAIL_URL_DEV=${{ secrets.TOSS_PAYMENT_FAIL_URL_DEV }}" >> .env
+            echo "TOSS_PAYMENT_FAIL_URL_PROD=${{ secrets.TOSS_PAYMENT_FAIL_URL_PROD }}" >> .env
+            echo "TOSS_PAYMENT_SECRET_KEY=${{ secrets.TOSS_PAYMENT_SECRET_KEY }}" >> .env
+            echo "TOSS_PAYMENT_SUCCESS_URL_DEV=${{ secrets.TOSS_PAYMENT_SUCCESS_URL_DEV }}" >> .env
+            echo "TOSS_PAYMENT_SUCCESS_URL_PROD=${{ secrets.TOSS_PAYMENT_SUCCESS_URL_PROD }}" >> .env
+            echo "TOSS_PAYMENT_BASE_URL"=${{ secrets.TOSS_PAYMENT_BASE_URL }}" >> .env
             
             docker-compose -f docker-compose-infra.yml -f docker-compose-kafka.yml down
             docker-compose -f docker-compose-infra.yml -f docker-compose-kafka.yml  up -d
