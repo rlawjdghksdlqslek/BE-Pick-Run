@@ -32,16 +32,26 @@ public class PostReadController {
                     - title, contents, images, likeCount, viewCount 등 게시글 상세 데이터
                     
                     [처리 로직]
-                    - UUID 로 게시글 조회
-                    - 게시글이 존재하지 않으면 예외 발생
+                       - postUuid로 MongoDB에서 게시글 조회
+                       - 게시글이 존재하지 않으면 예외 발생
+                       - 로그인 사용자인 경우:
+                         - Redis를 통해 중복 조회 여부(TTL 10분)를 확인
+                         - 중복이 아니면 Redis에 TTL 키 저장 후 Kafka로 조회 이벤트 발행
+                         
+                    [비동기 처리 흐름]
+                       - Kafka Consumer에서 Redis로 postUuid별 조회수 누적
+                       - 별도 배치 스케줄러가 1분 주기로 Redis → MongoDB(viewCount) 반영
                     
                     [예외 상황]
                     - NO_EXIST_POST: 해당 UUID 의 게시글이 존재하지 않음
                     """
     )
     @GetMapping("/{postUuid}")
-    public BaseResponseEntity<PostReadModelResDto> getPostRead(@PathVariable String postUuid) {
-        return new BaseResponseEntity<>(postReadService.getPostRead(postUuid));
+    public BaseResponseEntity<PostReadModelResDto> getPostRead(
+            @PathVariable String postUuid,
+            @RequestHeader(value = "X-Member-UUID", required = false) String memberUuid
+    ) {
+        return new BaseResponseEntity<>(postReadService.getPostRead(postUuid, memberUuid));
     }
 
 

@@ -2,6 +2,9 @@ spring:
   data:
     mongodb:
       uri: ${MONGODB_URI_POST_READ}
+    redis:
+      host: redis
+      port: 6379
 
   kafka:
     bootstrap-servers: ${EC2_HOST}:10000,${EC2_HOST}:10001,${EC2_HOST}:10002

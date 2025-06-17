@@ -15,6 +15,7 @@ import java.util.List;
 public class PostReadModel {
 
     @Id
+    private String id;
     private String postUuid;
     private String memberUuid;
     private Long categoryListId;
