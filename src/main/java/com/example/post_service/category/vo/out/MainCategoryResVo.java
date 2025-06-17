@@ -1,5 +1,6 @@
 package com.example.post_service.category.vo.out;
 
+import com.example.post_service.category.dto.out.MainCategoryResDto;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -16,5 +17,14 @@ public class MainCategoryResVo {
         this.name = name;
         this.iconUrl = iconUrl;
         this.alt = alt;
+    }
+
+    public static MainCategoryResVo of(MainCategoryResDto mainCategoryResDto) {
+        return MainCategoryResVo.builder()
+                .id(mainCategoryResDto.getId())
+                .name(mainCategoryResDto.getName())
+                .iconUrl(mainCategoryResDto.getIconUrl())
+                .alt(mainCategoryResDto.getAlt())
+                .build();
     }
 }

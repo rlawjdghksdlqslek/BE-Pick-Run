@@ -33,6 +33,13 @@ public class SubCategoryServiceImpl implements SubCategoryService {
                 .toList();
     }
 
+    @Override
+    public SubCategoryResDto getSubCategoryById(Long id) {
+        SubCategory subCategory = subCategoryRepository.findById(id)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.CATEGORY_NOT_FOUND));
+        return SubCategoryResDto.from(subCategory);
+    }
+
     @Transactional
     @Override
     public void updateSubCategory(Long id, SubCategoryReqDto dto) {
