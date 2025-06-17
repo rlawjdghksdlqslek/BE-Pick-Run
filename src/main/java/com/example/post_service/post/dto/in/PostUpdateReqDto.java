@@ -14,7 +14,8 @@ import java.util.List;
 public class PostUpdateReqDto {
     private String title;
     private String contents;
-    private Long categoryListId;
+    private Long mainCategoryId;
+    private Long subCategoryId;
     private List<Image> images;
 
 
@@ -22,11 +23,13 @@ public class PostUpdateReqDto {
     public PostUpdateReqDto(
             String title,
             String contents,
-            Long categoryListId,
+            Long mainCategoryId,
+            Long subCategoryId,
             List<Image> images) {
         this.title = title;
         this.contents = contents;
-        this.categoryListId = categoryListId;
+        this.mainCategoryId = mainCategoryId;
+        this.subCategoryId = subCategoryId;
         this.images = images;
     }
 
@@ -34,7 +37,8 @@ public class PostUpdateReqDto {
         return PostUpdateReqDto.builder()
                 .title(postUpdateReqVo.getTitle())
                 .contents(postUpdateReqVo.getContents())
-                .categoryListId(postUpdateReqVo.getCategoryListId())
+                .mainCategoryId(postUpdateReqVo.getMainCategoryId())
+                .subCategoryId(postUpdateReqVo.getSubCategoryId())
                 .images(postUpdateReqVo.getImages())
                 .build();
 

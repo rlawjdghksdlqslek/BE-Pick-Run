@@ -30,7 +30,8 @@ public class PostServiceImpl implements PostService {
         PostCreatedEvent postCreatedEvent = PostCreatedEvent.builder()
                 .postUuid(post.getPostUuid())
                 .memberUuid(post.getMemberUuid())
-                .categoryListId(post.getCategoryListId())
+                .mainCategoryId(post.getMainCategoryId())
+                .subCategoryId(post.getSubCategoryId())
                 .title(post.getTitle())
                 .contents(post.getContents())
                 .images(post.getImages())
@@ -57,7 +58,8 @@ public class PostServiceImpl implements PostService {
         post.update(
                 postUpdateReqDto.getTitle(),
                 postUpdateReqDto.getContents(),
-                postUpdateReqDto.getCategoryListId(),
+                postUpdateReqDto.getMainCategoryId(),
+                postUpdateReqDto.getSubCategoryId(),
                 postUpdateReqDto.getImages()
         );
         postRepository.save(post);
