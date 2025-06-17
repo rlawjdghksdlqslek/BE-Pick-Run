@@ -27,4 +27,27 @@ public class PostReadCustomRepositoryImpl implements PostReadCustomRepository {
         List<PostReadModel> posts = mongoTemplate.find(query, PostReadModel.class);
         return new PageImpl<>(posts, pageable, total);
     }
+
+    @Override
+    public Page<PostReadModel> findByDynamicCategory(
+            Long mainCategoryId,
+            Long subCategoryId,
+            Pageable pageable
+    ) {
+        Criteria criteria = new Criteria();
+
+        if (mainCategoryId != null) {
+            criteria = criteria.and("mainCategoryId").is(mainCategoryId);
+        }
+        if (subCategoryId != null) {
+            criteria = criteria.and("subCategoryId").is(subCategoryId);
+        }
+
+        Query query = new Query(criteria).with(pageable);
+        long total = mongoTemplate.count(query, PostReadModel.class);
+        List<PostReadModel> posts = mongoTemplate.find(query, PostReadModel.class);
+
+        return new PageImpl<>(posts, pageable, total);
+    }
+
 }
