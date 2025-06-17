@@ -14,5 +14,6 @@ public interface PostReadService {
 
     PostReadModelResDto getPostRead(String postUuid, String memberUuid);
 
-    PostListPageResponseDto getPostBySort(Long categoryListId, int page, int size, PostSortType postSortTyp);
+    PostListPageResponseDto getPostBySort(
+            Long mainCategoryId, Long subCategoryId, int page, int size, PostSortType postSortTyp);
 }

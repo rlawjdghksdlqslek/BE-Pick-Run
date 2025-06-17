@@ -18,7 +18,8 @@ public class PostReadModel {
     private String id;
     private String postUuid;
     private String memberUuid;
-    private Long categoryListId;
+    private Long mainCategoryId;
+    private Long subCategoryId;
     private String title;
     private String contents;
     private List<Image> images;
@@ -36,7 +37,8 @@ public class PostReadModel {
     public PostReadModel(
             String postUuid,
             String memberUuid,
-            Long categoryListId,
+            Long mainCategoryId,
+            Long subCategoryId,
             String title,
             String contents,
             List<Image> images,
@@ -49,7 +51,8 @@ public class PostReadModel {
     ) {
         this.postUuid = postUuid;
         this.memberUuid = memberUuid;
-        this.categoryListId = categoryListId;
+        this.mainCategoryId = mainCategoryId;
+        this.subCategoryId = subCategoryId;
         this.title = title;
         this.contents = contents;
         this.images = images;

@@ -37,7 +37,7 @@ public class PostReadController {
                        - 로그인 사용자인 경우:
                          - Redis를 통해 중복 조회 여부(TTL 10분)를 확인
                          - 중복이 아니면 Redis에 TTL 키 저장 후 Kafka로 조회 이벤트 발행
-                         
+                    
                     [비동기 처리 흐름]
                        - Kafka Consumer에서 Redis로 postUuid별 조회수 누적
                        - 별도 배치 스케줄러가 1분 주기로 Redis → MongoDB(viewCount) 반영
@@ -61,7 +61,7 @@ public class PostReadController {
                     게시글 목록을 정렬 조건 및 카테고리 기준으로 조회합니다.
                     
                     [요청 파라미터]
-                    - categoryListId: (Long) 카테고리 ID (nullable)
+                    - mainCategoryId: (Long) 카테고리 ID (nullable)
                     - page: (int) 페이지 번호, 기본값 1
                     - size: (int) 페이지 당 게시글 수, 기본값 8
                     - postSortType: (String) 정렬 방식 (RECENT, POPULAR 등), 기본값 RECENT
@@ -79,11 +79,13 @@ public class PostReadController {
     )
     @GetMapping()
     public BaseResponseEntity<PostListPageResponseDto> getPostBySort(
-            @RequestParam(required = false) Long categoryListId,
+            @RequestParam(required = false) Long mainCategoryId,
+            @RequestParam(required = false) Long subCategoryId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "8") int size,
             @RequestParam(defaultValue = "RECENT") PostSortType postSortType
     ) {
-        return new BaseResponseEntity<>(postReadService.getPostBySort(categoryListId, page, size, postSortType));
+        return new BaseResponseEntity<>(
+                postReadService.getPostBySort(mainCategoryId, subCategoryId, page, size, postSortType));
     }
 }

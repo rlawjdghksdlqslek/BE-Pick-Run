@@ -74,19 +74,16 @@ public class PostReadServiceImpl implements PostReadService {
 
     @Override
     public PostListPageResponseDto getPostBySort(
-            Long categoryListId,
+            Long mainCategoryId,
+            Long subCategoryId,
             int page,
             int size,
             PostSortType postSortType
     ) {
         Pageable pageable = PageRequest.of(page, size, postSortType.getSort());
-        Page<PostReadModel> resultPage;
 
-        if (categoryListId == null) {
-            resultPage = postReadRepository.findAll(pageable);
-        } else {
-            resultPage = postReadRepository.findByCategoryListId(categoryListId, pageable);
-        }
+        Page<PostReadModel> resultPage = postReadRepository.findByDynamicCategory(
+                mainCategoryId, subCategoryId, pageable);
 
         List<PostSummaryResDto> posts = resultPage.getContent().stream()
                 .map(PostSummaryResDto::from)

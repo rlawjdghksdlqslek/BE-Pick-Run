@@ -12,7 +12,8 @@ public class PostSummaryResDto {
 
     private String postUuid;
     private String memberUuid;
-    private Long categoryListId;
+    private Long mainCategoryId;
+    private Long subCategoryId;
     private String title;
     private String contents;
 
@@ -23,7 +24,8 @@ public class PostSummaryResDto {
     public PostSummaryResDto(
             String postUuid,
             String memberUuid,
-            Long categoryListId,
+            Long mainCategoryId,
+            Long subCategoryId,
             String title,
             String contents,
             boolean blindStatus,
@@ -31,7 +33,8 @@ public class PostSummaryResDto {
     ) {
         this.postUuid = postUuid;
         this.memberUuid = memberUuid;
-        this.categoryListId = categoryListId;
+        this.mainCategoryId = mainCategoryId;
+        this.subCategoryId = subCategoryId;
         this.title = title;
         this.contents = contents;
         this.blindStatus = blindStatus;
@@ -42,7 +45,8 @@ public class PostSummaryResDto {
         return PostSummaryResDto.builder()
                 .postUuid(model.getPostUuid())
                 .memberUuid(model.getMemberUuid())
-                .categoryListId(model.getCategoryListId())
+                .mainCategoryId(model.getMainCategoryId())
+                .subCategoryId(model.getSubCategoryId())
                 .title(model.getTitle())
                 .contents(model.getContents())
                 .blindStatus(model.isBlindStatus())
