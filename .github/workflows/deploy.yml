@@ -74,6 +74,6 @@ jobs:
             echo "TOSS_PAYMENT_BASE_URL=${{ secrets.TOSS_PAYMENT_BASE_URL }}" >> .env
             echo "MONGODB_URI_ACTIVE_HISTORY=${{ secrets.MONGODB_URI_ACTIVE_HISTORY }}" >> .env
             
-            docker-compose -f docker-compose-infra.yml -f docker-compose-kafka.yml down
-            docker-compose -f docker-compose-infra.yml -f docker-compose-kafka.yml  up -d
+            docker compose -f docker-compose-infra.yml -f docker-compose-kafka.yml down
+            docker compose -f docker-compose-infra.yml -f docker-compose-kafka.yml  up -d
             docker image prune -f
