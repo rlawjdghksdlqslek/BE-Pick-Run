@@ -7,7 +7,7 @@ spring:
       port: 6379
 
   kafka:
-    bootstrap-servers: ${EC2_HOST}:10000,${EC2_HOST}:10001,${EC2_HOST}:10002
+    bootstrap-servers: ${EC2_INFRA_HOST}:10000,${EC2_INFRA_HOST}:10001,${EC2_INFRA_HOST}:10002
     consumer:
       group-id: post-read-group
       auto-offset-reset: earliest
