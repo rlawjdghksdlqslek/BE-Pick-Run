@@ -38,6 +38,13 @@ public class MainCategoryServiceImpl implements MainCategoryService {
                 .toList();
     }
 
+    @Override
+    public MainCategoryResDto getMainCategoryById(Long id) {
+        MainCategory maincategory = mainCategoryRepository.findById(id)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.CATEGORY_NOT_FOUND));
+        return MainCategoryResDto.from(maincategory);
+    }
+
     @Transactional
     @Override
     public void updateMainCategory(Long id, MainCategoryReqDto dto) {
@@ -64,8 +71,10 @@ public class MainCategoryServiceImpl implements MainCategoryService {
         return list.stream()
                 .collect(Collectors.toMap(
                         CategoryList::getSubCategoryId,
-                        c -> new SimpleSubCategoryResDto(c.getSubCategoryId(), c.getSubCategoryName(), c.getSubCategoryColor()),
-                        (a, b) -> a))
+                        c -> new SimpleSubCategoryResDto(
+                                c.getSubCategoryId(), c.getSubCategoryName(), c.getSubCategoryColor()),
+                        (a, b) -> a
+                ))
                 .values()
                 .stream()
                 .toList();

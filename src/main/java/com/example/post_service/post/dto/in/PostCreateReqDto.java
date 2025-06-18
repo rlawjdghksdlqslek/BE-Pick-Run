@@ -17,7 +17,8 @@ public class PostCreateReqDto {
 
     private String postUuid;
     private String memberUuid;
-    private Long categoryListId;
+    private Long mainCategoryId;
+    private Long subCategoryId;
     private String title;
     private String contents;
     private List<Image> images;
@@ -33,7 +34,8 @@ public class PostCreateReqDto {
     public PostCreateReqDto(
             String postUuid,
             String memberUuid,
-            Long categoryListId,
+            Long mainCategoryId,
+            Long subCategoryId,
             String title,
             String contents,
             List<Image> images,
@@ -45,7 +47,8 @@ public class PostCreateReqDto {
     ) {
         this.postUuid = postUuid;
         this.memberUuid = memberUuid;
-        this.categoryListId = categoryListId;
+        this.mainCategoryId = mainCategoryId;
+        this.subCategoryId = subCategoryId;
         this.title = title;
         this.contents = contents;
         this.images = images;
@@ -60,7 +63,8 @@ public class PostCreateReqDto {
         return PostCreateReqDto.builder()
                 .postUuid(UUID.randomUUID().toString())
                 .memberUuid(memberUuid)
-                .categoryListId(postCreateReqVo.getCategoryListId())
+                .mainCategoryId(postCreateReqVo.getMainCategoryId())
+                .subCategoryId(postCreateReqVo.getSubCategoryId())
                 .title(postCreateReqVo.getTitle())
                 .contents(postCreateReqVo.getContents())
                 .images(postCreateReqVo.getImages())
@@ -74,7 +78,8 @@ public class PostCreateReqDto {
         return Post.builder()
                 .postUuid(this.postUuid)
                 .memberUuid(this.memberUuid)
-                .categoryListId(this.categoryListId)
+                .mainCategoryId(this.mainCategoryId)
+                .subCategoryId(this.subCategoryId)
                 .title(this.title)
                 .contents(this.contents)
                 .images(this.images)
@@ -85,5 +90,4 @@ public class PostCreateReqDto {
                 .updatedAt(LocalDateTime.now())
                 .build();
     }
-
 }

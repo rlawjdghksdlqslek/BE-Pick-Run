@@ -1,5 +1,6 @@
 package com.example.post_service.category.vo.out;
 
+import com.example.post_service.category.dto.out.SubCategoryResDto;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,5 +15,13 @@ public class SubCategoryResVo {
         this.id = id;
         this.name = name;
         this.color = color;
+    }
+
+    public static SubCategoryResVo of(SubCategoryResDto subCategoryResDto) {
+        return SubCategoryResVo.builder()
+                .id(subCategoryResDto.getId())
+                .name(subCategoryResDto.getName())
+                .color(subCategoryResDto.getColor())
+                .build();
     }
 }

@@ -4,8 +4,8 @@ import com.example.post_service.kafka.event.PostCreatedEvent;
 import com.example.post_service.kafka.producer.PostKafkaProducer;
 import com.example.post_service.post.dto.in.PostCreateReqDto;
 import com.example.post_service.post.dto.in.PostUpdateReqDto;
-import com.example.post_service.post.dto.out.GetPostInfoResDto;
 import com.example.post_service.post.dto.out.ExistsPostDto;
+import com.example.post_service.post.dto.out.GetPostInfoResDto;
 import com.example.post_service.post.entity.Post;
 import com.example.post_service.post.infrastructure.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,8 @@ public class PostServiceImpl implements PostService {
         PostCreatedEvent postCreatedEvent = PostCreatedEvent.builder()
                 .postUuid(post.getPostUuid())
                 .memberUuid(post.getMemberUuid())
-                .categoryListId(post.getCategoryListId())
+                .mainCategoryId(post.getMainCategoryId())
+                .subCategoryId(post.getSubCategoryId())
                 .title(post.getTitle())
                 .contents(post.getContents())
                 .images(post.getImages())
@@ -57,7 +58,8 @@ public class PostServiceImpl implements PostService {
         post.update(
                 postUpdateReqDto.getTitle(),
                 postUpdateReqDto.getContents(),
-                postUpdateReqDto.getCategoryListId(),
+                postUpdateReqDto.getMainCategoryId(),
+                postUpdateReqDto.getSubCategoryId(),
                 postUpdateReqDto.getImages()
         );
         postRepository.save(post);

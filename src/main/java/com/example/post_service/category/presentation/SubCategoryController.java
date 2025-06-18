@@ -39,6 +39,15 @@ public class SubCategoryController {
                         .toList());
     }
 
+    @Operation(summary = "서브 카테고리 단건 조회")
+    @GetMapping("/sub/{id}")
+    public BaseResponseEntity<SubCategoryResVo> getSubCategory(
+            @PathVariable Long id
+    ) {
+        return new BaseResponseEntity<>(
+                SubCategoryResVo.of(subCategoryService.getSubCategoryById(id)));
+    }
+
     @Operation(summary = "서브 카테고리 수정")
     @PutMapping("/sub/{id}")
     public BaseResponseEntity<Void> updateSubCategory(

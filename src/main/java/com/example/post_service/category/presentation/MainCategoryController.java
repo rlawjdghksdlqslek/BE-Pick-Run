@@ -6,6 +6,7 @@ import com.example.post_service.category.dto.out.MainCategoryResDto;
 import com.example.post_service.category.dto.out.SimpleSubCategoryResDto;
 import com.example.post_service.category.vo.in.MainCategoryReqVo;
 import com.example.post_service.category.vo.out.MainCategoryResVo;
+import com.example.post_service.category.vo.out.SubCategoryResVo;
 import com.example.post_service.common.entity.BaseResponseEntity;
 import com.example.post_service.common.response.BaseResponseStatus;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,6 +41,15 @@ public class MainCategoryController {
                         .toList());
     }
 
+    @Operation(summary = "메인 카테고리 단건 조회")
+    @GetMapping("/main/{id}")
+    public BaseResponseEntity<MainCategoryResVo> getMainCategory(
+            @PathVariable Long id
+    ) {
+        return new BaseResponseEntity<>(
+                MainCategoryResVo.of(mainCategoryService.getMainCategoryById(id)));
+    }
+
     @Operation(summary = "메인 카테고리 수정")
     @PutMapping("/main/{id}")
     public BaseResponseEntity<Void> updateMainCategory(
@@ -58,8 +68,8 @@ public class MainCategoryController {
     }
 
     @Operation(summary = "메인 카테고리에 속한 서브 카테고리 전체 조회")
-    @GetMapping("/main/{id}")
-    public BaseResponseEntity<List<SimpleSubCategoryResDto>> getMainCategory(@PathVariable Long id) {
+    @GetMapping("/main/{id}/sub-categories")
+    public BaseResponseEntity<List<SimpleSubCategoryResDto>> getSubCategoriesByMainCategoryId (@PathVariable Long id) {
         return new BaseResponseEntity<>(mainCategoryService.getSubCategoriesByMainCategoryId(id));
     }
 }

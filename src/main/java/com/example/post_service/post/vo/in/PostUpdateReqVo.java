@@ -15,6 +15,7 @@ import java.util.List;
 public class PostUpdateReqVo {
     private String title;
     private String contents;
-    private Long categoryListId;
+    private Long mainCategoryId;
+    private Long subCategoryId;
     private List<Image> images;
 }
