@@ -97,6 +97,8 @@ spring:
                   - /error
                   - /api/v1/profile/nickname/check-duplicate
                   - /api/v1/grade/**
+                  - /api/v1/profile/author/**
+                  - /api/v1/profile/member/**
 
 
         - id: post-read-service
@@ -161,7 +163,6 @@ spring:
                   - /webjars
                   - /error
 
-
         - id: bookmark-service
           uri: lb://BOOKMARK-SERVICE
           predicates:
@@ -177,6 +178,7 @@ spring:
                   - /swagger-ui.html
                   - /webjars
                   - /error
+
         - id: payment-service
           uri: lb://PAYMENT-SERVICE
           predicates:
