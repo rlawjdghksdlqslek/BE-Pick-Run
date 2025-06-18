@@ -8,7 +8,7 @@ spring:
   application:
     name: gateway-service
   profiles:
-    active: prod
+    active: dev
   cloud:
     gateway:
       default-filters:
@@ -95,8 +95,6 @@ spring:
                   - /swagger-ui.html
                   - /webjars
                   - /error
-                  - /api/v1/profile/author/**
-                  - /api/v1/profile/member/**
                   - /api/v1/profile/nickname/check-duplicate
                   - /api/v1/grade/**
 
@@ -146,6 +144,39 @@ spring:
                   - /error
                   - /api/v1/review/info/**
 
+
+        - id: comment-service
+          uri: lb://COMMENT-SERVICE
+          predicates:
+            - Path=/comment-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
+
+
+        - id: bookmark-service
+          uri: lb://BOOKMARK-SERVICE
+          predicates:
+            - Path=/bookmark-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
         - id: payment-service
           uri: lb://PAYMENT-SERVICE
           predicates:
@@ -181,6 +212,10 @@ springdoc:
         url: /post-read-service/v3/api-docs
       - name: Review Service API
         url: /review-service/v3/api-docs
+      - name: Comment Service API
+        url: /comment-service/v3/api-docs
+      - name: BOOKMARK Service API
+        url: /bookmark-service/v3/api-docs
       - name: Active History Service API
         url: /active-history-service/v3/api-docs
       - name: Payment Service API
