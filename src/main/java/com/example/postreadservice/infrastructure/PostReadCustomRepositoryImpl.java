@@ -43,9 +43,11 @@ public class PostReadCustomRepositoryImpl implements PostReadCustomRepository {
             criteria = criteria.and("subCategoryId").is(subCategoryId);
         }
 
-        Query query = new Query(criteria).with(pageable);
-        long total = mongoTemplate.count(query, PostReadModel.class);
-        List<PostReadModel> posts = mongoTemplate.find(query, PostReadModel.class);
+        Query pageQuery = new Query(criteria).with(pageable); // 페이징 적용
+        Query countQuery = new Query(criteria); // 전체 개수 조회용 쿼리
+
+        long total = mongoTemplate.count(countQuery, PostReadModel.class);
+        List<PostReadModel> posts = mongoTemplate.find(pageQuery, PostReadModel.class);
 
         return new PageImpl<>(posts, pageable, total);
     }
