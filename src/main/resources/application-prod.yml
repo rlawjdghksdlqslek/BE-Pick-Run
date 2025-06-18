@@ -3,7 +3,7 @@ spring:
     mongodb:
       uri: ${MONGODB_URI_POST_READ}
     redis:
-      host: redis
+      host: ${EC2_INFRA_HOST}
       port: 6379
 
   kafka:
