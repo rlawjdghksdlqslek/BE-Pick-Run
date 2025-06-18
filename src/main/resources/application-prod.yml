@@ -14,7 +14,7 @@ spring:
     mongodb:
       uri: ${MONGODB_URI_POST}
   kafka:
-    bootstrap-servers: ${EC2_HOST}:10000,${EC2_HOST}:10001,${EC2_HOST}:10002
+    bootstrap-servers: ${EC2_INFRA_HOST}:10000,${EC2_INFRA_HOST}:10001,${EC2_INFRA_HOST}:10002
     producer:
       key-deserializer: org.apache.kafka.common.serialization.StringSerializer
       value-deserializer: org.apache.kafka.common.serialization.StringSerializer
