@@ -25,7 +25,7 @@ jobs:
       - name: Copy docker-compose-infra.yml to EC2
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ secrets.EC2_HOST }}
+          host: ${{ secrets.EC2_INFRA_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           source: "docker-compose-infra.yml"
@@ -34,7 +34,7 @@ jobs:
       - name: Copy docker-compose-kafka.yml to EC2
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ secrets.EC2_HOST }}
+          host: ${{ secrets.EC2_INFRA_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           source: "docker-compose-kafka.yml"
@@ -43,7 +43,7 @@ jobs:
       - name: Deploy on EC2 via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.EC2_HOST }}
+          host: ${{ secrets.EC2_INFRA_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script_stop: true
@@ -60,6 +60,7 @@ jobs:
             echo "MONGO_INITDB_ROOT_PASSWORD=${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}" >> .env
             echo "MONGODB_URI_POST=${{ secrets.MONGODB_URI_POST }}" >> .env
             echo "EC2_HOST=${{ secrets.EC2_HOST }}" >> .env
+            echo "EC2_INFRA_HOST=${{ secrets.EC2_INFRA_HOST }}" >> .env
             echo "MONGODB_URI_PROFILE=${{ secrets.MONGODB_URI_PROFILE }}" >> .env
             echo "MONGODB_URI_REVIEW=${{ secrets.MONGODB_URI_REVIEW }}" >> .env
             echo "MONGODB_URI_POST_READ=${{ secrets.MONGODB_URI_POST_READ }}" >> .env
