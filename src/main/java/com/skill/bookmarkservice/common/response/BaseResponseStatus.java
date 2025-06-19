@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @AllArgsConstructor
-public enum BaseResponseStatus {
+public enum  BaseResponseStatus {
 
     /**
      * 200: 요청 성공
@@ -33,7 +33,7 @@ public enum BaseResponseStatus {
     INVALID_USER_ROLE(HttpStatus.BAD_REQUEST, false, 1102, "유효하지 않은 유저 권한입니다."),
 
     /**
-     * 2000 : post and comment service error
+     * 2000 ~ 2500: post and comment service error
      */
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, false, 2000, "해당 게시글을 찾을 수 없습니다."),
     FAILED_TO_CREATE_POST(HttpStatus.INTERNAL_SERVER_ERROR, false, 2001, "게시글 작성에 실패하였습니다."),
@@ -53,7 +53,15 @@ public enum BaseResponseStatus {
     DUPLICATE_CATEGORY_LIST(HttpStatus.BAD_REQUEST, false, 2106, "중복된 카테고리 입니다."),
 
 
-    NOT_FOUND_COMMENT(HttpStatus.NOT_FOUND, false, 2500, "해당 댓글을 찾을 수 없습니다.");
+    NOT_FOUND_COMMENT(HttpStatus.NOT_FOUND, false, 2500, "해당 댓글을 찾을 수 없습니다."),
+
+    /**
+     * 2600 ~ 2999 : bookmark service error
+     */
+    ALREADY_EXISTS_BOOKMARK(HttpStatus.CONFLICT, false, 2600, "이미 존재하는 북마크입니다."),
+    BOOKMARK_NOT_FOUND(HttpStatus.NOT_FOUND, false, 2601, "해당 북마크를 찾을 수 없습니다."),
+    FAILED_TO_CREATE_BOOKMARK(HttpStatus.INTERNAL_SERVER_ERROR, false, 2602, "북마크 생성에 실패하였습니다.");
+
     /**
      * 3000 : order service error
      */
