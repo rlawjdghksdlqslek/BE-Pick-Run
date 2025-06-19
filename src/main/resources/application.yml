@@ -16,7 +16,7 @@ spring:
   application:
     name: comment-service
   profiles:
-    active: dev
+    active: prod
 
   jpa:
     hibernate:
