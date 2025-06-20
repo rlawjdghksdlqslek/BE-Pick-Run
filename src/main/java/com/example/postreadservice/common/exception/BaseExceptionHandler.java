@@ -1,7 +1,7 @@
 package com.example.postreadservice.common.exception;
 
-import com.example.postreadservice.common.response.BaseResponseStatus;
 import com.example.postreadservice.common.entity.BaseResponseEntity;
+import com.example.postreadservice.common.response.BaseResponseStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -1,7 +1,7 @@
 package com.example.postreadservice.common.exception;
 
-import com.example.postreadservice.common.response.BaseResponseStatus;
 import com.example.postreadservice.common.entity.BaseResponseEntity;
+import com.example.postreadservice.common.response.BaseResponseStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
