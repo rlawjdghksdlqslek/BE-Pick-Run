@@ -1,13 +1,11 @@
 package com.example.postreadservice.dto.in;
 
-import com.example.postreadservice.entity.Image;
 import com.example.postreadservice.entity.PostReadModel;
 import com.example.postreadservice.kafka.event.PostCreatedEvent;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 public class PostReadModelReqDto {
@@ -16,7 +14,6 @@ public class PostReadModelReqDto {
     private Long categoryListId;
     private String title;
     private String contents;
-    private List<Image> images;
 
     private boolean blindStatus;
     private boolean deletedStatus;
@@ -34,7 +31,6 @@ public class PostReadModelReqDto {
             Long categoryListId,
             String title,
             String contents,
-            List<Image> images,
             boolean blindStatus,
             boolean deletedStatus,
             long viewCount,
@@ -47,7 +43,6 @@ public class PostReadModelReqDto {
         this.categoryListId = categoryListId;
         this.title = title;
         this.contents = contents;
-        this.images = images;
         this.blindStatus = blindStatus;
         this.deletedStatus = deletedStatus;
         this.viewCount = viewCount;
@@ -64,7 +59,6 @@ public class PostReadModelReqDto {
                 .subCategoryId(postCreatedEvent.getSubCategoryId())
                 .title(postCreatedEvent.getTitle())
                 .contents(postCreatedEvent.getContents())
-                .images(postCreatedEvent.getImages())
                 .blindStatus(postCreatedEvent.isBlindStatus())
                 .deletedStatus(postCreatedEvent.isDeletedStatus())
                 .viewCount(0L)
