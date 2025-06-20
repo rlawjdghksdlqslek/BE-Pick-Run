@@ -6,6 +6,7 @@ import com.example.postreadservice.dto.out.PostListPageResponseDto;
 import com.example.postreadservice.dto.out.PostReadModelResDto;
 import com.example.postreadservice.entity.PostSortType;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,38 +21,44 @@ public class PostReadController {
     @Operation(
             summary = "단일 게시글 조회",
             description = """
-                    게시글 UUID 를 기반으로 단일 게시글의 상세 정보를 조회합니다.
-                    
-                    [요청 경로]
-                    - /api/v1/post-read/{postUuid}
-                    
-                    [요청 파라미터]
-                    - path variable: postUuid (String) 게시글 고유 식별자
-                    
-                    [응답 필드]
-                    - title, contents, images, likeCount, viewCount 등 게시글 상세 데이터
-                    
-                    [처리 로직]
-                       - postUuid로 MongoDB에서 게시글 조회
-                       - 게시글이 존재하지 않으면 예외 발생
-                       - 로그인 사용자인 경우:
-                         - Redis를 통해 중복 조회 여부(TTL 10분)를 확인
-                         - 중복이 아니면 Redis에 TTL 키 저장 후 Kafka로 조회 이벤트 발행
-                    
-                    [비동기 처리 흐름]
-                       - Kafka Consumer에서 Redis로 postUuid별 조회수 누적
-                       - 별도 배치 스케줄러가 1분 주기로 Redis → MongoDB(viewCount) 반영
-                    
-                    [예외 상황]
-                    - NO_EXIST_POST: 해당 UUID 의 게시글이 존재하지 않음
-                    """
+        게시글 UUID를 기반으로 단일 게시글의 상세 정보를 조회합니다.
+
+        [요청 경로]
+        - GET /api/v1/post-read/{postUuid}
+
+        [요청 헤더]
+        - X-Member-UUID (String, optional): 로그인 사용자의 고유 식별자. 비로그인 사용자는 생략 가능
+
+        [요청 파라미터]
+        - path variable: postUuid (String) - 조회 대상 게시글 UUID
+
+        [조회 처리 로직]
+        1. postUuid를 기준으로 MongoDB에서 게시글을 조회
+        2. 게시글이 존재하지 않으면 예외 발생 (POST_NOT_FOUND)
+        3. 조회자 정보 식별 (로그인/비로그인)
+           - 로그인 사용자는 memberUuid를 기반으로 Redis 키 구성
+           - 비로그인 사용자는 IP + User-Agent 해시로 Redis 키 생성
+        4. Redis에 해당 사용자의 조회 기록이 없으면:
+           - 10분 TTL로 Redis에 조회 기록 저장
+           - 게시글별 Redis 카운터 키를 증가시킴 (즉시 조회수 증가)
+        5. Redis에 이미 조회 기록이 있으면:
+           - 중복 조회로 간주하고 조회수 증가 생략
+
+        [조회수 집계 처리]
+        - Redis에서 postUuid별 조회수(`aggregate:post:view:{postUuid}`)를 실시간으로 누적
+        - 배치 1분 간격으로 MongoDB의 viewCount에 반영
+
+        [예외 상황]
+        - POST_NOT_FOUND: 해당 UUID의 게시글이 존재하지 않을 경우 발생
+        """
     )
     @GetMapping("/{postUuid}")
     public BaseResponseEntity<PostReadModelResDto> getPostRead(
             @PathVariable String postUuid,
-            @RequestHeader(value = "X-Member-UUID", required = false) String memberUuid
+            @RequestHeader(value = "X-Member-UUID", required = false) String memberUuid,
+            HttpServletRequest request
     ) {
-        return new BaseResponseEntity<>(postReadService.getPostRead(postUuid, memberUuid));
+        return new BaseResponseEntity<>(postReadService.getPostRead(postUuid, memberUuid, request));
     }
 
 
