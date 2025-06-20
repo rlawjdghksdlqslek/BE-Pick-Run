@@ -16,7 +16,7 @@ spring:
   application:
     name: bookmark-service
   profiles:
-    active: dev
+    active: prod
 
   jpa:
     hibernate:
