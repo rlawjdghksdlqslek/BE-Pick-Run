@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 @Document(collection = "post")
@@ -24,7 +23,6 @@ public class Post {
     private Long subCategoryId;
     private String title;
     private String contents;
-    private List<Image> images;
 
     private boolean blindStatus;
     private boolean deletedStatus;
@@ -41,7 +39,6 @@ public class Post {
             Long subCategoryId,
             String title,
             String contents,
-            List<Image> images,
             boolean blindStatus,
             boolean deletedStatus,
             LocalDateTime deletedAt,
@@ -54,7 +51,6 @@ public class Post {
         this.subCategoryId = subCategoryId;
         this.title = title;
         this.contents = contents;
-        this.images = images;
         this.blindStatus = blindStatus;
         this.deletedStatus = deletedStatus;
         this.deletedAt = deletedAt;
@@ -66,13 +62,12 @@ public class Post {
             String title,
             String contents,
             Long mainCategoryId,
-            Long subCategoryId,
-            List<Image> images) {
+            Long subCategoryId
+    ) {
         this.title = title;
         this.contents = contents;
         this.mainCategoryId = mainCategoryId;
         this.subCategoryId = subCategoryId;
-        this.images = images;
         this.updatedAt = LocalDateTime.now();
     }
 }

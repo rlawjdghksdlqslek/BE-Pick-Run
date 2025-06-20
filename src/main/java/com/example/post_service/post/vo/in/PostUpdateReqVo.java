@@ -1,12 +1,9 @@
 package com.example.post_service.post.vo.in;
 
-import com.example.post_service.post.entity.Image;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -17,5 +14,4 @@ public class PostUpdateReqVo {
     private String contents;
     private Long mainCategoryId;
     private Long subCategoryId;
-    private List<Image> images;
 }
