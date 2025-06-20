@@ -202,7 +202,7 @@ springdoc:
     path: /v3/api-docs
   swagger-ui:
     enabled: true
-    path: /
+    path: /swagger
 
     urls:
       - name: Member Service API
