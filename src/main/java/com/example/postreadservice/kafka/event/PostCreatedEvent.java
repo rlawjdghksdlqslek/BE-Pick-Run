@@ -1,13 +1,11 @@
 package com.example.postreadservice.kafka.event;
 
-import com.example.postreadservice.entity.Image;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @ToString
 @Getter
@@ -20,7 +18,6 @@ public class PostCreatedEvent {
     private Long subCategoryId;
     private String title;
     private String contents;
-    private List<Image> images;
 
     private boolean blindStatus;
     private boolean deletedStatus;
@@ -36,7 +33,6 @@ public class PostCreatedEvent {
             Long subCategoryId,
             String title,
             String contents,
-            List<Image> images,
             boolean blindStatus,
             boolean deletedStatus,
             LocalDateTime createdAt,
@@ -48,7 +44,6 @@ public class PostCreatedEvent {
         this.subCategoryId = subCategoryId;
         this.title = title;
         this.contents = contents;
-        this.images = images;
         this.blindStatus = blindStatus;
         this.deletedStatus = deletedStatus;
         this.createdAt = createdAt;

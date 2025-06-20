@@ -1,12 +1,10 @@
 package com.example.postreadservice.dto.out;
 
-import com.example.postreadservice.entity.Image;
 import com.example.postreadservice.entity.PostReadModel;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 public class PostReadModelResDto {
@@ -18,7 +16,6 @@ public class PostReadModelResDto {
 
     private String title;
     private String contents;
-    private List<Image> images;
 
     private boolean blindStatus;
     private boolean deletedStatus;
@@ -37,7 +34,6 @@ public class PostReadModelResDto {
             Long subCategoryId,
             String title,
             String contents,
-            List<Image> images,
             boolean blindStatus,
             boolean deletedStatus,
             long viewCount,
@@ -51,7 +47,6 @@ public class PostReadModelResDto {
         this.subCategoryId = subCategoryId;
         this.title = title;
         this.contents = contents;
-        this.images = images;
         this.blindStatus = blindStatus;
         this.deletedStatus = deletedStatus;
         this.viewCount = viewCount;
@@ -68,7 +63,6 @@ public class PostReadModelResDto {
                 .subCategoryId(postReadModel.getSubCategoryId())
                 .title(postReadModel.getTitle())
                 .contents(postReadModel.getContents())
-                .images(postReadModel.getImages())
                 .blindStatus(postReadModel.isBlindStatus())
                 .deletedStatus(postReadModel.isDeletedStatus())
                 .viewCount(postReadModel.getViewCount())

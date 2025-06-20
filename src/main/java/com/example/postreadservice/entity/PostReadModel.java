@@ -7,7 +7,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Document(collection = "post_read")
 @Getter
@@ -22,7 +21,6 @@ public class PostReadModel {
     private Long subCategoryId;
     private String title;
     private String contents;
-    private List<Image> images;
 
     private boolean blindStatus;
     private boolean deletedStatus;
@@ -41,7 +39,6 @@ public class PostReadModel {
             Long subCategoryId,
             String title,
             String contents,
-            List<Image> images,
             boolean blindStatus,
             boolean deletedStatus,
             long viewCount,
@@ -55,7 +52,6 @@ public class PostReadModel {
         this.subCategoryId = subCategoryId;
         this.title = title;
         this.contents = contents;
-        this.images = images;
         this.blindStatus = blindStatus;
         this.deletedStatus = deletedStatus;
         this.viewCount = viewCount;
