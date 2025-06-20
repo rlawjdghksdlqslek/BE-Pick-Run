@@ -6,7 +6,6 @@ import com.example.post_service.category.dto.out.MainCategoryResDto;
 import com.example.post_service.category.dto.out.SimpleSubCategoryResDto;
 import com.example.post_service.category.vo.in.MainCategoryReqVo;
 import com.example.post_service.category.vo.out.MainCategoryResVo;
-import com.example.post_service.category.vo.out.SubCategoryResVo;
 import com.example.post_service.common.entity.BaseResponseEntity;
 import com.example.post_service.common.response.BaseResponseStatus;
 import io.swagger.v3.oas.annotations.Operation;

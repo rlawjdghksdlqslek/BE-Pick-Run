@@ -34,7 +34,6 @@ public class PostServiceImpl implements PostService {
                 .subCategoryId(post.getSubCategoryId())
                 .title(post.getTitle())
                 .contents(post.getContents())
-                .images(post.getImages())
                 .blindStatus(post.isBlindStatus())
                 .deletedStatus(post.isDeletedStatus())
                 .createdAt(post.getCreatedAt())
@@ -59,8 +58,7 @@ public class PostServiceImpl implements PostService {
                 postUpdateReqDto.getTitle(),
                 postUpdateReqDto.getContents(),
                 postUpdateReqDto.getMainCategoryId(),
-                postUpdateReqDto.getSubCategoryId(),
-                postUpdateReqDto.getImages()
+                postUpdateReqDto.getSubCategoryId()
         );
         postRepository.save(post);
     }

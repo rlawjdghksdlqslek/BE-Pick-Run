@@ -1,6 +1,5 @@
 package com.example.post_service.post.dto.in;
 
-import com.example.post_service.post.entity.Image;
 import com.example.post_service.post.entity.Post;
 import com.example.post_service.post.vo.in.PostCreateReqVo;
 import lombok.Builder;
@@ -8,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -21,7 +19,6 @@ public class PostCreateReqDto {
     private Long subCategoryId;
     private String title;
     private String contents;
-    private List<Image> images;
 
     private boolean blindStatus;
     private boolean deletedStatus;
@@ -38,7 +35,6 @@ public class PostCreateReqDto {
             Long subCategoryId,
             String title,
             String contents,
-            List<Image> images,
             boolean blindStatus,
             boolean deletedStatus,
             LocalDateTime deletedAt,
@@ -51,7 +47,6 @@ public class PostCreateReqDto {
         this.subCategoryId = subCategoryId;
         this.title = title;
         this.contents = contents;
-        this.images = images;
         this.blindStatus = blindStatus;
         this.deletedStatus = deletedStatus;
         this.deletedAt = deletedAt;
@@ -67,7 +62,6 @@ public class PostCreateReqDto {
                 .subCategoryId(postCreateReqVo.getSubCategoryId())
                 .title(postCreateReqVo.getTitle())
                 .contents(postCreateReqVo.getContents())
-                .images(postCreateReqVo.getImages())
                 .deletedAt(null)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
@@ -82,7 +76,6 @@ public class PostCreateReqDto {
                 .subCategoryId(this.subCategoryId)
                 .title(this.title)
                 .contents(this.contents)
-                .images(this.images)
                 .blindStatus(false)
                 .deletedStatus(false)
                 .deletedAt(null)
