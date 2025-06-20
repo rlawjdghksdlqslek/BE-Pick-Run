@@ -162,7 +162,8 @@ spring:
                   - /swagger-ui.html
                   - /webjars
                   - /error
-
+                  - /api/v1/comment/*
+                  - /api/v1/comment/post/*/list
         - id: bookmark-service
           uri: lb://BOOKMARK-SERVICE
           predicates:
@@ -216,7 +217,7 @@ springdoc:
         url: /review-service/v3/api-docs
       - name: Comment Service API
         url: /comment-service/v3/api-docs
-      - name: BOOKMARK Service API
+      - name: Bookmark Service API
         url: /bookmark-service/v3/api-docs
       - name: Active History Service API
         url: /active-history-service/v3/api-docs
