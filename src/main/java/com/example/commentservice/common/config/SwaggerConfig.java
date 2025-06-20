@@ -28,14 +28,14 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .addSecurityItem(securityRequirement)
                 .components(components)
-                .addServersItem(new Server().url("/community-service"))
+                .addServersItem(new Server().url("/comment-service"))
                 .info(apiInfo());
     }
 
     private Info apiInfo() {
         return new Info()
-                .title("COMMUNITY-SERVICE API DOCS")
-                .description("community-service API 테스트를 위한 Swagger UI")
+                .title("comment-SERVICE API DOCS")
+                .description("comment-service API 테스트를 위한 Swagger UI")
                 .version("1.0.0");
     }
 }
