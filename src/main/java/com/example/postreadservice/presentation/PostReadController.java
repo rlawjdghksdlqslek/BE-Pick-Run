@@ -6,6 +6,7 @@ import com.example.postreadservice.dto.out.PostListPageResponseDto;
 import com.example.postreadservice.dto.out.PostReadModelResDto;
 import com.example.postreadservice.entity.PostSortType;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,9 +50,10 @@ public class PostReadController {
     @GetMapping("/{postUuid}")
     public BaseResponseEntity<PostReadModelResDto> getPostRead(
             @PathVariable String postUuid,
-            @RequestHeader(value = "X-Member-UUID", required = false) String memberUuid
+            @RequestHeader(value = "X-Member-UUID", required = false) String memberUuid,
+            HttpServletRequest request
     ) {
-        return new BaseResponseEntity<>(postReadService.getPostRead(postUuid, memberUuid));
+        return new BaseResponseEntity<>(postReadService.getPostRead(postUuid, memberUuid, request));
     }
 
 
