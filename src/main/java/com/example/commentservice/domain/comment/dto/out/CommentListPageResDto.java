@@ -12,17 +12,17 @@ public class CommentListPageResDto {
     private long page;
     private long size;
     private boolean hasNext;
-    private long totalPage;
+    private long totalPages;
     private long totalElements;
 
     @Builder
     public CommentListPageResDto(
-            List<CommentResDto> comments, long page, long size, boolean hasNext, long totalPage, long totalElements) {
+            List<CommentResDto> comments, long page, long size, boolean hasNext, long totalPages, long totalElements) {
         this.comments = comments;
         this.page = page;
         this.size = size;
         this.hasNext = hasNext;
-        this.totalPage = totalPage;
+        this.totalPages = totalPages;
         this.totalElements = totalElements;
     }
 }
