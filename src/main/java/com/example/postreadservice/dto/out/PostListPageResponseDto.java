@@ -12,7 +12,7 @@ public class PostListPageResponseDto {
     private long page;
     private long size;
     private boolean hasNext;
-    private long totalPage;
+    private long totalPages;
     private long totalElements;
 
     @Builder
@@ -22,13 +22,13 @@ public class PostListPageResponseDto {
             long size,
             boolean hasNext,
             long totalElements,
-            long totalPage
+            long totalPages
     ) {
         this.posts = posts;
         this.page = page;
         this.size = size;
         this.hasNext = hasNext;
         this.totalElements = totalElements;
-        this.totalPage = totalPage;
+        this.totalPages = totalPages;
     }
 }
