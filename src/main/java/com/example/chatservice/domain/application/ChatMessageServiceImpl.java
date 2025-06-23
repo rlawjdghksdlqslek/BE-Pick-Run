@@ -19,7 +19,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     @Override
     public SendChatMessageResDto sendMessage(SendChatMessageReqDto dto) {
         SendChatMessageResDto result = SendChatMessageResDto.from(chatMessageRepository.save(dto.toEntity()));
-        simpMessagingTemplate.convertAndSend("/queue/messages" + dto.getChatRoomUuid(), dto);
+        simpMessagingTemplate.convertAndSend("/queue/messages/" + dto.getChatRoomUuid(), dto);
         return result;
     }
 }
