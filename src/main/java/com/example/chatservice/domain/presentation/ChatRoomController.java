@@ -3,6 +3,7 @@ package com.example.chatservice.domain.presentation;
 import com.example.chatservice.common.entity.BaseResponseEntity;
 import com.example.chatservice.domain.application.ChatRoomService;
 import com.example.chatservice.domain.dto.in.CreateChatRoomReqDto;
+import com.example.chatservice.domain.dto.in.MarkMessageAsReadReqDto;
 import com.example.chatservice.domain.vo.in.CreateChatRoomReqVo;
 import com.example.chatservice.domain.vo.out.CreateChatRoomResVo;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,6 +27,16 @@ public class ChatRoomController {
 
         CreateChatRoomReqDto dto = CreateChatRoomReqDto.of(participantAUuid, vo.getParticipantBUuid());
         return new BaseResponseEntity<>(chatRoomService.createOrGetRoom(dto).toVo());
+    }
+
+    //채팅방 읽음 처리
+    @PatchMapping("/read/{chatRoomUuid}")
+    public BaseResponseEntity<Void> readChatMessage(
+            @RequestHeader("X-Member-UUID") String receiverUuid,
+            @PathVariable String chatRoomUuid
+    ) {
+        chatRoomService.markUnreadMessagesAsRead(MarkMessageAsReadReqDto.of(receiverUuid, chatRoomUuid));
+        return new BaseResponseEntity<>();
     }
 
 }
