@@ -4,6 +4,8 @@ import com.example.commentservice.client.post.PostServiceClient;
 import com.example.commentservice.client.post.dto.out.ExistsPostResDto;
 import com.example.commentservice.common.entity.BaseResponseEntity;
 import com.example.commentservice.common.exception.BaseException;
+import com.example.commentservice.common.kafka.event.CommentCreatedEvent;
+import com.example.commentservice.common.kafka.util.KafkaProducer;
 import com.example.commentservice.common.response.BaseResponseStatus;
 import com.example.commentservice.domain.comment.dto.in.CommentCreateReqDto;
 import com.example.commentservice.domain.comment.dto.in.CommentDeleteReqDto;
@@ -31,6 +33,7 @@ public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final PostServiceClient postServiceClient;
+    private final KafkaProducer kafkaProducer;
 
     private static final int DEFAULT_PAGE_SIZE = 10;
 
@@ -38,7 +41,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void createComment(CommentCreateReqDto commentCreateReqDto) {
         validatePostExists(commentCreateReqDto);
-        commentRepository.save(commentCreateReqDto.toEntity());
+        Comment comment = commentRepository.save(commentCreateReqDto.toEntity());
+        kafkaProducer.sendCommentCreatedEvent(CommentCreatedEvent.from(comment));
     }
 
     @Transactional
