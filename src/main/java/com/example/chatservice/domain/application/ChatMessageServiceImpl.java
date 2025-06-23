@@ -5,6 +5,7 @@ import com.example.chatservice.domain.dto.out.SendChatMessageResDto;
 import com.example.chatservice.domain.infrastructure.ChatMessageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,9 +14,12 @@ import org.springframework.stereotype.Service;
 public class ChatMessageServiceImpl implements ChatMessageService {
 
     private final ChatMessageRepository chatMessageRepository;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
     @Override
     public SendChatMessageResDto sendMessage(SendChatMessageReqDto dto) {
-        return SendChatMessageResDto.from(chatMessageRepository.save(dto.toEntity()));
+        SendChatMessageResDto result = SendChatMessageResDto.from(chatMessageRepository.save(dto.toEntity()));
+        simpMessagingTemplate.convertAndSend("/queue/messages" + dto.getChatRoomUuid(), dto);
+        return result;
     }
 }
