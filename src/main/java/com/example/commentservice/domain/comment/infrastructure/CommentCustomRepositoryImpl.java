@@ -20,11 +20,10 @@ public class CommentCustomRepositoryImpl implements CommentCustomRepository {
 
     @Override
     public Page<Comment> findCommentByPostUuid(String postUuid, Pageable pageable) {
-        Query query = new Query(Criteria.where("postUuid").is(postUuid))
-                .with(pageable);
+        Query baseQuery = new Query(Criteria.where("postUuid").is(postUuid));
 
-        long total = mongoTemplate.count(query, Comment.class);
-        List<Comment> comments = mongoTemplate.find(query, Comment.class);
+        long total = mongoTemplate.count(baseQuery, Comment.class);
+        List<Comment> comments = mongoTemplate.find(baseQuery.with(pageable), Comment.class);
         return new PageImpl<>(comments, pageable, total);
     }
 }
