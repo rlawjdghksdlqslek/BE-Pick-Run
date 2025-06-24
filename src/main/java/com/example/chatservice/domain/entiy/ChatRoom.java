@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "chat_room")
 @Getter
@@ -26,10 +28,22 @@ public class ChatRoom extends BaseEntity {
     @Column(nullable = false)
     private String participantBUuid;
 
+    @Column(nullable = true, length = 255)
+    private String lastMessage;
+
+    @Column(nullable = true)
+    private LocalDateTime lastMessageTime;
+
+
     @Builder
     public ChatRoom(String chatRoomUuid, String participantAUuid, String participantBUuid) {
         this.chatRoomUuid = chatRoomUuid;
         this.participantAUuid = participantAUuid;
         this.participantBUuid = participantBUuid;
+    }
+
+    public void updateLastMessage(String message, LocalDateTime time) {
+        this.lastMessage = message;
+        this.lastMessageTime = time;
     }
 }

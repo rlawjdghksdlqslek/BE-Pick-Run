@@ -15,4 +15,6 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
                     "(r.participantAUuid = :user2 AND r.participantBUuid = :user1)"
     )
     Optional<ChatRoom> findByParticipants(@Param("user1") String user1, @Param("user2") String user2);
+
+    Optional<ChatRoom> findByChatRoomUuid(String chatRoomUuid);
 }
