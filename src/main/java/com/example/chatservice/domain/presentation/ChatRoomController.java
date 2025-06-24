@@ -5,10 +5,14 @@ import com.example.chatservice.domain.application.ChatRoomService;
 import com.example.chatservice.domain.dto.in.CreateChatRoomReqDto;
 import com.example.chatservice.domain.dto.in.MarkMessageAsReadReqDto;
 import com.example.chatservice.domain.vo.in.CreateChatRoomReqVo;
+import com.example.chatservice.domain.dto.out.ChatListResDto;
+import com.example.chatservice.domain.vo.out.ChatListResVo;
 import com.example.chatservice.domain.vo.out.CreateChatRoomResVo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/chat-room")
@@ -37,6 +41,17 @@ public class ChatRoomController {
     ) {
         chatRoomService.markUnreadMessagesAsRead(MarkMessageAsReadReqDto.of(receiverUuid, chatRoomUuid));
         return new BaseResponseEntity<>();
+    }
+
+    //채팅방 목록 조회
+    @GetMapping("/list")
+    public BaseResponseEntity<List<ChatListResVo>> getChatRoomList(
+            @RequestHeader("X-Member-UUID") String memberUuid
+    ) {
+        return new BaseResponseEntity<>(chatRoomService.getChatList(memberUuid)
+                                                .stream()
+                                                .map(ChatListResDto::toVo)
+                                                .toList());
     }
 
 }
