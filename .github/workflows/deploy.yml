@@ -96,6 +96,8 @@ jobs:
             echo "TOSS_PAYMENT_SUCCESS_URL_PROD=${{ secrets.TOSS_PAYMENT_SUCCESS_URL_PROD }}" >> .env
             echo "TOSS_PAYMENT_BASE_URL=${{ secrets.TOSS_PAYMENT_BASE_URL }}" >> .env
             echo "MONGODB_URI_ACTIVE_HISTORY=${{ secrets.MONGODB_URI_ACTIVE_HISTORY }}" >> .env
+            echo "MONGODB_URI_CHAT=${{ secrets.MONGODB_URI_CHAT }}" >> .env
+            
             
             docker pull ${{ steps.login-ecr.outputs.registry }}/learn-run/post-service:latest
             docker-compose -f docker-compose-post.yml down
