@@ -52,6 +52,7 @@ public class ChatMessageCustomRepositoryImpl implements ChatMessageCustomReposit
                 ));
     }
 
+    @Override
     public CursorPage<ChatMessage> findChatMessagesByCursor(String chatRoomUuid, ChatMessageReqDto chatMessageReqDto) {
         int size = chatMessageReqDto.getSize() != null ? chatMessageReqDto.getSize() : DEFAULT_PAGE_SIZE;
         LocalDateTime cursor = chatMessageReqDto.getCursor();
