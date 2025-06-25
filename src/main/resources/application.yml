@@ -17,7 +17,10 @@ spring:
         cors-configurations:
           '[/**]':
             allowedOrigins:
+              - "https://pickandlearn.shop"
+              - "https://www.pickandlearn.shop"
               - "http://localhost:3000"
+              - "http://localhost:3001"
             allow-credentials: true
             allowedHeaders:
               - x-requested-with
@@ -197,6 +200,35 @@ spring:
                   - /error
                   - /api/v1/payment/**
 
+        - id: chat-service-http
+          uri: lb://CHAT-SERVICE
+          predicates:
+            - Path=/chat-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
+                  - /api/v1/chat/**
+
+        # ② WebSocket 업그레이드 전용
+        - id: chat-service-ws
+          uri: lb:ws://CHAT-SERVICE            # ⭐ ws 스킴 + lb 로드밸런싱
+          predicates:
+            - Path=/chat-ws/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /chat-ws/** # hand-shake 단계 401 발생 예방
+
 springdoc:
   api-docs:
     path: /v3/api-docs
@@ -223,7 +255,8 @@ springdoc:
         url: /active-history-service/v3/api-docs
       - name: Payment Service API
         url: /payment-service/v3/api-docs
-
+      - name: Chat-Service API
+        url: /chat-service/v3/api-docs
 logging:
   level:
     root: INFO
