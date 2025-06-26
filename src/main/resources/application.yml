@@ -182,6 +182,7 @@ spring:
                   - /swagger-ui.html
                   - /webjars
                   - /error
+                  - /api/v1/bookmark/**
 
         - id: payment-service
           uri: lb://PAYMENT-SERVICE
