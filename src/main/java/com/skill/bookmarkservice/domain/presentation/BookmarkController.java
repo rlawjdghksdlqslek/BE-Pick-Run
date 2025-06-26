@@ -4,7 +4,10 @@ package com.skill.bookmarkservice.domain.presentation;
 import com.skill.bookmarkservice.common.entity.BaseResponseEntity;
 import com.skill.bookmarkservice.common.response.BaseResponseStatus;
 import com.skill.bookmarkservice.domain.application.BookmarkService;
+import com.skill.bookmarkservice.domain.dto.in.BookmarkReqDto;
 import com.skill.bookmarkservice.domain.dto.out.BookmarkListPageResDto;
+import com.skill.bookmarkservice.domain.dto.out.BookmarkResDto;
+import com.skill.bookmarkservice.domain.vo.out.BookmarkResVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -97,11 +100,12 @@ public class BookmarkController {
         """
     )
     @GetMapping("/{postUuid}")
-    public BaseResponseEntity<Boolean> isBookmarked(
+    public BaseResponseEntity<BookmarkResVo> isBookmarked(
             @PathVariable String postUuid,
-            @RequestHeader("X-Member-UUID") String memberUuid
+            @RequestHeader(value = "X-Member-UUID",required = false) String memberUuid
     ) {
-        return new BaseResponseEntity<>(bookmarkService.isBookmarked(memberUuid, postUuid));
+        BookmarkResDto bookmarked = bookmarkService.isBookmarked(BookmarkReqDto.of(memberUuid, postUuid));
+        return new BaseResponseEntity<>(BookmarkResDto.toVo(bookmarked));
     }
 
     @Operation(

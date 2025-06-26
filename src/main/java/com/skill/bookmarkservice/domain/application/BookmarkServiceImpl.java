@@ -5,7 +5,9 @@ import com.skill.bookmarkservice.client.post.dto.out.ExistsPostResDto;
 import com.skill.bookmarkservice.common.entity.BaseResponseEntity;
 import com.skill.bookmarkservice.common.exception.BaseException;
 import com.skill.bookmarkservice.common.response.BaseResponseStatus;
+import com.skill.bookmarkservice.domain.dto.in.BookmarkReqDto;
 import com.skill.bookmarkservice.domain.dto.out.BookmarkListPageResDto;
+import com.skill.bookmarkservice.domain.dto.out.BookmarkResDto;
 import com.skill.bookmarkservice.domain.entity.Bookmark;
 import com.skill.bookmarkservice.domain.infrastructure.BookmarkRepository;
 import lombok.RequiredArgsConstructor;
@@ -70,8 +72,14 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
-    public boolean isBookmarked(String memberUuid, String postUuid) {
-        return bookmarkRepository.existsByMemberUuidAndPostUuid(memberUuid, postUuid);
+    public BookmarkResDto isBookmarked(BookmarkReqDto bookmarkReqDto) {
+        Optional<Bookmark> bookmark = bookmarkRepository.findByMemberUuidAndPostUuid(
+                bookmarkReqDto.getMemberUuid(), bookmarkReqDto.getPostUuid());
+
+        return BookmarkResDto.builder()
+                .postUuid(bookmarkReqDto.getPostUuid())
+                .bookmarked(bookmark.isPresent())
+                .build();
     }
 
     @Override
