@@ -4,7 +4,6 @@ import org.springframework.data.domain.Sort;
 
 public enum CommentSortType {
     LIKE("likeCount"),
-    POPULAR("viewCount"),
     RECENT("createdAt");
 
     private final String sortField;
