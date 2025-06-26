@@ -53,7 +53,9 @@ public enum BaseResponseStatus {
     DUPLICATE_CATEGORY_LIST(HttpStatus.BAD_REQUEST, false, 2106, "중복된 카테고리 입니다."),
 
 
-    NOT_FOUND_COMMENT(HttpStatus.NOT_FOUND, false, 2500, "해당 댓글을 찾을 수 없습니다.");
+    NOT_FOUND_COMMENT(HttpStatus.NOT_FOUND, false, 2500, "해당 댓글을 찾을 수 없습니다."),
+    ALREADY_EXISTS_COMMENT_LIKE(HttpStatus.CONFLICT, false, 2501, "이미 댓글에 좋아요를 하였습니다.");
+
     /**
      * 3000 : order service error
      */
