@@ -4,4 +4,6 @@ import com.example.commentservice.domain.comment.dto.in.CommentLikeReqDto;
 
 public interface CommentLikeService {
     void likeComment(CommentLikeReqDto commentLikeReqDto);
+
+    void unlikeComment(CommentLikeReqDto commentLikeReqDto);
 }

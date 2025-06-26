@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/comment")
+@RequestMapping("/api/v1/comment-like")
 @Tag(name = "comment")
 @Slf4j
 public class CommentLikeController {
@@ -26,6 +26,15 @@ public class CommentLikeController {
             @RequestHeader("X-Member-UUID") String memberUuid
     ) {
         commentLikeService.likeComment(CommentLikeReqDto.of(commentUuid, memberUuid));
+        return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
+    }
+
+    @DeleteMapping("/{commentUuid}")
+    public BaseResponseEntity<Void> unlikeComment(
+            @PathVariable String commentUuid,
+            @RequestHeader("X-Member-UUID") String memberUuid
+    ) {
+        commentLikeService.unlikeComment(CommentLikeReqDto.of(commentUuid, memberUuid));
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
     }
 }
