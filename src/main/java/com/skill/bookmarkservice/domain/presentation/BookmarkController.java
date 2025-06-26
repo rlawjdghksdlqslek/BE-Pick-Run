@@ -104,7 +104,7 @@ public class BookmarkController {
             @PathVariable String postUuid,
             @RequestHeader(value = "X-Member-UUID",required = false) String memberUuid
     ) {
-        BookmarkResDto bookmarked = bookmarkService.isBookmarked(BookmarkReqDto.of(memberUuid, postUuid));
+        BookmarkResDto bookmarked = bookmarkService.isBookmarked(BookmarkReqDto.of(postUuid, memberUuid));
         return new BaseResponseEntity<>(BookmarkResDto.toVo(bookmarked));
     }
 
