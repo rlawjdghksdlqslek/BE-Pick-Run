@@ -1,7 +1,6 @@
 package com.example.chatservice.domain.dto.out;
 
 import com.example.chatservice.domain.entiy.ChatMessage;
-import com.example.chatservice.domain.vo.out.ChatMessageResVo;
 import lombok.Builder;
 import lombok.Getter;
 
