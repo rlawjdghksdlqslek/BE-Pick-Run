@@ -12,17 +12,17 @@ public class BookmarkListPageResDto {
     private long page;
     private long size;
     private boolean hasNext;
-    private long totalPage;
+    private long totalPages;
     private long totalElements;
 
     @Builder
     public BookmarkListPageResDto(
-            List<String> postUuid, long page, long size, boolean hasNext, long totalPage, long totalElements) {
+            List<String> postUuid, long page, long size, boolean hasNext, long totalPages, long totalElements) {
         this.postUuid = postUuid;
         this.page = page;
         this.size = size;
         this.hasNext = hasNext;
-        this.totalPage = totalPage;
+        this.totalPages = totalPages;
         this.totalElements = totalElements;
     }
 }
