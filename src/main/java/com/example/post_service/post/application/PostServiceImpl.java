@@ -47,10 +47,10 @@ public class PostServiceImpl implements PostService {
     @Override
     public void updatePost(
             String memberUuid,
-            String postId,
+            String postUuid,
             PostUpdateReqDto postUpdateReqDto
     ) {
-        Post post = postRepository.findById(postId)
+        Post post = postRepository.findByPostUuid(postUuid)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
         validatePostOwner(memberUuid, post);
 

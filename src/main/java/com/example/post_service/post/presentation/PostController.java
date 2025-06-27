@@ -44,18 +44,18 @@ public class PostController {
     /**
      * 2. 질문 수정
      * @param memberUuid
-     * @param postId
+     * @param postUuid
      * @param postUpdateReqVo
      * @return
      */
     @Operation(summary = "질문 수정")
-    @PatchMapping("/{postId}")
+    @PatchMapping("/{postUuid}")
     public BaseResponseEntity<Void> updatePost(
             @RequestHeader("X-Member-UUID") String memberUuid,
-            @PathVariable String postId,
+            @PathVariable String postUuid,
             @RequestBody PostUpdateReqVo postUpdateReqVo
     ) {
-        postService.updatePost(memberUuid, postId, PostUpdateReqDto.from(postUpdateReqVo));
+        postService.updatePost(memberUuid, postUuid, PostUpdateReqDto.from(postUpdateReqVo));
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
     }
 

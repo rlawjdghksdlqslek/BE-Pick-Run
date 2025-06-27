@@ -9,7 +9,7 @@ public interface PostService {
 
     void createPost(PostCreateReqDto postCreateReqDto);
 
-    void updatePost(String memberUuid, String postId, PostUpdateReqDto postUpdateReqDto);
+    void updatePost(String memberUuid, String postUuid, PostUpdateReqDto postUpdateReqDto);
 
     ExistsPostDto existsPost(String postUuid);
 
