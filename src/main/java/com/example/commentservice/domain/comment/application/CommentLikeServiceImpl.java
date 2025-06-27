@@ -2,7 +2,9 @@ package com.example.commentservice.domain.comment.application;
 
 import com.example.commentservice.common.exception.BaseException;
 import com.example.commentservice.common.response.BaseResponseStatus;
+import com.example.commentservice.domain.comment.dto.in.CommentLikeCountReqDto;
 import com.example.commentservice.domain.comment.dto.in.CommentLikeReqDto;
+import com.example.commentservice.domain.comment.dto.out.CommentLikeCountResDto;
 import com.example.commentservice.domain.comment.entity.CommentLike;
 import com.example.commentservice.domain.comment.infrastructure.CommentLikeRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,4 +44,14 @@ public class CommentLikeServiceImpl implements CommentLikeService {
 
         commentLikeRepository.delete(commentLike);
     }
+
+    @Override
+    public CommentLikeCountResDto getCommentLikeCount(CommentLikeCountReqDto commentLikeCountReqDto) {
+        long count = commentLikeRepository.countByCommentUuid(commentLikeCountReqDto.getCommentUuid());
+        return CommentLikeCountResDto.builder()
+                .commentUuid(commentLikeCountReqDto.getCommentUuid())
+                .likeCount(count)
+                .build();
+    }
+
 }

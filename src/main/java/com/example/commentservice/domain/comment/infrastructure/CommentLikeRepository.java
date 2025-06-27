@@ -12,4 +12,6 @@ public interface CommentLikeRepository extends MongoRepository<CommentLike, Stri
 
     Optional<CommentLike> findByCommentUuidAndMemberUuid(String commentUuid, String memberUuid);
 
+    long countByCommentUuid(String commentUuid);
+
 }

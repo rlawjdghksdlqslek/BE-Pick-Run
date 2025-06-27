@@ -1,6 +1,5 @@
 package com.example.commentservice.domain.comment.dto.in;
 
-import com.example.commentservice.domain.comment.entity.Comment;
 import com.example.commentservice.domain.comment.entity.CommentLike;
 import lombok.Builder;
 import lombok.Getter;
