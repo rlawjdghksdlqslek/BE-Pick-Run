@@ -17,7 +17,10 @@ spring:
         cors-configurations:
           '[/**]':
             allowedOrigins:
+              - "https://pickandlearn.shop"
+              - "https://www.pickandlearn.shop"
               - "http://localhost:3000"
+              - "http://localhost:3001"
             allow-credentials: true
             allowedHeaders:
               - x-requested-with
@@ -145,6 +148,7 @@ spring:
                   - /webjars
                   - /error
                   - /api/v1/review/info/**
+                  - /api/v1/member-review/**
 
 
         - id: comment-service
@@ -162,7 +166,8 @@ spring:
                   - /swagger-ui.html
                   - /webjars
                   - /error
-
+                  - /api/v1/comment/*
+                  - /api/v1/comment/post/*/list
         - id: bookmark-service
           uri: lb://BOOKMARK-SERVICE
           predicates:
@@ -178,6 +183,7 @@ spring:
                   - /swagger-ui.html
                   - /webjars
                   - /error
+                  - /api/v1/bookmark/**
 
         - id: payment-service
           uri: lb://PAYMENT-SERVICE
@@ -216,12 +222,41 @@ spring:
                   - /error
                   - /api/v1/point-charge/**
 
+        - id: chat-service-http
+          uri: lb://CHAT-SERVICE
+          predicates:
+            - Path=/chat-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
+                  - /api/v1/chat/**
+
+        # ② WebSocket 업그레이드 전용
+        - id: chat-service-ws
+          uri: lb:ws://CHAT-SERVICE            # ⭐ ws 스킴 + lb 로드밸런싱
+          predicates:
+            - Path=/chat-ws/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /chat-ws/** # hand-shake 단계 401 발생 예방
+
 springdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
     enabled: true
-    path: /
+    path: /swagger
 
     urls:
       - name: Member Service API
@@ -236,7 +271,7 @@ springdoc:
         url: /review-service/v3/api-docs
       - name: Comment Service API
         url: /comment-service/v3/api-docs
-      - name: BOOKMARK Service API
+      - name: Bookmark Service API
         url: /bookmark-service/v3/api-docs
       - name: Active History Service API
         url: /active-history-service/v3/api-docs
@@ -244,6 +279,8 @@ springdoc:
         url: /payment-service/v3/api-docs
       - name: Point Service API
         url: /point-service/v3/api-docs
+      - name: Chat-Service API
+        url: /chat-service/v3/api-docs
 
 logging:
   level:
