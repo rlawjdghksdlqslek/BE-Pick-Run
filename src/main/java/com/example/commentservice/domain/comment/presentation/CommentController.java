@@ -137,7 +137,7 @@ public class CommentController {
             [요청 파라미터]
             - postUuid: (String) 게시글 UUID
             - page: (int) 페이지 번호 (기본값: 0)
-            - commentSortType: (String) 정렬 기준 (RECENT, POPULAR 등)
+            - commentSortType: (String) 정렬 기준 (RECENT, POPULAR)
 
             [처리 로직]
             - 게시글 UUID에 따른 댓글 페이징 목록 조회
