@@ -195,6 +195,26 @@ spring:
                   - /webjars
                   - /error
                   - /api/v1/payment/**
+                  - /fail.html/**
+                  - /success.html/**
+                  - /payment-service/payment-service.main/static/**
+
+        - id: point-service
+          uri: lb://POINT-SERVICE
+          predicates:
+            - Path=/point-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
+                  - /api/v1/point-charge/**
 
 springdoc:
   api-docs:
@@ -222,6 +242,8 @@ springdoc:
         url: /active-history-service/v3/api-docs
       - name: Payment Service API
         url: /payment-service/v3/api-docs
+      - name: Point Service API
+        url: /point-service/v3/api-docs
 
 logging:
   level:
