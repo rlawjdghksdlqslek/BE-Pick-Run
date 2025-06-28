@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  chat-service:
+    image: 009160040466.dkr.ecr.ap-northeast-2.amazonaws.com/learn-run/chat-service:latest
+    container_name: chat-service
+    env_file:
+      - .env
+    networks:
+      - shared-net
+
+networks:
+  shared-net:
+    external: true
