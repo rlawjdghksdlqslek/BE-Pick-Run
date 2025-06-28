@@ -2,10 +2,11 @@ package com.example.chatservice.domain.application;
 
 import com.example.chatservice.common.response.CursorPage;
 import com.example.chatservice.domain.dto.in.ChatMessageReqDto;
+import com.example.chatservice.domain.dto.in.ChatRoomListReqDto;
 import com.example.chatservice.domain.dto.in.CreateChatRoomReqDto;
 import com.example.chatservice.domain.dto.in.MarkMessageAsReadReqDto;
-import com.example.chatservice.domain.dto.out.ChatListResDto;
 import com.example.chatservice.domain.dto.out.ChatMessageResDto;
+import com.example.chatservice.domain.dto.out.ChatRoomListResDto;
 import com.example.chatservice.domain.dto.out.CreateChatRoomResDto;
 import com.example.chatservice.domain.entiy.ChatMessage;
 import com.example.chatservice.domain.entiy.ChatRoom;
@@ -21,7 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -70,25 +70,9 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
     @Override
-    public List<ChatListResDto> getChatList(String memberUuid) {
-        List<ChatRoom> chatRooms = chatRoomRepository.findAllByParticipantUuid(memberUuid);
-        Map<String, Integer> unreadCountMap = chatMessageRepository.getUnreadMessageCountByChatRoom(memberUuid);
-
-        return chatRooms.stream()
-                .map(room -> {
-                    String opponent = memberUuid.equals(room.getParticipantAUuid())
-                            ? room.getParticipantBUuid()
-                            : room.getParticipantAUuid();
-
-                    return new ChatListResDto(
-                            room.getChatRoomUuid(),
-                            opponent,
-                            room.getLastMessage(),
-                            room.getLastMessageTime(),
-                            unreadCountMap.getOrDefault(room.getChatRoomUuid(), 0)
-                    );
-                })
-                .toList();
+    public CursorPage<ChatRoomListResDto> getChatRoomList(String memberUuid, ChatRoomListReqDto chatRoomListReqDto) {
+        CursorPage<ChatRoom> chatRooms = chatRoomRepository.findAllChatRoomsWithCursor(memberUuid, chatRoomListReqDto);
+        return chatRooms.map(chatRoom -> ChatRoomListResDto.from(chatRoom, memberUuid));
     }
 
     @Override

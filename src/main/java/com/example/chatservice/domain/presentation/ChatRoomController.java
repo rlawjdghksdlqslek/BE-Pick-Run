@@ -4,19 +4,17 @@ import com.example.chatservice.common.entity.BaseResponseEntity;
 import com.example.chatservice.common.response.CursorPage;
 import com.example.chatservice.domain.application.ChatRoomService;
 import com.example.chatservice.domain.dto.in.ChatMessageReqDto;
+import com.example.chatservice.domain.dto.in.ChatRoomListReqDto;
 import com.example.chatservice.domain.dto.in.CreateChatRoomReqDto;
 import com.example.chatservice.domain.dto.in.MarkMessageAsReadReqDto;
-import com.example.chatservice.domain.dto.out.ChatListResDto;
+import com.example.chatservice.domain.dto.out.ChatRoomListResDto;
 import com.example.chatservice.domain.dto.out.ChatMessageResDto;
 import com.example.chatservice.domain.vo.in.CreateChatRoomReqVo;
-import com.example.chatservice.domain.vo.out.ChatListResVo;
 import com.example.chatservice.domain.vo.out.CreateChatRoomResVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/chat-room")
@@ -89,36 +87,62 @@ public class ChatRoomController {
     }
 
     @Operation(
-            summary = "채팅방 목록 조회",
+            summary = "채팅방 목록 커서 기반 조회",
             description = """
-                        회원 UUID 기준으로 해당 사용자의 채팅방 목록을 조회합니다.
-                    
-                        [요청 경로]
-                        - GET /api/v1/chat-room/list
-                    
-                        [요청 헤더]
-                        - X-Member-UUID: (String) 회원 고유 식별자
-                    
-                        [응답 필드]
-                        - chatRoomUuid, lastMessage, unreadCount 등 포함된 채팅방 리스트
-                    
-                        [처리 로직]
-                        - 해당 회원이 속한 모든 채팅방 목록 조회
-                    
-                        [예외 상황]
-                        - INVALID_MEMBER_UUID: 잘못된 UUID 입력
-                    """
+        회원이 참여 중인 채팅방을 커서 기반 페이지네이션 방식으로 조회합니다.
+
+        [정렬 방식]
+        - 채팅방은 마지막 메시지 시간(`lastMessageTime`) 기준으로 내림차순 정렬됩니다.
+        - 단, `lastMessageTime`이 없는 채팅방은 생성일(`createdAt`) 기준으로 정렬됩니다.
+        
+        [요청 경로]
+        - GET /api/v1/chat-room/list
+
+        [요청 헤더]
+        - X-Member-UUID: (String) 회원 고유 식별자
+
+        [요청 파라미터 - QueryString]
+        - cursor: (String) 이전 페이지 마지막 채팅방의 마지막 메시지 시간 (ISO 8601 형식, nullable)
+        - size: (int) 페이지 크기 (기본값: 10)
+
+        [요청 예시]
+        - /api/v1/chat-room/list?cursor=2025-06-28T15:33:40
+
+        [응답 필드]
+        - content: 채팅방 리스트
+        - nextCursor: 다음 페이지 조회를 위한 커서 (마지막 채팅방의 lastMessageTime)
+        - hasNext: 다음 페이지 존재 여부
+    """
     )
     @GetMapping("/list")
-    public BaseResponseEntity<List<ChatListResVo>> getChatRoomList(
-            @RequestHeader("X-Member-UUID") String memberUuid
+    public BaseResponseEntity<CursorPage<ChatRoomListResDto>> getChatRoomList(
+            @RequestHeader("X-Member-UUID") String memberUuid,
+            @ModelAttribute ChatRoomListReqDto chatRoomListReqDto
     ) {
-        return new BaseResponseEntity<>(chatRoomService.getChatList(memberUuid)
-                                                .stream()
-                                                .map(ChatListResDto::toVo)
-                                                .toList());
+        return new BaseResponseEntity<>(chatRoomService.getChatRoomList(memberUuid,chatRoomListReqDto));
     }
 
+    @Operation(
+            summary = "채팅방 메시지 목록 조회",
+            description = """
+            특정 채팅방의 메시지를 커서 기반으로 페이징 조회합니다.
+
+            [요청 경로]
+            - GET /api/v1/chat-room/{chatRoomUuid}/message
+
+            [요청 파라미터]
+            - path variable: chatRoomUuid (String) 채팅방 UUID
+            - cursor: (String) 마지막 메시지 UUID (nullable)
+            - size: (int) 페이지 크기 (기본값: 10)
+
+            [응답 필드]
+            - content: 메시지 리스트
+            - nextCursor: 다음 페이지 커서
+
+            [예외 상황]
+            - NO_EXIST_CHAT_ROOM: 채팅방 존재하지 않음
+        """
+    )
     @GetMapping("/{chatRoomUuid}/message")
     public BaseResponseEntity<CursorPage<ChatMessageResDto>> getChatMessages(
             @PathVariable String chatRoomUuid,

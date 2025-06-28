@@ -1,6 +1,5 @@
-package com.example.chatservice.domain.dto.out;
+package com.example.chatservice.domain.vo.out;
 
-import com.example.chatservice.domain.vo.out.ChatListResVo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class ChatListResDto {
+public class ChatRoomListResVo {
     private String chatRoomUuid;
     private String opponentUuid;
     private String lastMessage;
@@ -17,7 +16,7 @@ public class ChatListResDto {
     private int unreadMessageCount;
 
     @Builder
-    public ChatListResDto(
+    public ChatRoomListResVo(
             String chatRoomUuid, String opponentUuid, String lastMessage, LocalDateTime lastMessageTime,
             int unreadMessageCount
     ) {
@@ -26,15 +25,5 @@ public class ChatListResDto {
         this.lastMessage = lastMessage;
         this.lastMessageTime = lastMessageTime;
         this.unreadMessageCount = unreadMessageCount;
-    }
-
-    public ChatListResVo toVo() {
-        return ChatListResVo.builder()
-                .chatRoomUuid(chatRoomUuid)
-                .opponentUuid(opponentUuid)
-                .lastMessage(lastMessage)
-                .lastMessageTime(lastMessageTime)
-                .unreadMessageCount(unreadMessageCount)
-                .build();
     }
 }
