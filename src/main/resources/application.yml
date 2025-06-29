@@ -1,1 +1,13 @@
-spring.application.name=openvidu
+server:
+  port: 2000
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+
+spring:
+  application:
+    name: openvidu-service
+  profiles:
+    active: dev
+
