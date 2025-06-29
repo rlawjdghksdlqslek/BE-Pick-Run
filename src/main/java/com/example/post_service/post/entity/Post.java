@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 public class Post {
 
     @Id
+    private String id;
+
     private String postUuid;
 
     private String memberUuid;
