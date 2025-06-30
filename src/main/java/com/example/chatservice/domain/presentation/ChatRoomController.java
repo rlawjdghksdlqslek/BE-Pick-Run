@@ -123,6 +123,33 @@ public class ChatRoomController {
     }
 
     @Operation(
+            summary = "단일 채팅방 정보 조회",
+            description = """
+            특정 채팅방 UUID와 회원 UUID를 기반으로 해당 채팅방의 정보를 조회합니다.
+
+            [요청 경로]
+            - GET /api/v1/chat-room/{chatRoomUuid}
+
+            [요청 헤더]
+            - X-Member-UUID: (String) 조회 요청 회원 UUID
+
+            [요청 파라미터]
+            - path variable: chatRoomUuid (String) 채팅방 UUID
+
+            [응답 필드]
+            - 채팅방 상대 정보, 마지막 메시지, 안 읽은 메시지 수 등
+
+        """
+    )
+    @GetMapping("/{chatRoomUuid}")
+    public BaseResponseEntity<ChatRoomListResDto> getChatRoom(
+            @PathVariable String chatRoomUuid,
+            @RequestHeader("X-Member-UUID") String memberUuid
+    ) {
+        return new BaseResponseEntity<>(chatRoomService.getChatRoom(memberUuid,chatRoomUuid));
+    }
+
+    @Operation(
             summary = "채팅방 메시지 목록 조회",
             description = """
             특정 채팅방의 메시지를 커서 기반으로 페이징 조회합니다.
