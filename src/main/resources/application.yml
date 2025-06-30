@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 2000
 
 eureka:
   instance:
@@ -16,7 +16,7 @@ spring:
   application:
     name: chat-service
   profiles:
-    active: prod
+    active: dev
 
   jpa:
     hibernate:
