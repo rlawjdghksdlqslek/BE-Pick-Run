@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 
 @Getter
 @NoArgsConstructor
@@ -16,11 +18,13 @@ public class CommentResDto {
     private String content;
     private boolean blind_status;
     private boolean deleted_status;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     @Builder
     public CommentResDto(
             String commentUuid, String postUuid, String memberUuid, String content, boolean blind_status,
-            boolean deleted_status
+            boolean deleted_status, LocalDateTime createdAt, LocalDateTime updatedAt
     ) {
         this.commentUuid = commentUuid;
         this.postUuid = postUuid;
@@ -28,6 +32,8 @@ public class CommentResDto {
         this.content = content;
         this.blind_status = blind_status;
         this.deleted_status = deleted_status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
 
@@ -39,6 +45,8 @@ public class CommentResDto {
                 .content(comment.getContent())
                 .blind_status(comment.isBlind_status())
                 .deleted_status(comment.isDeleted_status())
+                .createdAt(comment.getCreatedAt())
+                .updatedAt(comment.getUpdatedAt())
                 .build();
     }
 }
