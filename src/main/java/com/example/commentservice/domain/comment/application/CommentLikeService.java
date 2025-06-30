@@ -2,6 +2,7 @@ package com.example.commentservice.domain.comment.application;
 
 import com.example.commentservice.domain.comment.dto.in.CommentLikeCountReqDto;
 import com.example.commentservice.domain.comment.dto.in.CommentLikeReqDto;
+import com.example.commentservice.domain.comment.dto.out.CommentLikeCheckResDto;
 import com.example.commentservice.domain.comment.dto.out.CommentLikeCountResDto;
 
 public interface CommentLikeService {
@@ -10,4 +11,6 @@ public interface CommentLikeService {
     void unlikeComment(CommentLikeReqDto commentLikeReqDto);
 
     CommentLikeCountResDto getCommentLikeCount(CommentLikeCountReqDto commentLikeCountReqDto);
+
+    CommentLikeCheckResDto hasLikedComment(String commentUuid, String memberUuid);
 }
