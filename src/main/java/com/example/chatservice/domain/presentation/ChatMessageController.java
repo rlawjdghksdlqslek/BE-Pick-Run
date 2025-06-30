@@ -1,6 +1,7 @@
 package com.example.chatservice.domain.presentation;
 
 import com.example.chatservice.domain.application.ChatMessageService;
+import com.example.chatservice.domain.dto.in.ReadMessageReqDto;
 import com.example.chatservice.domain.dto.in.SendChatMessageReqDto;
 import com.example.chatservice.domain.vo.in.SendChatMessageReqVo;
 import lombok.RequiredArgsConstructor;
@@ -21,4 +22,12 @@ public class ChatMessageController {
     ) {
         chatMessageService.sendMessage(SendChatMessageReqDto.of(senderUuid, vo));
     }
+
+    /*@MessageMapping("/chat.read")
+    public void readMessages(
+            @Header("X-Member-UUID") String readerUuid,
+            ReadMessageReqDto dto
+    ) {
+        chatMessageService.markMessagesAsRead(readerUuid, dto.getMessageIds());
+    }*/
 }

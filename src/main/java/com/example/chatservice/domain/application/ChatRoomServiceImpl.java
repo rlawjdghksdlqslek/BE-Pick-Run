@@ -76,6 +76,14 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
     @Override
+    public ChatRoomListResDto getChatRoom(String memberUuid, String chatRoomUuid) {
+        ChatRoom chatRoom = chatRoomRepository.findByChatRoomUuid(chatRoomUuid)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 채팅방입니다."));
+
+        return ChatRoomListResDto.from(chatRoom,memberUuid);
+    }
+
+    @Override
     public CursorPage<ChatMessageResDto> getChatMessages(String chatRoomUuid, ChatMessageReqDto chatMessageReqDto) {
         CursorPage<ChatMessage> page = chatMessageRepository.findChatMessagesByCursor(chatRoomUuid, chatMessageReqDto);
 

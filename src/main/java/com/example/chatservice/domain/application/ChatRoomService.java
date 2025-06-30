@@ -17,5 +17,7 @@ public interface ChatRoomService {
 
     CursorPage<ChatRoomListResDto> getChatRoomList(String memberUuid, ChatRoomListReqDto chatRoomListReqDto);
 
+    ChatRoomListResDto getChatRoom(String memberUuid,String chatRoomUuid);
+
     CursorPage<ChatMessageResDto> getChatMessages(String chatRoomUuid, ChatMessageReqDto dto);
 }
