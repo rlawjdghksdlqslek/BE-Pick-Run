@@ -168,6 +168,7 @@ spring:
                   - /error
                   - /api/v1/comment/*
                   - /api/v1/comment/post/*/list
+                  - /api/v1/comment-like/*
         - id: bookmark-service
           uri: lb://BOOKMARK-SERVICE
           predicates:
