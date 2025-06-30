@@ -1,6 +1,7 @@
 package com.example.commentservice.common.config;
 
 import com.example.commentservice.common.kafka.event.CommentCreatedEvent;
+import com.example.commentservice.common.kafka.event.CommentDeletedEvent;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,5 +40,15 @@ public class KafkaProducerConfig {
     @Bean
     public KafkaTemplate<String, CommentCreatedEvent> commentCreatedEventKafkaTemplate() {
         return new KafkaTemplate<>(commentCreatedEventProducerFactory());
+    }
+
+    @Bean
+    public ProducerFactory<String, CommentDeletedEvent> commentDeletedEventProducerFactory() {
+        return new DefaultKafkaProducerFactory<>(producerConfigs());
+    }
+
+    @Bean
+    public KafkaTemplate<String, CommentDeletedEvent> commentDeletedEventKafkaTemplate() {
+        return new KafkaTemplate<>(commentDeletedEventProducerFactory());
     }
 }

@@ -5,6 +5,7 @@ import com.example.commentservice.client.post.dto.out.ExistsPostResDto;
 import com.example.commentservice.common.entity.BaseResponseEntity;
 import com.example.commentservice.common.exception.BaseException;
 import com.example.commentservice.common.kafka.event.CommentCreatedEvent;
+import com.example.commentservice.common.kafka.event.CommentDeletedEvent;
 import com.example.commentservice.common.kafka.util.KafkaProducer;
 import com.example.commentservice.common.response.BaseResponseStatus;
 import com.example.commentservice.domain.comment.dto.in.CommentCreateReqDto;
@@ -65,6 +66,7 @@ public class CommentServiceImpl implements CommentService {
         validateCommentOwner(comment, commentDeleteReqDto.getMemberUuid());
         comment.softDelete();
         commentRepository.save(comment);
+        kafkaProducer.sendCommentDeletedEvent(CommentDeletedEvent.from(comment));
     }
 
     @Override

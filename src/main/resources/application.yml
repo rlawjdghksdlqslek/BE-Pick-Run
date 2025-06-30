@@ -29,6 +29,7 @@ spring:
       buffer-memory: 33554432
     topics:
       comment-created: comment-created
+      comment-deleted: comment-deleted
 
   jpa:
     hibernate:
