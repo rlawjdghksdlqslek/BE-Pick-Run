@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
@@ -35,6 +36,7 @@ public class SendChatMessageReqDto {
 
     public ChatMessage toEntity() {
         return ChatMessage.builder()
+                .messageUuId(UUID.randomUUID().toString())
                 .chatRoomUuid(chatRoomUuid)
                 .senderUuid(senderUuid)
                 .receiverUuid(receiverUuid)
