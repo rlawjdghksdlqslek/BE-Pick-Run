@@ -247,10 +247,10 @@ spring:
             - Path=/chat-ws/**
           filters:
             - StripPrefix=1
-            - name: JwtAuthenticationFilter
-              args:
-                skipPaths:
-                  - /chat-ws/** # hand-shake 단계 401 발생 예방
+#            - name: JwtAuthenticationFilter
+#              args:
+#                skipPaths:
+#                  - /chat-ws/** # hand-shake 단계 401 발생 예방
 
 springdoc:
   api-docs:
