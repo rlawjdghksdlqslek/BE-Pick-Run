@@ -242,7 +242,7 @@ spring:
 
         # ② WebSocket 업그레이드 전용
         - id: chat-service-ws
-          uri: lb:ws://CHAT-SERVICE            # ⭐ ws 스킴 + lb 로드밸런싱
+          uri: ws://CHAT-SERVICE            # ⭐ ws 스킴 + lb 로드밸런싱
           predicates:
             - Path=/chat-ws/**
           filters:
