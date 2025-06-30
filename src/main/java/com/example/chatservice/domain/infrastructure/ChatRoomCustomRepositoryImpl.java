@@ -22,15 +22,15 @@ public class ChatRoomCustomRepositoryImpl implements ChatRoomCustomRepository {
     private static final int DEFAULT_PAGE_SIZE = 10;
 
 
-    public CursorPage<ChatRoom> findAllChatRoomsWithCursor(String memberUuid, ChatRoomListReqDto chatRoomListReqDto) {
+    public CursorPage<ChatRoom> findAllChatRoomsWithCursor(String senderUuid, ChatRoomListReqDto chatRoomListReqDto) {
         QChatRoom chatRoom = QChatRoom.chatRoom;
 
         int size = (chatRoomListReqDto.getSize() != null)
                 ? chatRoomListReqDto.getSize()
                 : DEFAULT_PAGE_SIZE;
 
-        BooleanExpression condition = chatRoom.participantAUuid.eq(memberUuid)
-                .or(chatRoom.participantBUuid.eq(memberUuid));
+        BooleanExpression condition = chatRoom.participantAUuid.eq(senderUuid)
+                .or(chatRoom.participantBUuid.eq(senderUuid));
 
         if (chatRoomListReqDto.getCursor() != null) {
             // lastMessageTime 있는 경우엔 그걸 기준으로, 없으면 createdAt 기준으로

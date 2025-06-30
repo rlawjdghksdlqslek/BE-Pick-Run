@@ -13,18 +13,20 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ChatRoomListResDto {
     private String chatRoomUuid;
-    private String opponentUuid;
+    private String senderUuid;
+    private String receiverUuid;
     private String lastMessage;
     private LocalDateTime lastMessageTime;
     private int unreadMessageCount;
 
     @Builder
     public ChatRoomListResDto(
-            String chatRoomUuid, String opponentUuid, String lastMessage, LocalDateTime lastMessageTime,
-            int unreadMessageCount
+            String chatRoomUuid, String senderUuid, String receiverUuid, String lastMessage,
+            LocalDateTime lastMessageTime, int unreadMessageCount
     ) {
         this.chatRoomUuid = chatRoomUuid;
-        this.opponentUuid = opponentUuid;
+        this.senderUuid = senderUuid;
+        this.receiverUuid = receiverUuid;
         this.lastMessage = lastMessage;
         this.lastMessageTime = lastMessageTime;
         this.unreadMessageCount = unreadMessageCount;
@@ -37,24 +39,16 @@ public class ChatRoomListResDto {
         this.lastMessageTime = lastMessageTime;
     }
 
-    public ChatRoomListResVo toVo() {
-        return ChatRoomListResVo.builder()
-                .chatRoomUuid(chatRoomUuid)
-                .opponentUuid(opponentUuid)
-                .lastMessage(lastMessage)
-                .lastMessageTime(lastMessageTime)
-                .unreadMessageCount(unreadMessageCount)
-                .build();
-    }
 
-    public static ChatRoomListResDto from(ChatRoom chatRoom, String requesterUuid) {
-        String opponent = requesterUuid.equals(chatRoom.getParticipantAUuid())
+    public static ChatRoomListResDto from(ChatRoom chatRoom, String senderUuid) {
+        String opponent = senderUuid.equals(chatRoom.getParticipantAUuid())
                 ? chatRoom.getParticipantBUuid()
                 : chatRoom.getParticipantAUuid();
 
         return ChatRoomListResDto.builder()
                 .chatRoomUuid(chatRoom.getChatRoomUuid())
-                .opponentUuid(opponent)
+                .senderUuid(senderUuid)
+                .receiverUuid(opponent)
                 .lastMessage(chatRoom.getLastMessage())
                 .lastMessageTime(chatRoom.getLastMessageTime())
                 .build();

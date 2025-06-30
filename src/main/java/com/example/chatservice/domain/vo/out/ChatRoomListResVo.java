@@ -10,18 +10,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ChatRoomListResVo {
     private String chatRoomUuid;
-    private String opponentUuid;
+    private String receiverUuid;
     private String lastMessage;
     private LocalDateTime lastMessageTime;
     private int unreadMessageCount;
 
     @Builder
     public ChatRoomListResVo(
-            String chatRoomUuid, String opponentUuid, String lastMessage, LocalDateTime lastMessageTime,
+            String chatRoomUuid, String receiverUuid, String lastMessage, LocalDateTime lastMessageTime,
             int unreadMessageCount
     ) {
         this.chatRoomUuid = chatRoomUuid;
-        this.opponentUuid = opponentUuid;
+        this.receiverUuid = receiverUuid;
         this.lastMessage = lastMessage;
         this.lastMessageTime = lastMessageTime;
         this.unreadMessageCount = unreadMessageCount;

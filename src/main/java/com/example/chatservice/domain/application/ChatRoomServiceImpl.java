@@ -70,9 +70,9 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
     @Override
-    public CursorPage<ChatRoomListResDto> getChatRoomList(String memberUuid, ChatRoomListReqDto chatRoomListReqDto) {
-        CursorPage<ChatRoom> chatRooms = chatRoomRepository.findAllChatRoomsWithCursor(memberUuid, chatRoomListReqDto);
-        return chatRooms.map(chatRoom -> ChatRoomListResDto.from(chatRoom, memberUuid));
+    public CursorPage<ChatRoomListResDto> getChatRoomList(String senderUuid, ChatRoomListReqDto chatRoomListReqDto) {
+        CursorPage<ChatRoom> chatRooms = chatRoomRepository.findAllChatRoomsWithCursor(senderUuid, chatRoomListReqDto);
+        return chatRooms.map(chatRoom -> ChatRoomListResDto.from(chatRoom, senderUuid));
     }
 
     @Override
