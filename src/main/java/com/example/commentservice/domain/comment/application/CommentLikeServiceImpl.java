@@ -4,6 +4,7 @@ import com.example.commentservice.common.exception.BaseException;
 import com.example.commentservice.common.response.BaseResponseStatus;
 import com.example.commentservice.domain.comment.dto.in.CommentLikeCountReqDto;
 import com.example.commentservice.domain.comment.dto.in.CommentLikeReqDto;
+import com.example.commentservice.domain.comment.dto.out.CommentLikeCheckResDto;
 import com.example.commentservice.domain.comment.dto.out.CommentLikeCountResDto;
 import com.example.commentservice.domain.comment.entity.CommentLike;
 import com.example.commentservice.domain.comment.infrastructure.CommentLikeRepository;
@@ -51,6 +52,15 @@ public class CommentLikeServiceImpl implements CommentLikeService {
         return CommentLikeCountResDto.builder()
                 .commentUuid(commentLikeCountReqDto.getCommentUuid())
                 .likeCount(count)
+                .build();
+    }
+
+    @Override
+    public CommentLikeCheckResDto hasLikedComment(String commentUuid, String memberUuid) {
+        boolean result = commentLikeRepository.existsByCommentUuidAndMemberUuid(commentUuid, memberUuid);
+        return CommentLikeCheckResDto.builder()
+                .commentUuid(commentUuid)
+                .liked(result)
                 .build();
     }
 
