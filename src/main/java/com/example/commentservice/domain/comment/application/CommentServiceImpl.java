@@ -48,7 +48,8 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @Override
     public void updateComment(CommentUpdateReqDto commentUpdateReqDto) {
-        Comment comment = commentRepository.findCommentByCommentUuid(commentUpdateReqDto.getCommentUuid());
+        Comment comment = commentRepository.findByCommentUuid(commentUpdateReqDto.getCommentUuid())
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_COMMENT));
 
         validateCommentOwner(comment, commentUpdateReqDto.getMemberUuid());
 
@@ -59,14 +60,16 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @Override
     public void deleteComment(CommentDeleteReqDto commentDeleteReqDto) {
-        Comment comment = commentRepository.findCommentByCommentUuid(commentDeleteReqDto.getCommentUuid());
+        Comment comment = commentRepository.findByCommentUuid(commentDeleteReqDto.getCommentUuid())
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_COMMENT));
         validateCommentOwner(comment, commentDeleteReqDto.getMemberUuid());
         commentRepository.delete(comment);
     }
 
     @Override
     public CommentResDto getCommentByCommentUuid(String commentUuid) {
-        Comment comment = commentRepository.findCommentByCommentUuid(commentUuid);
+        Comment comment = commentRepository.findByCommentUuid(commentUuid)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_COMMENT));
         return CommentResDto.from(comment);
     }
 
