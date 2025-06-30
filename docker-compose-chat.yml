@@ -8,6 +8,8 @@ services:
       - .env
     networks:
       - shared-net
+    ports:
+      - 2000:2000
 
 networks:
   shared-net:
