@@ -49,4 +49,9 @@ public class Comment extends BaseDocument {
     public void updateContent(String content) {
         this.content = content;
     }
+
+    public void softDelete() {
+        this.deleted_status = true;
+        this.deleted_at = LocalDateTime.now();
+    }
 }

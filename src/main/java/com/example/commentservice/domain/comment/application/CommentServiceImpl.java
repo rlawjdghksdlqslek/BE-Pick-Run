@@ -63,7 +63,8 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentRepository.findByCommentUuid(commentDeleteReqDto.getCommentUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_COMMENT));
         validateCommentOwner(comment, commentDeleteReqDto.getMemberUuid());
-        commentRepository.delete(comment);
+        comment.softDelete();
+        commentRepository.save(comment);
     }
 
     @Override
