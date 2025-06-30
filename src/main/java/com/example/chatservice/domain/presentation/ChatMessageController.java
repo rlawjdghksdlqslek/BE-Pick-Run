@@ -1,7 +1,6 @@
 package com.example.chatservice.domain.presentation;
 
 import com.example.chatservice.domain.application.ChatMessageService;
-import com.example.chatservice.domain.dto.in.ReadMessageReqDto;
 import com.example.chatservice.domain.dto.in.SendChatMessageReqDto;
 import com.example.chatservice.domain.vo.in.SendChatMessageReqVo;
 import lombok.RequiredArgsConstructor;
