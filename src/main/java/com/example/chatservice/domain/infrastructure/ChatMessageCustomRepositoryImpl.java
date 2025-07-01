@@ -64,7 +64,7 @@ public class ChatMessageCustomRepositoryImpl implements ChatMessageCustomReposit
 
         log.info("cursor: {}", cursor);
         Query query = new Query(criteria)
-                .with(Sort.by(Sort.Direction.ASC, "sentAt"))
+                .with(Sort.by(Sort.Direction.DESC, "sentAt"))
                 .limit(size + 1);  // hasNext 판별 위해 +1
 
         List<ChatMessage> messages = mongoTemplate.find(query, ChatMessage.class);
