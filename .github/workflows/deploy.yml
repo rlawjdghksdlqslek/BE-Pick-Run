@@ -98,8 +98,7 @@ jobs:
             echo "MONGODB_URI_ACTIVE_HISTORY=${{ secrets.MONGODB_URI_ACTIVE_HISTORY }}" >> .env
             echo "MONGODB_URI_CHAT=${{ secrets.MONGODB_URI_CHAT }}" >> .env
             echo "TOSS_PAYMENT_SUCCESS_URL=${{ secrets.TOSS_PAYMENT_SUCCESS_URL }}" >> .env
-            echo "TOSS_PAYMENT_SUCCESS_URL=${{ secrets.TOSS_PAYMENT_SUCCESS_URL }}" >> .env
-            
+            echo "TOSS_PAYMENT_FAIL_URL=${{ secrets.TOSS_PAYMENT_FAIL_URL }}" >> .env
             
             
             docker pull ${{ steps.login-ecr.outputs.registry }}/learn-run/post-service:latest
