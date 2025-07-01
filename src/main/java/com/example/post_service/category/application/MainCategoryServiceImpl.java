@@ -2,6 +2,7 @@ package com.example.post_service.category.application;
 
 import com.example.post_service.category.dto.in.MainCategoryReqDto;
 import com.example.post_service.category.dto.out.MainCategoryResDto;
+import com.example.post_service.category.dto.out.MainCategoryWithSubCategoriesResDto;
 import com.example.post_service.category.dto.out.SimpleSubCategoryResDto;
 import com.example.post_service.category.entity.CategoryList;
 import com.example.post_service.category.entity.MainCategory;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -80,4 +82,38 @@ public class MainCategoryServiceImpl implements MainCategoryService {
                 .toList();
     }
 
+    @Override
+    public List<MainCategoryWithSubCategoriesResDto> getAllMainCategoriesWithSubCategories() {
+        // 모든 메인 카테고리 조회
+        List<MainCategory> mainCategories = mainCategoryRepository.findAll();
+
+        // 모든 카테고리 리스트 조회
+        List<CategoryList> allCategoryLists = categoryListRepository.findAll();
+
+        // 메인 카테고리 ID별로 서브카테고리 그룹화
+        Map<Long, List<CategoryList>> categoryListMap = allCategoryLists.stream()
+                .collect(Collectors.groupingBy(CategoryList::getMainCategoryId));
+
+        return mainCategories.stream()
+                .map(mainCategory -> {
+                    List<CategoryList> categoryLists = categoryListMap.getOrDefault(mainCategory.getId(), List.of());
+
+                    List<MainCategoryWithSubCategoriesResDto.SubCategoryDto> subCategoryDtos = categoryLists.stream()
+                            .map(categoryList -> MainCategoryWithSubCategoriesResDto.SubCategoryDto.builder()
+                                    .subCategoryId(categoryList.getSubCategoryId())
+                                    .subCategoryName(categoryList.getSubCategoryName())
+                                    .color(categoryList.getSubCategoryColor())
+                                    .build())
+                            .toList();
+
+                    return MainCategoryWithSubCategoriesResDto.builder()
+                            .mainCategoryId(mainCategory.getId())
+                            .mainCategoryName(mainCategory.getName())
+                            .iconUrl(mainCategory.getIconUrl())
+                            .alt(mainCategory.getAlt())
+                            .subCategories(subCategoryDtos)
+                            .build();
+                })
+                .toList();
+    }
 }

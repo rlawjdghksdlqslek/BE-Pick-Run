@@ -2,6 +2,7 @@ package com.example.post_service.category.application;
 
 import com.example.post_service.category.dto.in.MainCategoryReqDto;
 import com.example.post_service.category.dto.out.MainCategoryResDto;
+import com.example.post_service.category.dto.out.MainCategoryWithSubCategoriesResDto;
 import com.example.post_service.category.dto.out.SimpleSubCategoryResDto;
 
 import java.util.List;
@@ -19,5 +20,7 @@ public interface MainCategoryService {
     void deleteMainCategory(Long mainCategoryId);
 
     List<SimpleSubCategoryResDto> getSubCategoriesByMainCategoryId(Long mainCategoryId);
+
+    List<MainCategoryWithSubCategoriesResDto> getAllMainCategoriesWithSubCategories();
 
 }
