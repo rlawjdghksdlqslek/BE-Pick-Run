@@ -17,6 +17,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -68,14 +70,21 @@ public class ChatMessageCustomRepositoryImpl implements ChatMessageCustomReposit
                 .limit(size + 1);  // hasNext 판별 위해 +1
 
         List<ChatMessage> messages = mongoTemplate.find(query, ChatMessage.class);
-        boolean hasNext = messages.size() > size;
 
+        boolean hasNext = messages.size() > size;
         if (hasNext) messages = messages.subList(0, size);
 
         String nextCursor = hasNext
                 ? messages.get(messages.size() - 1).getSentAt().toString()
                 : null;
 
-        return CursorPage.of(messages, hasNext, nextCursor);
+        List<ChatMessage> result = new ArrayList<>();
+        for (int i = messages.size() - 1; i >= 0 ; i--) {
+            result.add(messages.get(i));
+        }
+
+
+
+        return CursorPage.of(result, hasNext, nextCursor);
     }
 }
