@@ -7,5 +7,5 @@ server:
 
 livekit:
   api:
-    key: ${LIVEKIT_API_KEY:devkey}
-    secret: ${LIVEKIT_API_SECRET:secret}
+    key: ${LIVEKIT_API_KEY}
+    secret: ${LIVEKIT_API_SECRET}
