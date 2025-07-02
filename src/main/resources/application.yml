@@ -1,1 +1,11 @@
-spring.application.name=openvidu
+spring:
+  application:
+    name: oepnvidu-serivce
+
+server:
+  port: ${SERVER_PORT:6080}
+
+livekit:
+  api:
+    key: ${LIVEKIT_API_KEY:devkey}
+    secret: ${LIVEKIT_API_SECRET:secret}
