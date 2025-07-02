@@ -24,16 +24,16 @@ public class LiveKitController {
 	@PostMapping(value = "/token")
 	public ResponseEntity<Map<String, String>> createToken(
 			@RequestHeader("X-Member-UUID") String memberUuid,
-			@RequestBody String roomName) {
+			@RequestBody String chatRoomUuid) {
 
-		if (roomName == null || memberUuid == null) {
-			return ResponseEntity.badRequest().body(Map.of("errorMessage", "roomName and memberUuid are required"));
+		if (chatRoomUuid == null || memberUuid == null) {
+			return ResponseEntity.badRequest().body(Map.of("errorMessage", "chatRoomUuid and memberUuid are required"));
 		}
 
 		AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
 		token.setName(memberUuid);
 		token.setIdentity(memberUuid);
-		token.addGrants(new RoomJoin(true), new RoomName(roomName));
+		token.addGrants(new RoomJoin(true), new RoomName(chatRoomUuid));
 
 		return ResponseEntity.ok(Map.of("token", token.toJwt()));
 	}
