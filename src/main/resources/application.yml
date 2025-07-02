@@ -3,9 +3,9 @@ spring:
     name: oepnvidu-serivce
 
 server:
-  port: ${SERVER_PORT:8080}
+  port: ${SERVER_PORT}
 
 livekit:
   api:
-    key: ${LIVEKIT_API_KEY}
-    secret: ${LIVEKIT_API_SECRET}
+    key: devkey
+    secret: secret
