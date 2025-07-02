@@ -8,6 +8,7 @@ import com.example.commentservice.domain.comment.dto.out.CommentResDto;
 import com.example.commentservice.domain.comment.entity.CommentSortType;
 
 public interface CommentService {
+
     void createComment(CommentCreateReqDto commentCreateReqDto);
 
     void updateComment(CommentUpdateReqDto commentUpdateReqDto);
