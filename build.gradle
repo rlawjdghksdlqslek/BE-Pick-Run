@@ -25,10 +25,12 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
     //  openvidu
     implementation "io.openvidu:openvidu-java-client-v2compatibility:3.3.0"
+
+    //  livekit
+    implementation 'io.livekit:livekit-server:0.8.2'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

@@ -1,13 +1,11 @@
-server:
-  port: 2000
-
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-
 spring:
   application:
-    name: openvidu-service
-  profiles:
-    active: dev
+    name: oepnvidu-serivce
 
+server:
+  port: ${SERVER_PORT:6080}
+
+livekit:
+  api:
+    key: ${LIVEKIT_API_KEY:devkey}
+    secret: ${LIVEKIT_API_SECRET:secret}
