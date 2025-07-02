@@ -72,6 +72,9 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script_stop: true
           script: |
+            echo "LIVEKIT_API_KEY=${{ secrets.LIVEKIT_API_KEY }}" > .env
+            echo "LIVEKIT_API_SECRET=${{ secrets.LIVEKIT_API_SECRET }}" >> .env
+            echo "SERVER_PORT=${{ secrets.SERVER_PORT }}" >> .env
             docker pull ${{ steps.login-ecr.outputs.registry }}/learn-run/openvidu-service:latest
             docker-compose -f docker-compose-openvidu.yml down
             docker-compose -f docker-compose-openvidu.yml up -d
