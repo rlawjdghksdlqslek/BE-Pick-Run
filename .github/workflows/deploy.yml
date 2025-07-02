@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - 2-feature-cicd
   pull_request:
     branches:
       - main
