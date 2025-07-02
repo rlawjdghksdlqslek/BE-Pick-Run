@@ -40,7 +40,6 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @Override
     public void createComment(CommentCreateReqDto commentCreateReqDto) {
-        validatePostExists(commentCreateReqDto);
         Comment comment = commentRepository.save(commentCreateReqDto.toEntity());
         kafkaProducer.sendCommentCreatedEvent(CommentCreatedEvent.from(comment));
     }
