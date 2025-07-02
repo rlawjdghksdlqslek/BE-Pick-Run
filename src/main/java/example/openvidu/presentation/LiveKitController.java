@@ -21,22 +21,18 @@ public class LiveKitController {
 	@Value("${livekit.api.secret}")
 	private String LIVEKIT_API_SECRET;
 
-	/**
-	 * @param params JSON object with roomName and participantName
-	 * @return JSON object with the JWT token
-	 */
 	@PostMapping(value = "/token")
-	public ResponseEntity<Map<String, String>> createToken(@RequestBody Map<String, String> params) {
-		String roomName = params.get("roomName");
-		String participantName = params.get("participantName");
+	public ResponseEntity<Map<String, String>> createToken(
+			@RequestHeader("X-Member-UUID") String memberUuid,
+			@RequestBody String roomName) {
 
-		if (roomName == null || participantName == null) {
-			return ResponseEntity.badRequest().body(Map.of("errorMessage", "roomName and participantName are required"));
+		if (roomName == null || memberUuid == null) {
+			return ResponseEntity.badRequest().body(Map.of("errorMessage", "roomName and memberUuid are required"));
 		}
 
 		AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
-		token.setName(participantName);
-		token.setIdentity(participantName);
+		token.setName(memberUuid);
+		token.setIdentity(memberUuid);
 		token.addGrants(new RoomJoin(true), new RoomName(roomName));
 
 		return ResponseEntity.ok(Map.of("token", token.toJwt()));
