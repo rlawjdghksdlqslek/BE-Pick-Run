@@ -1,5 +1,6 @@
 package example.openvidu.presentation;
 
+import example.openvidu.dto.in.CreateTokenReqDto;
 import io.livekit.server.AccessToken;
 import io.livekit.server.RoomJoin;
 import io.livekit.server.RoomName;
@@ -24,16 +25,17 @@ public class LiveKitController {
 	@PostMapping(value = "/token")
 	public ResponseEntity<Map<String, String>> createToken(
 			@RequestHeader("X-Member-UUID") String memberUuid,
-			@RequestBody String chatRoomUuid) {
+			@RequestBody CreateTokenReqDto createTokenReqDto
+			) {
 
-		if (chatRoomUuid == null || memberUuid == null) {
+		if (createTokenReqDto.getChatRoomUuid() == null || memberUuid == null) {
 			return ResponseEntity.badRequest().body(Map.of("errorMessage", "chatRoomUuid and memberUuid are required"));
 		}
 
 		AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
-		token.setName(memberUuid);
+		token.setName(createTokenReqDto.getNickname());
 		token.setIdentity(memberUuid);
-		token.addGrants(new RoomJoin(true), new RoomName(chatRoomUuid));
+		token.addGrants(new RoomJoin(true), new RoomName(createTokenReqDto.getChatRoomUuid()));
 
 		return ResponseEntity.ok(Map.of("token", token.toJwt()));
 	}
