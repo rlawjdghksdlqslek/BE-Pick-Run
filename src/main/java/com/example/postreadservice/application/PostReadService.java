@@ -4,10 +4,12 @@ import com.example.postreadservice.dto.out.PostListPageResponseDto;
 import com.example.postreadservice.dto.out.PostReadModelResDto;
 import com.example.postreadservice.entity.PostSortType;
 import com.example.postreadservice.kafka.event.PostCreatedEvent;
+import com.example.postreadservice.kafka.event.PostUpdatedEvent;
 import jakarta.servlet.http.HttpServletRequest;
 
 public interface PostReadService {
     void createPostRead(PostCreatedEvent postCreatedEvent);
+    void updatePostRead(PostUpdatedEvent postUpdatedEvent);
 
     PostReadModelResDto getPostRead(String postUuid, String memberUuid, HttpServletRequest request);
 

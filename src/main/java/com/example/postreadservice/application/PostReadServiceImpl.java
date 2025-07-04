@@ -10,6 +10,7 @@ import com.example.postreadservice.entity.PostReadModel;
 import com.example.postreadservice.entity.PostSortType;
 import com.example.postreadservice.infrastructure.PostReadRepository;
 import com.example.postreadservice.kafka.event.PostCreatedEvent;
+import com.example.postreadservice.kafka.event.PostUpdatedEvent;
 import com.example.postreadservice.kafka.producer.PostViewKafkaProducer;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +43,14 @@ public class PostReadServiceImpl implements PostReadService {
     @Override
     public void createPostRead(PostCreatedEvent postCreatedEvent) {
         postReadRepository.save(PostReadModelReqDto.from(postCreatedEvent));
+    }
+
+    @Transactional
+    public void updatePostRead(PostUpdatedEvent postUpdatedEvent) {
+        Optional<PostReadModel> existingPostReadModel = postReadRepository.findByPostUuid(postUpdatedEvent.getPostUuid());
+        PostReadModel postReadModel = existingPostReadModel.get();
+        postReadModel.updateFromEvent(postUpdatedEvent);
+        postReadRepository.save(postReadModel);
     }
 
     @Override

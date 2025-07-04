@@ -1,5 +1,6 @@
 package com.example.postreadservice.entity;
 
+import com.example.postreadservice.kafka.event.PostUpdatedEvent;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -58,5 +59,16 @@ public class PostReadModel {
         this.likeCount = likeCount;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public void updateFromEvent(PostUpdatedEvent event) {
+        this.memberUuid = event.getMemberUuid();
+        this.mainCategoryId = event.getMainCategoryId();
+        this.subCategoryId = event.getSubCategoryId();
+        this.title = event.getTitle();
+        this.contents = event.getContents();
+        this.blindStatus = event.isBlindStatus();
+        this.deletedStatus = event.isDeletedStatus();
+        this.updatedAt = event.getUpdatedAt();
     }
 }
