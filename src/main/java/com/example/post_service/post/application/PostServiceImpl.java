@@ -1,6 +1,7 @@
 package com.example.post_service.post.application;
 
 import com.example.post_service.kafka.event.PostCreatedEvent;
+import com.example.post_service.kafka.event.PostUpdatedEvent;
 import com.example.post_service.kafka.producer.PostKafkaProducer;
 import com.example.post_service.post.dto.in.PostCreateReqDto;
 import com.example.post_service.post.dto.in.PostUpdateReqDto;
@@ -61,6 +62,20 @@ public class PostServiceImpl implements PostService {
                 postUpdateReqDto.getSubCategoryId()
         );
         postRepository.save(post);
+
+        PostUpdatedEvent postUpdatedEvent = PostUpdatedEvent.builder()
+                .postUuid(post.getPostUuid())
+                .memberUuid(post.getMemberUuid())
+                .mainCategoryId(post.getMainCategoryId())
+                .subCategoryId(post.getSubCategoryId())
+                .title(post.getTitle())
+                .contents(post.getContents())
+                .blindStatus(post.isBlindStatus())
+                .deletedStatus(post.isDeletedStatus())
+                .updatedAt(post.getUpdatedAt())
+                .build();
+
+        postKafkaProducer.sendUpdatePostEvent(postUpdatedEvent);
     }
 
     @Override
