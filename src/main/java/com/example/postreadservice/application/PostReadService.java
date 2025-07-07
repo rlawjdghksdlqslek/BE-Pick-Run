@@ -19,4 +19,6 @@ public interface PostReadService {
 
     PostListPageResponseDto getPostBySort(
             Long mainCategoryId, Long subCategoryId, int page, int size, PostSortType postSortTyp);
+
+    PostListPageResponseDto searchPostsByTitle(String titleKeyword, int page, int size);
 }

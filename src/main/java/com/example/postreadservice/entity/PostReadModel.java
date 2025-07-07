@@ -11,6 +11,8 @@ import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.mongodb.core.index.TextIndexed;
+
 @Document(collection = "post_read")
 @Getter
 @NoArgsConstructor
@@ -26,6 +28,7 @@ public class PostReadModel {
     private String memberUuid;
     private Long mainCategoryId;
     private Long subCategoryId;
+    @TextIndexed
     private String title;
     private String contents;
 

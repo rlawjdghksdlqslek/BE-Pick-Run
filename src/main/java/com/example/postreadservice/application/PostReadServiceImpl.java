@@ -133,4 +133,22 @@ public class PostReadServiceImpl implements PostReadService {
         );
     }
 
+    @Override
+    public PostListPageResponseDto searchPostsByTitle(String titleKeyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<PostReadModel> resultPage = postReadRepository.findByTitleContainingIgnoreCaseAndDeletedStatusIsFalse(titleKeyword, pageable);
+
+        List<PostSummaryResDto> posts = resultPage.getContent().stream()
+                .map(PostSummaryResDto::from)
+                .toList();
+
+        return new PostListPageResponseDto(
+                posts,
+                resultPage.getNumber(),
+                resultPage.getSize(),
+                resultPage.hasNext(),
+                resultPage.getTotalElements(),
+                resultPage.getTotalPages()
+        );
+    }
 }
