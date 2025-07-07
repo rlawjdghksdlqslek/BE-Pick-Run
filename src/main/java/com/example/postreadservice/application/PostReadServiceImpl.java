@@ -75,7 +75,7 @@ public class PostReadServiceImpl implements PostReadService {
 
     @Override
     public PostReadModelResDto getPostRead(String postUuid, String memberUuid, HttpServletRequest request) {
-        PostReadModel postReadModel = postReadRepository.findByPostUuid(postUuid)
+        PostReadModel postReadModel = postReadRepository.findByPostUuidAndDeletedStatusIsFalse(postUuid)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.POST_NOT_FOUND));
 
         String redisKey;

@@ -34,7 +34,7 @@ public class PostReadCustomRepositoryImpl implements PostReadCustomRepository {
             Long subCategoryId,
             Pageable pageable
     ) {
-        Criteria criteria = new Criteria();
+        Criteria criteria = Criteria.where("deletedStatus").is(false);
 
         if (mainCategoryId != null) {
             criteria = criteria.and("mainCategoryId").is(mainCategoryId);
