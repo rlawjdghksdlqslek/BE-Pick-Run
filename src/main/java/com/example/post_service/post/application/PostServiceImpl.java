@@ -1,6 +1,7 @@
 package com.example.post_service.post.application;
 
 import com.example.post_service.kafka.event.PostCreatedEvent;
+import com.example.post_service.kafka.event.PostDeletedEvent;
 import com.example.post_service.kafka.event.PostUpdatedEvent;
 import com.example.post_service.kafka.producer.PostKafkaProducer;
 import com.example.post_service.post.dto.in.PostCreateReqDto;
@@ -53,7 +54,9 @@ public class PostServiceImpl implements PostService {
     ) {
         Post post = postRepository.findByPostUuid(postUuid)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
-        validatePostOwner(memberUuid, post);
+        if (!post.getMemberUuid().equals(memberUuid)) {
+            throw new SecurityException("게시글 수정 권한이 없습니다.");
+        }
 
         post.update(
                 postUpdateReqDto.getTitle(),
@@ -78,6 +81,24 @@ public class PostServiceImpl implements PostService {
         postKafkaProducer.sendUpdatePostEvent(postUpdatedEvent);
     }
 
+    @Transactional
+    @Override
+    public void softDeletePost(String memberUuid, String postUuid) {
+        Post post = postRepository.findByPostUuid(postUuid)
+                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+        if (!post.getMemberUuid().equals(memberUuid)) {
+            throw new SecurityException("게시글 수정 권한이 없습니다.");
+        }
+        post.softDelete();
+        postRepository.save(post);
+
+        PostDeletedEvent postDeletedEvent = PostDeletedEvent.builder()
+                .postUuid(post.getPostUuid())
+                .build();
+
+        postKafkaProducer.sendDeletePostEvent(postDeletedEvent);
+    }
+
     @Override
     public GetPostInfoResDto getPostInfo(String postUuid) {
         return GetPostInfoResDto.from(postRepository.findByPostUuid(postUuid)
@@ -87,14 +108,5 @@ public class PostServiceImpl implements PostService {
     @Override
     public ExistsPostDto existsPost(String postUuid) {
         return ExistsPostDto.from(postRepository.existsByPostUuid(postUuid));
-    }
-
-    private void validatePostOwner(
-            String memberUuid,
-            Post post
-    ) {
-        if (!post.getMemberUuid().equals(memberUuid)) {
-            throw new SecurityException("게시글 수정 권한이 없습니다.");
-        }
     }
 }

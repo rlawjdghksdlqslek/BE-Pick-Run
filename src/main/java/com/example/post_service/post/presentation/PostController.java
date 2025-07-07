@@ -43,6 +43,7 @@ public class PostController {
 
     /**
      * 2. 질문 수정
+     *
      * @param memberUuid
      * @param postUuid
      * @param postUpdateReqVo
@@ -74,26 +75,35 @@ public class PostController {
     @Operation(
             summary = "게시글 존재 여부 확인",
             description = """
-            게시글 UUID를 통해 해당 게시글이 존재하는지 확인합니다.
-
-            [요청 경로]
-            - /api/v1/post/exist/{postUuid}
-
-            [요청 파라미터]
-            - path variable: postUuid (String) 게시글 고유 식별자
-
-            [응답 필드]
-            - exists: (boolean) 해당 게시글이 존재하면 true, 없으면 false
-
-            [처리 로직]
-            - UUID로 게시글을 조회하고 존재 여부만 반환
-            """
+                    게시글 UUID를 통해 해당 게시글이 존재하는지 확인합니다.
+                    
+                    [요청 경로]
+                    - /api/v1/post/exist/{postUuid}
+                    
+                    [요청 파라미터]
+                    - path variable: postUuid (String) 게시글 고유 식별자
+                    
+                    [응답 필드]
+                    - exists: (boolean) 해당 게시글이 존재하면 true, 없으면 false
+                    
+                    [처리 로직]
+                    - UUID로 게시글을 조회하고 존재 여부만 반환
+                    """
     )
     @GetMapping("/exist/{postUuid}")
     public BaseResponseEntity<ExistsPostDto> existsPost(
             @PathVariable String postUuid
-    ){
+    ) {
         return new BaseResponseEntity<>(postService.existsPost(postUuid));
+    }
+
+    @DeleteMapping("{postUuid}")
+    public BaseResponseEntity<Void> deletePost(
+            @RequestHeader("X-Member-UUID") String memberUuid,
+            @PathVariable String postUuid
+    ) {
+        postService.softDeletePost(memberUuid, postUuid);
+        return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
     }
 
 }
