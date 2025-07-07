@@ -37,7 +37,6 @@ import java.util.Optional;
 public class PostReadServiceImpl implements PostReadService {
 
     private final PostReadRepository postReadRepository;
-    private final PostViewKafkaProducer postViewKafkaProducer;
     private final RedisTemplate<String, Object> redisTemplate;
 
     @Transactional
