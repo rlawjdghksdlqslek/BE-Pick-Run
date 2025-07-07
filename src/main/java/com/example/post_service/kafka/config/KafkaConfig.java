@@ -1,6 +1,7 @@
 package com.example.post_service.kafka.config;
 
 import com.example.post_service.kafka.event.PostCreatedEvent;
+import com.example.post_service.kafka.event.PostDeletedEvent;
 import com.example.post_service.kafka.event.PostUpdatedEvent;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -50,6 +51,16 @@ public class KafkaConfig {
     @Bean
     public KafkaTemplate<String, PostUpdatedEvent> postUpdateEventKafkaTemplate() {
         return new KafkaTemplate<>(updatePostNotification());
+    }
+
+    @Bean
+    public ProducerFactory<String, PostDeletedEvent> deletePostNotification() {
+        return new DefaultKafkaProducerFactory<>(postProducerConfigs());
+    }
+
+    @Bean
+    public KafkaTemplate<String, PostDeletedEvent> postDeleteEventKafkaTemplate() {
+        return new KafkaTemplate<>(deletePostNotification());
     }
 
 }

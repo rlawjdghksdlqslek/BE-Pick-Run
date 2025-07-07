@@ -72,4 +72,9 @@ public class Post {
         this.subCategoryId = subCategoryId;
         this.updatedAt = LocalDateTime.now();
     }
+
+    public void softDelete(){
+        this.deletedStatus = true;
+        this.deletedAt = LocalDateTime.now();
+    }
 }

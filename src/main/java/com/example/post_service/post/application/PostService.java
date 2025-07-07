@@ -11,6 +11,8 @@ public interface PostService {
 
     void updatePost(String memberUuid, String postUuid, PostUpdateReqDto postUpdateReqDto);
 
+    void softDeletePost(String memberUuid, String postUuid);
+
     ExistsPostDto existsPost(String postUuid);
 
     GetPostInfoResDto getPostInfo(String postUuid);
