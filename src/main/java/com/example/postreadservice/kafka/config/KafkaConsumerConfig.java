@@ -1,5 +1,6 @@
 package com.example.postreadservice.kafka.config;
 
+import com.example.postreadservice.kafka.event.PostDeletedEvent;
 import com.example.postreadservice.kafka.event.PostUpdatedEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -50,6 +51,36 @@ public class KafkaConsumerConfig {
     public ConcurrentKafkaListenerContainerFactory<String, PostUpdatedEvent> postUpdatedEventListener() {
         ConcurrentKafkaListenerContainerFactory<String, PostUpdatedEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(postUpdatedEventConsumerFactory());
+        return factory;
+    }
+
+    @Bean
+    public Map<String, Object> postDeletedConsumerConfigs() {
+        Map<String, Object> props = new HashMap<>();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "post-delete-read-group");
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
+        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, PostDeletedEvent.class);
+
+        return props;
+    }
+
+    @Bean
+    public ConsumerFactory<String, PostDeletedEvent> postDeletedEventConsumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(
+                postDeletedConsumerConfigs(),
+                new StringDeserializer(),
+                new ErrorHandlingDeserializer<>(new JsonDeserializer<>(PostDeletedEvent.class, false))
+        );
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, PostDeletedEvent> postDeletedEventListener() {
+        ConcurrentKafkaListenerContainerFactory<String, PostDeletedEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(postDeletedEventConsumerFactory());
         return factory;
     }
 }
