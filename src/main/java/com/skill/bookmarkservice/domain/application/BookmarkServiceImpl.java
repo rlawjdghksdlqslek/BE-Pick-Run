@@ -36,7 +36,6 @@ public class BookmarkServiceImpl implements BookmarkService {
     @Transactional
     @Override
     public void addBookmark(String memberUuid, String postUuid) {
-        validatePostExists(postUuid);
         if (bookmarkRepository.existsByMemberUuidAndPostUuid(memberUuid, postUuid)) {
             log.warn("북마크가 이미 존재합니다: memberUuid={}, postUuid={}", memberUuid, postUuid);
             throw new BaseException(BaseResponseStatus.ALREADY_EXISTS_BOOKMARK);
@@ -96,13 +95,6 @@ public class BookmarkServiceImpl implements BookmarkService {
                 postUuids, page, resultPage.getSize(), resultPage.hasNext(), resultPage.getTotalPages(),
                 resultPage.getTotalElements()
         );
-    }
-
-    private void validatePostExists(String postUuid) {
-        BaseResponseEntity<ExistsPostResDto> response = postServiceClient.existsPost(postUuid);
-        if (!response.result().isExistsPost()) {
-            throw new BaseException(BaseResponseStatus.POST_NOT_FOUND);
-        }
     }
 }
 
