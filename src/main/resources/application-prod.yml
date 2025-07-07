@@ -2,6 +2,7 @@ spring:
   data:
     mongodb:
       uri: ${MONGODB_URI_POST_READ}
+      auto-index-creation: true
     redis:
       host: ${EC2_REDIS_HOST}
       port: ${EC2_REDIS_PORT}
