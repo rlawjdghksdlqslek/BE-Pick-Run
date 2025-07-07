@@ -6,16 +6,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.time.LocalDateTime;
 
 @Document(collection = "post_read")
 @Getter
 @NoArgsConstructor
+@CompoundIndex(name = "category_sort_created_at", def = "{'deletedStatus': 1, 'mainCategoryId': 1, 'subCategoryId': 1, 'createdAt': -1}")
+@CompoundIndex(name = "category_sort_view_count", def = "{'deletedStatus': 1, 'mainCategoryId': 1, 'subCategoryId': 1, 'viewCount': -1}")
+@CompoundIndex(name = "category_sort_like_count", def = "{'deletedStatus': 1, 'mainCategoryId': 1, 'subCategoryId': 1, 'likeCount': -1}")
 public class PostReadModel {
 
     @Id
     private String id;
+    @Indexed(unique = true)
     private String postUuid;
     private String memberUuid;
     private Long mainCategoryId;
