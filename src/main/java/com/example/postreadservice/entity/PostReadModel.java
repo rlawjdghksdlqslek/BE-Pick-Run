@@ -31,6 +31,7 @@ public class PostReadModel {
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
 
     @Builder
     public PostReadModel(
@@ -45,7 +46,8 @@ public class PostReadModel {
             long viewCount,
             long likeCount,
             LocalDateTime createdAt,
-            LocalDateTime updatedAt
+            LocalDateTime updatedAt,
+            LocalDateTime deletedAt
     ) {
         this.postUuid = postUuid;
         this.memberUuid = memberUuid;
@@ -59,6 +61,7 @@ public class PostReadModel {
         this.likeCount = likeCount;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
     }
 
     public void updateFromEvent(PostUpdatedEvent event) {
@@ -70,5 +73,10 @@ public class PostReadModel {
         this.blindStatus = event.isBlindStatus();
         this.deletedStatus = event.isDeletedStatus();
         this.updatedAt = event.getUpdatedAt();
+    }
+
+    public void softDeleteFromEvent() {
+        this.deletedStatus = true;
+        this.deletedAt = LocalDateTime.now();
     }
 }

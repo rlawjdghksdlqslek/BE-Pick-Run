@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface PostReadRepository extends MongoRepository<PostReadModel,String>, PostReadCustomRepository   {
     Optional<PostReadModel> findByPostUuid(String postUuid);
+    Optional<PostReadModel> findByPostUuidAndDeletedStatusIsFalse(String postUuid);
 }

@@ -10,6 +10,7 @@ import com.example.postreadservice.entity.PostReadModel;
 import com.example.postreadservice.entity.PostSortType;
 import com.example.postreadservice.infrastructure.PostReadRepository;
 import com.example.postreadservice.kafka.event.PostCreatedEvent;
+import com.example.postreadservice.kafka.event.PostDeletedEvent;
 import com.example.postreadservice.kafka.event.PostUpdatedEvent;
 import com.example.postreadservice.kafka.producer.PostViewKafkaProducer;
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,16 +47,35 @@ public class PostReadServiceImpl implements PostReadService {
     }
 
     @Transactional
+    @Override
     public void updatePostRead(PostUpdatedEvent postUpdatedEvent) {
-        Optional<PostReadModel> existingPostReadModel = postReadRepository.findByPostUuid(postUpdatedEvent.getPostUuid());
+        Optional<PostReadModel> existingPostReadModel = postReadRepository.findByPostUuid(
+                postUpdatedEvent.getPostUuid());
         PostReadModel postReadModel = existingPostReadModel.get();
         postReadModel.updateFromEvent(postUpdatedEvent);
         postReadRepository.save(postReadModel);
     }
 
+    @Transactional
+    public void softDeletePostRead(PostDeletedEvent postDeletedEvent) {
+        Optional<PostReadModel> existingPostReadModel = postReadRepository.findByPostUuid(
+                postDeletedEvent.getPostUuid());
+
+        if (existingPostReadModel.isPresent()) {
+            PostReadModel postReadModel = existingPostReadModel.get();
+
+            postReadModel.softDeleteFromEvent();
+
+            postReadRepository.save(postReadModel);
+            log.info("PostReadModel soft-deleted for postUuid {}", postDeletedEvent.getPostUuid());
+        } else {
+            log.warn("postUuid {} 에 대한 PostReadModel 을 찾을 수 없습니다.", postDeletedEvent.getPostUuid());
+        }
+    }
+
     @Override
     public PostReadModelResDto getPostRead(String postUuid, String memberUuid, HttpServletRequest request) {
-        PostReadModel postReadModel = postReadRepository.findByPostUuid(postUuid)
+        PostReadModel postReadModel = postReadRepository.findByPostUuidAndDeletedStatusIsFalse(postUuid)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.POST_NOT_FOUND));
 
         String redisKey;
