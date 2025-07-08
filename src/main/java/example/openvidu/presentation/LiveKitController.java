@@ -6,12 +6,14 @@ import io.livekit.server.RoomJoin;
 import io.livekit.server.RoomName;
 import io.livekit.server.WebhookReceiver;
 import livekit.LivekitWebhook.WebhookEvent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+@Slf4j
 @CrossOrigin(origins = "*")
 @RestController
 public class LiveKitController {
@@ -36,6 +38,7 @@ public class LiveKitController {
 		token.setName(createTokenReqDto.getNickname());
 		token.setIdentity(memberUuid);
 		token.addGrants(new RoomJoin(true), new RoomName(createTokenReqDto.getChatRoomUuid()));
+		log.info("chatRoomUuid: " + createTokenReqDto.getChatRoomUuid());
 
 		return ResponseEntity.ok(Map.of("token", token.toJwt()));
 	}
