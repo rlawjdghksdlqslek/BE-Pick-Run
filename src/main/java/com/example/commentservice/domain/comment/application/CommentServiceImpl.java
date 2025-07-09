@@ -1,8 +1,6 @@
 package com.example.commentservice.domain.comment.application;
 
 import com.example.commentservice.client.post.PostServiceClient;
-import com.example.commentservice.client.post.dto.out.ExistsPostResDto;
-import com.example.commentservice.common.entity.BaseResponseEntity;
 import com.example.commentservice.common.exception.BaseException;
 import com.example.commentservice.common.kafka.event.CommentCreatedEvent;
 import com.example.commentservice.common.kafka.event.CommentDeletedEvent;
@@ -48,7 +46,7 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @Override
     public void updateComment(CommentUpdateReqDto commentUpdateReqDto) {
-        Comment comment = commentRepository.findByCommentUuid(commentUpdateReqDto.getCommentUuid())
+        Comment comment = commentRepository.findNotDeletedByCommentUuid(commentUpdateReqDto.getCommentUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_COMMENT));
 
         validateCommentOwner(comment, commentUpdateReqDto.getMemberUuid());
@@ -60,7 +58,7 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @Override
     public void deleteComment(CommentDeleteReqDto commentDeleteReqDto) {
-        Comment comment = commentRepository.findByCommentUuid(commentDeleteReqDto.getCommentUuid())
+        Comment comment = commentRepository.findNotDeletedByCommentUuid(commentDeleteReqDto.getCommentUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_COMMENT));
         validateCommentOwner(comment, commentDeleteReqDto.getMemberUuid());
         comment.softDelete();
@@ -70,7 +68,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentResDto getCommentByCommentUuid(String commentUuid) {
-        Comment comment = commentRepository.findByCommentUuid(commentUuid)
+        Comment comment = commentRepository.findNotDeletedByCommentUuid(commentUuid)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_COMMENT));
         return CommentResDto.from(comment);
     }
@@ -96,13 +94,6 @@ public class CommentServiceImpl implements CommentService {
         }
         if (!comment.getMemberUuid().equals(memberUuid)) {
             throw new BaseException(BaseResponseStatus.INVALID_USER_ROLE);
-        }
-    }
-
-    private void validatePostExists(CommentCreateReqDto commentCreateReqDto) {
-        BaseResponseEntity<ExistsPostResDto> response = postServiceClient.existsPost(commentCreateReqDto.getPostUuid());
-        if (!response.result().isExistsPost()) {
-            throw new BaseException(BaseResponseStatus.POST_NOT_FOUND);
         }
     }
 }
