@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: oepnvidu-serivce
+
+server:
+  port: ${SERVER_PORT}
+
+livekit:
+  api:
+    key: ${LIVEKIT_API_KEY}
+    secret: ${LIVEKIT_API_SECRET}
