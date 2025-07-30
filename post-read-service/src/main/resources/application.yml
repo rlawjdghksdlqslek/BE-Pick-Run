@@ -1,0 +1,30 @@
+server:
+  port: 0
+
+
+spring:
+  application:
+    name: post-read-service
+  profiles:
+    active: prod
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        show_sql: true
+        format_sql: true
+
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    client:
+      register-with-eureka: true
+      fetch-registry: true
+
+logging:
+  level:
+    root: INFO
