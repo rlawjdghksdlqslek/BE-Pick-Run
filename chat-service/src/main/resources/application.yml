@@ -1,0 +1,28 @@
+server:
+  port: 2000
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    client:
+      register-with-eureka: true
+      fetch-registry: true
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+
+spring:
+  application:
+    name: chat-service
+  profiles:
+    active: prod
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        show_sql: true
+        format_sql: true
