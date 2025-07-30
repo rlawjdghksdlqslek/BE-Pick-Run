@@ -1,0 +1,109 @@
+name: Deploy post-service to ECR and EC2
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: "${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}"
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build with Gradle
+        run: |
+          chmod +x gradlew
+          ./gradlew build -x test --no-daemon
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ap-northeast-2
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Login to ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build Docker Image
+        run: docker build -t post-service:latest .
+
+      - name: Tag Docker Image
+        run: docker tag post-service:latest ${{ steps.login-ecr.outputs.registry }}/learn-run/post-service:latest
+
+      - name: Push Docker Image to ECR
+        run: docker push ${{ steps.login-ecr.outputs.registry }}/learn-run/post-service:latest
+
+      - name: Copy docker-compose-post.yml to EC2
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          source: "docker-compose-post.yml"
+          target: "~/"
+
+      - name: Deploy on EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script_stop: true
+          script: |
+            echo "MYSQL_HOST=${{ secrets.MYSQL_HOST }}" > .env
+            echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
+            echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
+            echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
+            echo "MAIL_APP_PASSWORD=${{ secrets.MAIL_APP_PASSWORD }}" >> .env
+            echo "MAIL_SENDER_ADDRESS=${{ secrets.MAIL_SENDER_ADDRESS }}" >> .env
+            echo "MAIL_SENDER_NAME=${{ secrets.MAIL_SENDER_NAME }}" >> .env
+            echo "REDIS_HOST=${{ secrets.REDIS_HOST }}" >> .env
+            echo "MONGO_INITDB_ROOT_USERNAME=${{ secrets.MONGO_INITDB_ROOT_USERNAME }}" >> .env
+            echo "MONGO_INITDB_ROOT_PASSWORD=${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}" >> .env
+            echo "MONGODB_URI_POST=${{ secrets.MONGODB_URI_POST }}" >> .env
+            echo "EC2_HOST=${{ secrets.EC2_HOST }}" >> .env
+            echo "EC2_INFRA_HOST=${{ secrets.EC2_INFRA_HOST }}" >> .env
+            echo "MONGODB_URI_PROFILE=${{ secrets.MONGODB_URI_PROFILE }}" >> .env
+            echo "MONGODB_URI_REVIEW=${{ secrets.MONGODB_URI_REVIEW }}" >> .env
+            echo "MONGODB_URI_POST_READ=${{ secrets.MONGODB_URI_POST_READ }}" >> .env
+            echo "MONGODB_URI_COMMENT=${{ secrets.MONGODB_URI_COMMENT }}" >> .env
+            echo "TOSS_PAYMENT_CLIENT_KEY=${{ secrets.TOSS_PAYMENT_CLIENT_KEY }}" >> .env
+            echo "TOSS_PAYMENT_FAIL_URL_DEV=${{ secrets.TOSS_PAYMENT_FAIL_URL_DEV }}" >> .env
+            echo "TOSS_PAYMENT_FAIL_URL_PROD=${{ secrets.TOSS_PAYMENT_FAIL_URL_PROD }}" >> .env
+            echo "TOSS_PAYMENT_SECRET_KEY=${{ secrets.TOSS_PAYMENT_SECRET_KEY }}" >> .env
+            echo "TOSS_PAYMENT_SUCCESS_URL_DEV=${{ secrets.TOSS_PAYMENT_SUCCESS_URL_DEV }}" >> .env
+            echo "TOSS_PAYMENT_SUCCESS_URL_PROD=${{ secrets.TOSS_PAYMENT_SUCCESS_URL_PROD }}" >> .env
+            echo "TOSS_PAYMENT_BASE_URL=${{ secrets.TOSS_PAYMENT_BASE_URL }}" >> .env
+            echo "MONGODB_URI_ACTIVE_HISTORY=${{ secrets.MONGODB_URI_ACTIVE_HISTORY }}" >> .env
+            echo "MONGODB_URI_CHAT=${{ secrets.MONGODB_URI_CHAT }}" >> .env
+            echo "TOSS_PAYMENT_SUCCESS_URL=${{ secrets.TOSS_PAYMENT_SUCCESS_URL }}" >> .env
+            echo "TOSS_PAYMENT_FAIL_URL=${{ secrets.TOSS_PAYMENT_FAIL_URL }}" >> .env
+            echo "EC2_REDIS_HOST=${{ secrets.EC2_REDIS_HOST }}" >> .env
+            echo "EC2_REDIS_PORT=${{ secrets.EC2_REDIS_PORT }}" >> .env
+            
+            
+            docker pull ${{ steps.login-ecr.outputs.registry }}/learn-run/post-service:latest
+            docker-compose -f docker-compose-post.yml down
+            docker-compose -f docker-compose-post.yml up -d
+            docker image prune -f
