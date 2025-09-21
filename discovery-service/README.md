@@ -1,0 +1,49 @@
+# Discovery Service
+
+이 프로젝트는 Spring Cloud Netflix Eureka를 사용하여 구축된 서비스 디스커버리 서버입니다.
+
+## 기술 스택
+
+*   Java 17
+*   Spring Boot 3.4.5
+*   Spring Cloud Netflix Eureka Server
+*   Gradle
+
+## 빌드 및 실행
+
+프로젝트를 빌드하려면 다음 명령어를 실행하세요:
+
+```bash
+./gradlew build
+```
+
+프로젝트를 실행하려면 다음 명령어를 실행하세요:
+
+```bash
+./gradlew bootRun
+```
+
+또는 빌드 후 생성된 JAR 파일을 직접 실행할 수 있습니다:
+
+```bash
+java -jar build/libs/discovery-service-0.0.1-SNAPSHOT.jar
+```
+
+## Eureka 대시보드
+
+애플리케이션이 실행되면 다음 URL에서 Eureka 대시보드에 접근할 수 있습니다:
+
+`http://localhost:8761` (기본 포트)
+
+## 주요 기능
+
+*   **서비스 등록 및 검색**: 클라이언트 애플리케이션은 이 서버에 자신을 등록하고 다른 서비스를 검색할 수 있습니다.
+*   **고가용성**: 여러 Eureka 서버 인스턴스를 실행하여 고가용성을 확보할 수 있습니다.
+
+## 기여
+
+기여를 환영합니다! 풀 리퀘스트를 제출하기 전에 이슈를 열어 논의해 주세요.
+
+## 라이선스
+
+이 프로젝트는 MIT 라이선스에 따라 배포됩니다. 자세한 내용은 `LICENSE` 파일을 참조하세요.

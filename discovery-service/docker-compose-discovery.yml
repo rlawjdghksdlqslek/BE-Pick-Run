@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  discovery-service:
+    image: 009160040466.dkr.ecr.ap-northeast-2.amazonaws.com/learn-run/discovery-service:latest
+    container_name: discovery-service
+    ports:
+      - "8761:8761"
+    env_file:
+      - .env
+    networks:
+      - shared-net
+
+networks:
+  shared-net:
+    external: true
