@@ -1,0 +1,44 @@
+# Gateway Service
+
+이 프로젝트는 Spring Cloud Gateway를 사용하여 여러 마이크로서비스로 들어오는 요청을 라우팅하고 관리하는 게이트웨이 서비스입니다.
+
+## 주요 기능
+
+*   **API 라우팅**: `application.yml`에 정의된 경로를 기반으로 `member-service`, `post-service`, `profile-service`, `post-read-service`, `active-history-service`, `review-service`, `comment-service`, `bookmark-service`, `payment-service`, `point-service`, `chat-service` 등 다양한 마이크로서비스로 요청을 라우팅합니다.
+*   **JWT 인증 필터**: `JwtAuthenticationFilter`를 통해 JWT 토큰을 검증하고, 특정 경로(`skipPaths`)에 대해서는 인증을 건너뛸 수 있도록 설정되어 있습니다.
+*   **CORS 설정**: `application.yml`에 정의된 `global-cors` 설정을 통해 `https://pickandlearn.shop`, `https://www.pickandlearn.shop`, `http://localhost:3000`, `http://localhost:3001` 등 허용된 Origin에 대한 CORS를 처리합니다.
+*   **Eureka 연동**: `application-dev.yml` 및 `application-prod.yml`에 따라 Eureka Discovery Service에 등록하고 서비스를 찾습니다.
+*   **Docker Compose**: `docker-compose-gateway.yml`을 통해 Docker 환경에서 게이트웨이 서비스를 쉽게 배포하고 실행할 수 있습니다.
+*   **CI/CD (GitHub Actions)**: `.github/workflows/deploy.yml`에 정의된 GitHub Actions 워크플로우를 통해 `main` 브랜치에 푸시되거나 Pull Request가 발생할 때마다 자동으로 빌드, Docker 이미지 생성, ECR 푸시, EC2 배포가 이루어집니다.
+
+## 설정 파일
+
+*   `application.yml`: 게이트웨이의 기본 설정, 라우팅 규칙, CORS 설정, JWT 필터 예외 경로 등이 정의되어 있습니다.
+*   `application-dev.yml`: 개발 환경을 위한 Eureka 설정 (localhost).
+*   `application-prod.yml`: 운영 환경을 위한 Eureka 설정 (discovery-service).
+*   `docker-compose-gateway.yml`: Docker Compose를 사용하여 게이트웨이 서비스를 컨테이너로 실행하기 위한 설정 파일입니다.
+*   `.github/workflows/deploy.yml`: GitHub Actions를 사용하여 CI/CD 파이프라인을 정의하는 파일입니다.
+
+## 배포
+
+`docker-compose-gateway.yml` 파일을 사용하여 Docker 환경에서 서비스를 배포할 수 있습니다.
+
+```bash
+docker-compose -f docker-compose-gateway.yml up -d
+```
+
+GitHub Actions를 통해 `main` 브랜치에 푸시하면 자동으로 빌드 및 배포가 진행됩니다.
+
+## API 문서
+
+Swagger UI를 통해 각 마이크로서비스의 API 문서를 확인할 수 있습니다. `application.yml`에 설정된 경로를 통해 접근 가능합니다.
+
+*   `/swagger`
+
+## 개발 환경 설정
+
+1.  JDK 17 설치
+2.  Gradle 빌드: `./gradlew build -x test`
+3.  `application-dev.yml`을 사용하여 개발 환경에서 실행
+
+```

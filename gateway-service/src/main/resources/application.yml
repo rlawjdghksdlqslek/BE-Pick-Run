@@ -1,0 +1,291 @@
+server:
+  port: 8000
+  forward-headers-strategy: framework
+
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: gateway-service
+  profiles:
+    active: prod
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+      global-cors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "https://pickandlearn.shop"
+              - "https://www.pickandlearn.shop"
+              - "http://localhost:3000"
+              - "http://localhost:3001"
+            allow-credentials: true
+            allowedHeaders:
+              - x-requested-with
+              - Authorization
+              - content-type
+              - credential
+              - X-AUTH-TOKEN
+              - X-CSRF-TOKEN
+            allowedMethods:
+              - PUT
+              - GET
+              - POST
+              - PATCH
+              - DELETE
+              - OPTIONS
+      routes:
+        - id: member-service
+          uri: lb://MEMBER-SERVICE
+          predicates:
+            - Path=/member-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
+                  - /api/v1/auth/sign-up
+                  - /api/v1/auth/sign-in
+                  - /api/v1/member/email/check-duplicate
+                  - /api/v1/auth/login-id/check-duplicate
+                  - /api/v1/email/send-code
+                  - /api/v1/email/verify-code
+                  - /api/v1/email/send-password
+                  - /api/v1/oauth/sign-in
+                  - /api/v1/oauth/sign-up
+                  - /api/v1/agreement/**
+                  - /api/v1/member/agreement/**
+
+        - id: post-service
+          uri: lb://POST-SERVICE
+          predicates:
+            - Path=/post-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /api/v1/post-service/**
+                  - /api/v1/category/**
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
+                  - /api/v1/category-list/**
+
+        - id: profile-service
+          uri: lb://PROFILE-SERVICE
+          predicates:
+            - Path=/profile-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
+                  - /api/v1/profile/nickname/check-duplicate
+                  - /api/v1/grade/**
+                  - /api/v1/profile/author/**
+                  - /api/v1/profile/member/**
+
+
+        - id: post-read-service
+          uri: lb://POST-READ-SERVICE
+          predicates:
+            - Path=/post-read-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /**
+
+        - id: active-history-service
+          uri: lb://ACTIVE-HISTORY-SERVICE
+          predicates:
+            - Path=/active-history-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
+                  - /api/v1/active-history/**
+
+        - id: review-service
+          uri: lb://REVIEW-SERVICE
+          predicates:
+            - Path=/review-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
+                  - /api/v1/review/info/**
+                  - /api/v1/member-review/**
+
+
+        - id: comment-service
+          uri: lb://COMMENT-SERVICE
+          predicates:
+            - Path=/comment-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
+                  - /api/v1/comment/*
+                  - /api/v1/comment/post/*/list
+                  - /api/v1/comment-like/*
+        - id: bookmark-service
+          uri: lb://BOOKMARK-SERVICE
+          predicates:
+            - Path=/bookmark-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
+                  - /api/v1/bookmark/**
+
+        - id: payment-service
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/payment-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
+                  - /api/v1/payment/**
+                  - /fail.html/**
+                  - /success.html/**
+                  - /payment-service/payment-service.main/static/**
+
+        - id: point-service
+          uri: lb://POINT-SERVICE
+          predicates:
+            - Path=/point-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
+                  - /api/v1/point-charge/**
+
+        - id: chat-service-http
+          uri: lb://CHAT-SERVICE
+          predicates:
+            - Path=/chat-service/**
+          filters:
+            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                skipPaths:
+                  - /v3/api-docs
+                  - /v3/api-docs/swagger-config
+                  - /swagger-ui/**
+                  - /swagger-ui.html
+                  - /webjars
+                  - /error
+                  - /api/v1/chat/**
+
+        # ② WebSocket 업그레이드 전용
+        - id: chat-service-ws
+          uri: ws://43.201.170.253:2000         # ⭐ ws 스킴 + lb 로드밸런싱
+          predicates:
+            - Path=/chat-ws/**
+          filters:
+            - StripPrefix=1
+#            - name: JwtAuthenticationFilter
+#              args:
+#                skipPaths:
+#                  - /chat-ws/** # hand-shake 단계 401 발생 예방
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger
+
+    urls:
+      - name: Member Service API
+        url: /member-service/v3/api-docs
+      - name: Post Service API
+        url: /post-service/v3/api-docs
+      - name: Profile Service API
+        url: /profile-service/v3/api-docs
+      - name: Post Read Service API
+        url: /post-read-service/v3/api-docs
+      - name: Review Service API
+        url: /review-service/v3/api-docs
+      - name: Comment Service API
+        url: /comment-service/v3/api-docs
+      - name: Bookmark Service API
+        url: /bookmark-service/v3/api-docs
+      - name: Active History Service API
+        url: /active-history-service/v3/api-docs
+      - name: Payment Service API
+        url: /payment-service/v3/api-docs
+      - name: Point Service API
+        url: /point-service/v3/api-docs
+      - name: Chat-Service API
+        url: /chat-service/v3/api-docs
+
+logging:
+  level:
+    root: INFO
+
+jwt:
+  secret-key: Bt#WZxNc@M1pQ9LvUYKA8oFrTcVJX!g7qFu32LxZ$NbPCy0w

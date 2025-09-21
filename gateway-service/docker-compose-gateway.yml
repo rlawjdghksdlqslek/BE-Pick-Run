@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  gateway-service:
+    image: 009160040466.dkr.ecr.ap-northeast-2.amazonaws.com/learn-run/gateway-service:latest
+    container_name: gateway-service
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    networks:
+      - shared-net
+
+networks:
+  shared-net:
+    external: true
