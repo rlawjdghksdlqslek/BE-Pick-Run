@@ -105,6 +105,18 @@ public class PostReadServiceImpl implements PostReadService {
         return PostReadModelResDto.from(postReadModel);
     }
 
+    @Transactional
+    @Override
+    public PostReadModelResDto getPostReadAndUpdateViewCount(String postUuid) {
+        PostReadModel postReadModel = postReadRepository.findByPostUuidAndDeletedStatusIsFalse(postUuid)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.POST_NOT_FOUND));
+
+        postReadModel.increaseViewCount();
+        postReadRepository.save(postReadModel);
+
+        return PostReadModelResDto.from(postReadModel);
+    }
+
     @Override
     public PostListPageResponseDto getPostBySort(
             Long mainCategoryId,
