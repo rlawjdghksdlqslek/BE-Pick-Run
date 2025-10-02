@@ -6,6 +6,12 @@ spring:
     redis:
       host: ${EC2_REDIS_HOST}
       port: ${EC2_REDIS_PORT}
+      cache:
+        type: redis # none / redis
+        redis:
+          time-to-live: 300000 # 5 minutes
+          key-prefix: "cache:"
+          cache-null-values: false
 
   kafka:
     bootstrap-servers: ${EC2_INFRA_HOST}:10000,${EC2_INFRA_HOST}:10001,${EC2_INFRA_HOST}:10002
