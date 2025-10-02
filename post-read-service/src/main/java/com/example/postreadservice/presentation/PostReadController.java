@@ -61,6 +61,33 @@ public class PostReadController {
         return new BaseResponseEntity<>(postReadService.getPostRead(postUuid, memberUuid, request));
     }
 
+    @Operation(
+            summary = "단일 게시글 조회 (조회수 즉시 업데이트)",
+            description = """
+                    게시글 UUID를 기반으로 단일 게시글의 상세 정보를 조회하고, 조회수를 즉시 1 증가시킵니다.
+
+                    [요청 경로]
+                    - GET /api/v1/post-read/{postUuid}/with-view-count-update
+
+                    [요청 파라미터]
+                    - path variable: postUuid (String) - 조회 대상 게시글 UUID
+
+                    [처리 로직]
+                    1. postUuid를 기준으로 MongoDB에서 게시글을 조회합니다.
+                    2. 게시글이 존재하지 않으면 예외가 발생합니다. (POST_NOT_FOUND)
+                    3. 게시글의 viewCount를 1 증가시키고 데이터베이스에 즉시 저장합니다.
+
+                    [예외 상황]
+                    - POST_NOT_FOUND: 해당 UUID의 게시글이 존재하지 않을 경우 발생
+                    """
+    )
+    @GetMapping("/test/{postUuid}")
+    public BaseResponseEntity<PostReadModelResDto> getPostReadWithViewCountUpdate(
+            @PathVariable String postUuid
+    ) {
+        return new BaseResponseEntity<>(postReadService.getPostReadAndUpdateViewCount(postUuid));
+    }
+
 
     @Operation(
             summary = "게시글 목록 조회",

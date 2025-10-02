@@ -23,6 +23,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
+import org.springframework.cache.annotation.Cacheable; // Added for caching
 
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
@@ -105,6 +106,23 @@ public class PostReadServiceImpl implements PostReadService {
         return PostReadModelResDto.from(postReadModel);
     }
 
+    @Transactional
+    @Override
+    public PostReadModelResDto getPostReadAndUpdateViewCount(String postUuid) {
+        PostReadModel postReadModel = postReadRepository.findByPostUuidAndDeletedStatusIsFalse(postUuid)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.POST_NOT_FOUND));
+
+        postReadModel.increaseViewCount();
+        postReadRepository.save(postReadModel);
+
+        return PostReadModelResDto.from(postReadModel);
+    }
+
+    @Cacheable(
+        value = "popularPosts",
+        key = "#postSortType.name() + '_' + #page + '_' + #size + '_' + (#mainCategoryId != null ? #mainCategoryId : 'null') + '_' + (#subCategoryId != null ? #subCategoryId : 'null')",
+        condition = "#postSortType == T(com.example.postreadservice.entity.PostSortType).POPULAR"
+    )
     @Override
     public PostListPageResponseDto getPostBySort(
             Long mainCategoryId,
@@ -113,6 +131,7 @@ public class PostReadServiceImpl implements PostReadService {
             int size,
             PostSortType postSortType
     ) {
+        System.out.println("DB에서 게시글 조회 중... (캐시 조건 확인)"); // 캐시 적용 확인을 위한 로그
         Pageable pageable = PageRequest.of(page, size, postSortType.getSort());
 
         Page<PostReadModel> resultPage = postReadRepository.findByDynamicCategory(

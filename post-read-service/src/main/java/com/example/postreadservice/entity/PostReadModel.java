@@ -88,4 +88,8 @@ public class PostReadModel {
         this.deletedStatus = true;
         this.deletedAt = LocalDateTime.now();
     }
+
+    public void increaseViewCount() {
+        this.viewCount++;
+    }
 }
