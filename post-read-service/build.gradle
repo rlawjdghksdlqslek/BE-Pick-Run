@@ -39,6 +39,12 @@ dependencies {
     // redisson
     implementation 'org.redisson:redisson-spring-boot-starter:3.38.0'
 
+    // Spring Cache Abstraction
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    // For JSON serialization in Redis
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+
     testImplementation 'org.springframework.kafka:spring-kafka-test'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
